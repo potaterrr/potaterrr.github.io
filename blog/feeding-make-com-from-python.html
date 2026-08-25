@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feeding Make.com from Python — potaterrr</title>
+  <meta name="description" content="How job-scrapper turns OnlineJobs.ph listings into clean webhook payloads for Make.com: flat JSON design, polite scraping, retries, and queue discipline." />
+  <meta property="og:title" content="Feeding Make.com from Python — potaterrr" />
+  <meta property="og:description" content="Flat JSON payloads, polite scraping and queue discipline: how a Python scraper feeds a Make.com pipeline." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/feeding-make-com-from-python.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-i-work">How I Work</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
+              <span class="reading-time">7 min read</span>
+            </div>
+            <h1 class="post-title">Feeding Make.com from Python</h1>
+          </header>
+          <div class="post-body">
+            <p>Every Make.com scenario is a consumer. It waits for data to arrive — from an app, an API, or someone upstream who did the unglamorous work of collecting it. That upstream role is exactly where plain old Python shines.</p>
+            <p><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper</a> is my producer: a small scraper that watches OnlineJobs.ph for remote gigs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each hit as JSON into a Make.com webhook, which forwards it to Telegram. Here's what I learned building the kitchen that feeds the restaurant.</p>
+
+            <h2>The moving parts</h2>
+            <ul>
+              <li>A keyword list at the top of <code>main.py</code> — currently four automation-related terms.</li>
+              <li>GitHub Actions running the script on a cron, every 4 hours, with the webhook URL injected as a repository secret. No server, no hosting bill.</li>
+              <li>A <code>requests</code>-only dependency list. No Selenium, no headless browser — the site renders server-side enough to parse.</li>
+              <li>The script exits immediately if <code>WEBHOOK_URL</code> isn't set. Fail loudly at startup, not mysteriously at runtime.</li>
+            </ul>
+
+            <h2>One job, one JSON object</h2>
+            <p>The payload contract is deliberately flat:</p>
+<pre><code>{
+  "jobTitle": "Senior Digital Marketing, AI Content &amp; E-Commerce Manager",
+  "company": "MadeEA",
+  "salary": "$1200/month",
+  "employmentType": "Full Time",
+  "url": "https://www.onlinejobs.ph/jobseekers/job/12345",
+  "datePosted": "2026-08-24",
+  "description": "About the Role\nWe are an established and growing…"
+}</code></pre>
+            <p>Three decisions worth stealing:</p>
+            <ul>
+              <li><strong>Flat beats nested.</strong> Every key maps one-to-one onto a field in Make's mapping panel. No dot-path spelunking inside arrays when you're wiring up a filter at midnight.</li>
+              <li><strong>One request per job.</strong> Each listing POSTs individually instead of batching the whole search. Downstream routing stays trivial — no iterator needed unless you want one.</li>
+              <li><strong>Presentation stays out of transport.</strong> The description is capped in the scraper (600 characters, cut at a word boundary), because only the scraper knows about Telegram's 4096-character message limit once title, salary and button text are added. The payload arrives pre-sized for its destination.</li>
+            </ul>
+
+            <h2>Politeness is a feature</h2>
+            <p>Scrapers that hammer sites get banned, so the delays are randomized like a human's: 5–12 seconds between searches, another 2–5 second pause before visiting each listing page for its full description.</p>
+            <p>When OnlineJobs.ph throws up a bot-check interstitial anyway, both request types retry several times with growing waits before giving up gracefully — sending the teaser text with a logged warning rather than failing the whole run. And because I parse raw HTML with regex (no fragile DOM tree dependency), a markup change means zero results, never crashes. The fallback path makes sure downstream still gets a single ping with a search link, so my notifications never stall silently.</p>
+
+            <h2>Queue discipline</h2>
+            <p>The most important constant in the file is <code>MAX_JOBS_PER_KEYWORD = 1</code>. Each keyword contributes at most one listing per run, deduplicated across keywords. Two reasons:</p>
+            <ol>
+              <li><strong>Operations budget.</strong> Every job that hits the webhook costs operations downstream. Four keywords × every 4 hours is already a steady trickle; uncapped, a hot day on the job board would torch a free plan's monthly budget in a weekend.</li>
+              <li><strong>Notification fatigue.</strong> A Telegram channel that pings forty times a morning gets muted by Thursday. One strong signal per keyword per run keeps me actually reading them.</li>
+            </ol>
+
+            <h2>Treat the webhook like an API contract</h2>
+            <p>The payload shape lives verbatim in the README, with types and a real example. That sounds obvious until you've rebuilt a downstream scenario and had to reverse-engineer your own fields from execution logs. Producer and consumer should be strangers who agree on a schema — then either side can be rebuilt without touching the other.</p>
+            <hr />
+            <p>This design has one more trick up its sleeve: it's cheap. How cheap, in actual operations-per-month arithmetic? That's the next post: <a href="make-com-free-plan-ops-math.html">The free-plan ops math</a>.</p>
+          </div>
+          <nav class="post-nav">
+            <a href="why-my-ai-never-sends-emails.html">&larr; Why my AI never sends emails</a>
+            <a href="make-com-free-plan-ops-math.html">The free-plan ops math &rarr;</a>
+          </nav>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

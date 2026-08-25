@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why my AI never sends emails — potaterrr</title>
+  <meta name="description" content="The human-in-the-loop pattern behind Dead Lead Follow-up: LLM drafts, Gmail holds, human approves. Guardrails, war stories and the case for keeping judgment out of the loop's hands." />
+  <meta property="og:title" content="Why my AI never sends emails — potaterrr" />
+  <meta property="og:description" content="LLM drafts, Gmail holds, human approves. The human-in-the-loop pattern behind Dead Lead Follow-up." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/why-my-ai-never-sends-emails.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-i-work">How I Work</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
+              <span class="reading-time">8 min read</span>
+            </div>
+            <h1 class="post-title">Why my AI never sends emails</h1>
+          </header>
+          <div class="post-body">
+            <p>People hear "AI writes my follow-up emails" and assume the next sentence is "…and it sends them." It isn't. Nothing in my lead pipeline has permission to hit send, and that constraint is the most valuable design decision in the entire system.</p>
+            <p>This is the story behind <a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">dead-lead-followup</a>: how it works, the guardrails that make its drafts worth reading, and the production scars that taught me why the draft step is non-negotiable.</p>
+
+            <h2>The slow death of a lead</h2>
+            <p>Dormant leads rarely die because someone said no. They die because nobody followed up. Manual follow-up is slow, inconsistent, and the first thing that falls off the plate during a busy week. Fully automated outreach fixes the consistency problem but introduces a worse one: robotic messages that burn relationships you spent months building.</p>
+            <p>So both extremes fail. Pure manual dies of neglect. Pure automated dies of cringe.</p>
+
+            <h2>The middle path: machine speed, human judgment</h2>
+            <p>The workflow takes a deliberately boring shape — five linear nodes:</p>
+            <ol>
+              <li>Every morning at 10:00, a schedule trigger fires.</li>
+              <li>A ClickUp node fetches leads still marked <code>TO DO</code> — filtered server-side, inside the API query, not in post-processing.</li>
+              <li>An LLM agent writes a short, warm, three-sentence check-in for each lead.</li>
+              <li>The email lands as a <strong>Gmail draft</strong> with an HTML call-to-action button. Never sent. Never.</li>
+              <li>The task flips to <code>Draft Done</code>, waiting for a human to review and press send.</li>
+            </ol>
+<pre><code>TO DO ──(AI draft created)──► Draft Done ──(human sends)──► Follow-up Sent</code></pre>
+            <p>The board is the database. Nothing gets sent without a draft existing first, and every state transition reflects back onto the task itself. That single invariant powers duplicate protection for free: tomorrow's run skips anything that already advanced.</p>
+
+            <h2>Why drafts, specifically</h2>
+            <p>Do the worst-case analysis. Ask not "will the automation work?" but "what happens on the worst day of its life?"</p>
+            <ul>
+              <li><strong>A runaway loop</strong> fills your drafts folder. Annoying, not catastrophic. Nobody outside your inbox knows it happened.</li>
+              <li><strong>A hallucination</strong> gets caught by a human eyeball at review time instead of by an angry recipient.</li>
+              <li><strong>You remain the sender of record.</strong> Every email carries your judgment, even when the typing was done by a machine.</li>
+              <li><strong>Even a leaked credential</strong> can't email anyone. The draft-only design means the blast radius of total system compromise is… a tidier to-do list.</li>
+            </ul>
+            <p>Show me a fully-autonomous outreach bot whose failure modes are that gentle.</p>
+
+            <h2>Guardrails that make drafts worth reading</h2>
+            <p>Drafts only save time if they're actually sendable. Four constraints do the heavy lifting:</p>
+            <ul>
+              <li><strong>Personalization comes from real fields, not vibes.</strong> The prompt receives the lead's name, company, and original interest notes from ClickUp custom fields. Task titles are a last-resort fallback only.</li>
+              <li><strong>The model may not invent URLs.</strong> Prompt-level ban. The only clickable link in any draft is my booking button — which kills the classic "AI confidently linked to a similar-looking company" failure.</li>
+              <li><strong>Fields resolve by name, not position.</strong> Custom fields are regex-matched by name, so someone reordering columns on Tuesday doesn't break greetings on Wednesday.</li>
+              <li><strong>Status updates are atomic with drafting.</strong> The <code>Draft Done</code> flip happens in the same run, so a retried or partially-failed execution can't double-contact anyone.</li>
+            </ul>
+
+            <h2>What production taught me</h2>
+            <p>These aren't hypotheticals. Every one of these cost me a debugging session:</p>
+            <ol>
+              <li><strong>Omitted parameters fall back to dangerous defaults.</strong> n8n's ClickUp node defaults its operation to <em>create</em>. A node missing an explicit <code>operation: getAll</code> didn't fail — it tried to <em>write new tasks</em>. Always declare resource and operation, even when the panel looks right.</li>
+              <li><strong>Status names match word-exactly.</strong> Case is forgiven (<code>IN PROGRESS</code> equals <code>in progress</code>); words are not. Updating with <code>COMPLETED</code> when the board says <code>complete</code> returns a 400. Check the board's own slugs first.</li>
+              <li><strong>Positional field access is a time bomb.</strong> <code>custom_fields[1].value</code> works beautifully until the day it doesn't. Name-match everything.</li>
+              <li><strong>Task title ≠ person name.</strong> Boards collect descriptive titles like "Leads Pipelines" while the human's actual name hides in a custom field. Greeting someone as "Leads Pipelines" is a great way to be ignored forever.</li>
+              <li><strong>Stale editor tabs revert API edits silently.</strong> Automation platforms cache canvas state per tab. If the workflow changed via API while an old tab held it, saving that tab rolls everything back. One writer at a time, and keep JSON backups in git.</li>
+            </ol>
+
+            <h2>So would I ever let it send?</h2>
+            <p>Honestly — parts of this are heading that way, carefully. The roadmap includes sweeping <code>Draft Done</code> tasks against the Gmail sent folder to auto-mark <code>Follow-up Sent</code>, reply detection so follow-ups stop on answered threads, and calendar events created straight from booking submissions. Those are mechanical steps with verifiable outcomes, exactly where autonomy belongs.</p>
+            <p>But first-touch outreach stays human-approved. The rule I've settled on: <strong>automation should delete drudgery, not judgment.</strong> Remembering, drafting, filing — that's machine work. Deciding — that stays mine.</p>
+            <p>The potatoes get mashed. The emails get approved. 🥔</p>
+            <hr />
+            <p>Built this pattern into something you want running on your own leads? The sanitized workflow and full setup guide live in the <a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">repo</a>, and I'm always up for talking shop on <a href="https://t.me/portaterrrr" target="_blank" rel="noopener">Telegram</a>.</p>
+          </div>
+          <nav class="post-nav">
+            <span></span>
+            <a href="feeding-make-com-from-python.html">Feeding Make.com from Python &rarr;</a>
+          </nav>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

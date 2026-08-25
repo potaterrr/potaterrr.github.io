@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The free-plan ops math — potaterrr</title>
+  <meta name="description" content="Make.com's free plan gives you 1,000 operations a month. Here's the arithmetic that decides whether your polling interval is an automation or an ops bonfire." />
+  <meta property="og:title" content="The free-plan ops math — potaterrr" />
+  <meta property="og:description" content="Polling every 15 minutes burns 2,880 ops/month before a single action runs. The arithmetic behind trigger choice on free automation plans." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/make-com-free-plan-ops-math.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-i-work">How I Work</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
+              <span class="reading-time">6 min read</span>
+            </div>
+            <h1 class="post-title">The free-plan ops math</h1>
+          </header>
+          <div class="post-body">
+            <p>Make.com's free plan hands you 1,000 operations a month. That sounds generous until you learn what actually costs one.</p>
+            <p>I learned it while planning an automation that posts my GitHub commits to a Facebook Page. The design died on a spreadsheet before I built a single module — which is exactly where bad designs should die.</p>
+
+            <h2>What costs an operation</h2>
+            <p>Every module execution counts as an operation. The part that surprises people: <strong>a polling trigger consumes at least one operation per cycle even when it finds nothing.</strong> An empty check-in is not a free check-in. Failed and incomplete runs count too. Your budget doesn't care whether the work succeeded; it cares that work was attempted.</p>
+
+            <h2>The arithmetic</h2>
+            <p>Take the most natural-sounding setup: watch a repo for commits, polling every 15 minutes because "instant-ish" feels right.</p>
+<pre><code>Polling trigger, 15-minute interval:
+4 checks/hour × 24 hours × 30 days = 2,880 cycles/month
+→ dead on arrival. Over budget before a single commit exists.
+
+Polling trigger, hourly:
+1 × 24 × 30 = 720 cycles/month
+→ fits, but idling eats 72% of the entire monthly budget.
+
+Webhook trigger:
+idle cost = 0 operations
+one push ≈ 2 operations (trigger + action)</code></pre>
+            <p>Same outcome, three architectures, two orders of magnitude apart. The 15-minute version isn't slightly over budget — it's nearly 3× the entire plan before the first real event fires.</p>
+
+            <h2>The real-world decision</h2>
+            <p>Back to the GitHub-to-Facebook scenario. Two options were on the table:</p>
+            <ul>
+              <li><strong>Watch Commits trigger</strong> (polling): zero extra setup, but hourly — the only affordable interval — spends ~720 ops/month just looking at repos that changed maybe twice a week.</li>
+              <li><strong>Custom webhook:</strong> paste a URL into each repo's settings once, then every push delivers itself instantly for about 2 operations. Idle cost: zero.</li>
+            </ul>
+            <p>The webhook won without hesitation. It required ten minutes of manual setup in GitHub's settings panel; the polling alternative would have burned most of a month's budget watching empty repos. Put differently: <strong>one quiet afternoon of actual commits costs less than one idle hour of 15-minute polling.</strong></p>
+
+            <h2>The decision rule</h2>
+            <ul>
+              <li><strong>Need instant reaction?</strong> Webhook, always — even on paid plans, latency for free beats latency for $9.</li>
+              <li><strong>Source offers webhooks?</strong> Take them. A little one-time setup buys permanent zero-idle cost.</li>
+              <li><strong>Forced to poll?</strong> Stretch the interval to the longest tolerable delay, and prefer a daily batch sweep over frequent checks whenever latency tolerance exists.</li>
+              <li><strong>Before building anything:</strong> multiply cycles-per-month × modules × expected runs. If that number makes you wince, redesign now — the spreadsheet is cheaper than the bill.</li>
+            </ul>
+
+            <h2>This travels beyond Make</h2>
+            <p>n8n plays the same game: polling triggers have undocumented default intervals — a Gmail trigger with no explicit schedule quietly polls roughly hourly. I've been bitten by exactly that. Zapier counts "tasks" the same way. The platforms differ; the math is identical everywhere.</p>
+            <hr />
+            <p>On paid plans, sloppy intervals are a rounding error. On free plans, they're the whole bill. <strong>Architecture is budget.</strong></p>
+            <p>Want the producer side of this story — building payloads cheap enough to matter? Read <a href="feeding-make-com-from-python.html">Feeding Make.com from Python</a>.</p>
+          </div>
+          <nav class="post-nav">
+            <a href="feeding-make-com-from-python.html">&larr; Feeding Make.com from Python</a>
+            <span></span>
+          </nav>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
