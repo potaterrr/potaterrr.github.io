@@ -52,19 +52,33 @@
   <main>
     <section class="section" id="projects">
       <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Featured Project</h2>
-        <article class="card card-featured reveal">
-          <div class="card-body">
-            <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up ↗</a></h3>
-            <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
-            <ul class="feature-list">
-              <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
-              <li>Personalization from custom fields: lead name, company, original interest notes</li>
-              <li>Anti-hallucination guardrails: the only link in any email is mine</li>
-              <li>Full setup guide, config reference and production-tested lessons learned in the README</li>
-            </ul>
-          </div>
-        </article>
+        <h2 class="section-title reveal"><span class="hash">#</span> Featured Projects</h2>
+        <div class="grid grid-2">
+          <article class="card card-featured reveal">
+            <div class="card-body">
+              <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up ↗</a></h3>
+              <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
+              <ul class="feature-list">
+                <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
+                <li>Personalization from custom fields: lead name, company, original interest notes</li>
+                <li>Anti-hallucination guardrails: the only link in any email is mine</li>
+                <li>Full setup guide, config reference and production-tested lessons learned in the README</li>
+              </ul>
+            </div>
+          </article>
+          <article class="card card-featured reveal">
+            <div class="card-body">
+              <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist ↗</a></h3>
+              <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
+              <ul class="feature-list">
+                <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
+                <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
+                <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
+                <li>Includes platform scorecard + plug-in checklist for going live</li>
+              </ul>
+            </div>
+          </article>
+        </div>
 
         <h2 class="section-title reveal"><span class="hash">#</span> Other Projects</h2>
         <div class="grid grid-3">
@@ -170,6 +184,15 @@
         <h2 class="section-title reveal"><span class="hash">#</span> Timeline</h2>
         <ol class="timeline">
           <li class="timeline-item reveal">
+            <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
+            <article class="card timeline-card">
+              <div class="card-body">
+                <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist released ↗</a></h3>
+                <p>One receptionist, three engines: an AI that answers missed calls, books calendar slots and alerts the owner — implemented on Make, n8n and Zapier over a shared Vapi voice layer, with a full platform scorecard.</p>
+              </div>
+            </article>
+          </li>
+          <li class="timeline-item reveal">
             <time class="timeline-date" datetime="2026-08-25">Aug 25, 2026</time>
             <article class="card timeline-card">
               <div class="card-body">
@@ -230,28 +253,40 @@
     <section class="section" id="blog">
       <div class="container">
         <h2 class="section-title reveal"><span class="hash">#</span> Blog</h2>
-        <div class="grid grid-3">
-          <article class="card reveal">
-            <div class="card-body">
-              <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">8 min</span></p>
-              <h3><a href="/blog/why-my-ai-never-sends-emails.html">Why my AI never sends emails</a></h3>
-              <p>Human-in-the-loop AI outreach: the LLM drafts into Gmail, a human approves, and guardrails keep hallucinations out of your inbox.</p>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
-              <h3><a href="/blog/feeding-make-com-from-python.html">Feeding Make.com from Python</a></h3>
-              <p>Flat JSON payloads, polite scraping and queue discipline: how job-scrapper keeps its downstream automations cheap and quiet.</p>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">6 min</span></p>
-              <h3><a href="/blog/make-com-free-plan-ops-math.html">The free-plan ops math</a></h3>
-              <p>Polling every 15 minutes burns 2,880 ops/month before anything happens. The arithmetic that should decide every trigger choice.</p>
-            </div>
-          </article>
+        <div class="slideshow reveal" id="blog-slideshow">
+          <div class="slideshow-track">
+            <article class="card slide active">
+              <div class="card-body">
+                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
+                <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
+                <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
+              </div>
+            </article>
+            <article class="card slide">
+              <div class="card-body">
+                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">8 min</span></p>
+                <h3><a href="/blog/why-my-ai-never-sends-emails.html">Why my AI never sends emails</a></h3>
+                <p>Human-in-the-loop AI outreach: the LLM drafts into Gmail, a human approves, and guardrails keep hallucinations out of your inbox.</p>
+              </div>
+            </article>
+            <article class="card slide">
+              <div class="card-body">
+                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
+                <h3><a href="/blog/feeding-make-com-from-python.html">Feeding Make.com from Python</a></h3>
+                <p>Flat JSON payloads, polite scraping and queue discipline: how job-scrapper keeps its downstream automations cheap and quiet.</p>
+              </div>
+            </article>
+            <article class="card slide">
+              <div class="card-body">
+                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">6 min</span></p>
+                <h3><a href="/blog/make-com-free-plan-ops-math.html">The free-plan ops math</a></h3>
+                <p>Polling every 15 minutes burns 2,880 ops/month before anything happens. The arithmetic that should decide every trigger choice.</p>
+              </div>
+            </article>
+          </div>
+          <button class="ss-arrow ss-prev" type="button" aria-label="Previous post">&#8249;</button>
+          <button class="ss-arrow ss-next" type="button" aria-label="Next post">&#8250;</button>
+          <div class="ss-dots" role="tablist" aria-label="Blog posts"></div>
         </div>
       </div>
     </section>
@@ -266,6 +301,12 @@
             <span class="contact-name">Telegram</span>
             <span class="contact-handle">@portaterrrr</span>
             <span class="contact-note">preferred</span>
+          </a>
+          <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
+            <span class="contact-icon">📘</span>
+            <span class="contact-name">Facebook</span>
+            <span class="contact-handle">Potaterrr</span>
+            <span class="contact-note">message the page</span>
           </a>
           <a class="contact-card email" href="mailto:kristiandyanbusiness@gmail.com">
             <span class="contact-icon">📧</span>

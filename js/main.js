@@ -64,3 +64,80 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+  const slideshow = document.getElementById("blog-slideshow");
+  if (!slideshow) return;
+
+  const slides = Array.from(slideshow.querySelectorAll(".slide"));
+  const dotsWrap = slideshow.querySelector(".ss-dots");
+  const prevBtn = slideshow.querySelector(".ss-prev");
+  const nextBtn = slideshow.querySelector(".ss-next");
+  if (!slides.length || !dotsWrap) return;
+
+  let index = 0;
+  let timer = null;
+  const AUTO_MS = 6000;
+
+  const dots = slides.map((_, i) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.setAttribute("role", "tab");
+    dot.setAttribute("aria-label", `Go to post ${i + 1}`);
+    dot.addEventListener("click", () => {
+      show(i);
+      restart();
+    });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  function show(next) {
+    index = (next + slides.length) % slides.length;
+    slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === index);
+      dot.setAttribute("aria-selected", String(i === index));
+    });
+  }
+
+  function restart() {
+    clearInterval(timer);
+    timer = setInterval(() => show(index + 1), AUTO_MS);
+  }
+
+  prevBtn?.addEventListener("click", () => {
+    show(index - 1);
+    restart();
+  });
+  nextBtn?.addEventListener("click", () => {
+    show(index + 1);
+    restart();
+  });
+
+  slideshow.addEventListener("mouseenter", () => clearInterval(timer));
+  slideshow.addEventListener("mouseleave", restart);
+  slideshow.addEventListener("focusin", () => clearInterval(timer));
+  slideshow.addEventListener("focusout", restart);
+
+  slideshow.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") { show(index - 1); restart(); }
+    if (event.key === "ArrowRight") { show(index + 1); restart(); }
+  });
+
+  let touchX = null;
+  slideshow.addEventListener("touchstart", (e) => {
+    touchX = e.touches[0].clientX;
+    clearInterval(timer);
+  }, { passive: true });
+  slideshow.addEventListener("touchend", (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+    touchX = null;
+    restart();
+  }, { passive: true });
+
+  show(0);
+  restart();
+});
