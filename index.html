@@ -18,14 +18,14 @@
     <div class="container nav-inner">
       <a href="#top" class="brand">🥔 potaterrr</a>
       <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-      <ul class="nav-links">
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#how-i-work">How I Work</li>
-        <li><a href="#timeline">Timeline</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#contact" class="nav-cta">Contact</a></li>
-      </ul>
+<ul class="nav-links">
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#other-projects">Other Projects</a></li>
+          <li><a href="#how-i-work">How I Work</a></li>
+          <li><a href="#timeline">Timeline</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
     </div>
   </nav>
 
@@ -51,33 +51,135 @@
   </header>
 
   <main>
-    <section class="section" id="projects">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Featured Projects</h2>
-        <table>
-          <tr>
-            <th width="50%">💤 <a href="https://github.com/potaterrr/dead-lead-followup">Dead Lead Follow-up</a></th>
-            <th width="50%">📞 <a href="https://github.com/potaterrr/voice-receptionist">AI Voice Receptionist</a></th>
-          </tr>
-          <tr>
-            <td valign="top">
-              An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <b>Gmail drafts</b> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.<br><br>
-              • <b>Human-in-the-loop by design</b> — AI drafts, human approves, nothing sends itself<br>
-              • Anti-hallucination guardrails: the only link in any email is mine<br>
-              • Full setup guide, config reference and production-tested lessons in the README
-            </td>
-            <td valign="top">
-              An AI receptionist that answers missed calls and books appointments — built <b>three times</b> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.<br><br>
-              • Answers instantly, capturing name, number, intent and preferred slot as structured data<br>
-              • Conflict-checks Google Calendar, books real slots, alerts the owner with a summary<br>
-              • Simulated end-to-end today — live phone calls are a plug-in away
-            </td>
-          </tr>
-        </table>
-      </div>
-    </section>
-
-    <section class="section" id="blog">
+<section class="section" id="projects">
+       <div class="container">
+         <h2 class="section-title reveal"><span class="hash">#</span> Featured Projects</h2>
+         <table>
+           <tr>
+             <th width="50%">💤 <a href="https://github.com/potaterrr/dead-lead-followup">Dead Lead Follow-up</a></th>
+             <th width="50%">📞 <a href="https://github.com/potaterrr/voice-receptionist">AI Voice Receptionist</a></th>
+           </tr>
+           <tr>
+             <td valign="top">
+               An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <b>Gmail drafts</b> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.<br><br>
+               • <b>Human-in-the-loop by design</b> — AI drafts, human approves, nothing sends itself<br>
+               • Anti-hallucination guardrails: the only link in any email is mine<br>
+               • Full setup guide, config reference and production-tested lessons in the README
+             </td>
+             <td valign="top">
+               An AI receptionist that answers missed calls and books appointments — built <b>three times</b> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.<br><br>
+               • Answers instantly, capturing name, number, intent and preferred slot as structured data<br>
+               • Conflict-checks Google Calendar, books real slots, alerts the owner with a summary<br>
+               • Simulated end-to-end today — live phone calls are a plug-in away
+             </td>
+           </tr>
+         </table>
+       </div>
+     </section>
+     
+     <!-- Other Projects Section -->
+     <section class="section section-alt" id="other-projects">
+       <div class="container">
+         <h2 class="section-title reveal"><span class="hash">#</span> Other Projects</h2>
+         <div class="grid grid-3">
+           <div class="card">
+             <div class="card-body">
+               <h3>Job Scraper</h3>
+               <p>Automated job scraping pipeline that collects tech opportunities from multiple sources, filters by criteria, and delivers digest emails daily.</p>
+               <p><a href="https://github.com/potaterrr/job-scrapper" class="btn btn-ghost">View on GitHub</a></p>
+             </div>
+           </div>
+           <div class="card">
+             <div class="card-body">
+               <h3>Money Generator</h3>
+               <p>Automated trading signal engine that analyzes market data, generates alerts, and executes paper trades based on strategy rules.</p>
+               <p><a href="https://github.com/potaterrr/money-generator" class="btn btn-ghost">View on GitHub</a></p>
+             </div>
+           </div>
+           <div class="card">
+             <div class="card-body">
+               <h3>Signal Checker</h3>
+               <p>Real-time signal validation system that cross-references trading alerts with multiple data sources to reduce false positives.</p>
+               <p><a href="https://github.com/potaterrr/signal-checker" class="btn btn-ghost">View on GitHub</a></p>
+             </div>
+           </div>
+           <div class="card">
+             <div class="card-body">
+               <h3>Dead Lead Followup</h3>
+               <p>Features the AI-powered lead resurrection system mentioned above - human-in-the-loop email automation for sales pipelines.</p>
+               <p><a href="https://github.com/potaterrr/dead-lead-followup" class="btn btn-ghost">View on GitHub</a></p>
+             </div>
+           </div>
+         </div>
+       </div>
+</section>
+ 
+     <!-- Timeline Section -->
+     <section class="section" id="timeline">
+       <div class="container">
+         <h2 class="section-title reveal"><span class="hash">#</span> Timeline</h2>
+         <ul class="timeline">
+           <li class="timeline-item">
+             <div class="timeline-date">Aug 2026</div>
+             <div class="timeline-content">
+               <h3>Folklore AI Video Generator Documentation</h3>
+               <p>Published detailed documentation for Make.com scenarios that generate AI-powered folklore videos using Gemini AI.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Aug 2026</div>
+             <div class="timeline-content">
+               <h3>One Receptionist, Three Engines</h3>
+               <p>Built and compared AI phone receptionist on Make, n8n and Zapier platforms.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Aug 2026</div>
+             <div class="timeline-content">
+               <h3>Human-in-the-loop AI Outreach</h3>
+               <p>Refined system where LLMs draft emails into Gmail for human approval, preventing auto-sends.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Aug 2026</div>
+             <div class="timeline-content">
+               <h3>Job Scraper Automation</h3>
+               <p>Implemented flat JSON payloads, polite scraping and queue discipline for cost-effective automation.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Jul 2026</div>
+             <div class="timeline-content">
+               <h3>Dead Lead Follow-up System</h3>
+               <p>Launched AI-powered automation that resurrects dormant leads with human-in-the-loop email drafting.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Jun 2026</div>
+             <div class="timeline-content">
+               <h3>AI Voice Receptionist</h3>
+               <p>Created AI receptionist that answers missed calls and books appointments across multiple platforms.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">May 2026</div>
+             <div class="timeline-content">
+               <h3>Money Generator Engine</h3>
+               <p>Developed automated trading signal engine that analyzes market data and executes paper trades.</p>
+             </div>
+           </li>
+           <li class="timeline-item">
+             <div class="timeline-date">Apr 2026</div>
+             <div class="timeline-content">
+               <h3>Signal Checker Validation</h3>
+               <p>Built real-time signal validation system to reduce false positives in trading alerts.</p>
+             </div>
+           </li>
+         </ul>
+       </div>
+     </section>
+ 
+     <section class="section" id="blog">
       <div class="container">
         <h2 class="section-title reveal"><span class="hash">#</span> Blog</h2>
         <div class="slideshow reveal" id="blog-slideshow">
@@ -166,17 +268,18 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-inner">
-        <div class="footer-links">
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#how-i-work">How I Work</a>
-          <a href="#timeline">Timeline</a>
-          <a href="#blog">Blog</a>
-          <a href="#contact">Contact</a>
-        </div>
-        <p class="footer-credit">© 2026 potaterrr. Built with Python automation and a touch of potato power.</p>
-      </div>
+<div class="footer-inner">
+         <div class="footer-links">
+           <a href="#projects">Projects</a>
+           <a href="#other-projects">Other Projects</a>
+           <a href="#skills">Skills</a>
+           <a href="#how-i-work">How I Work</a>
+           <a href="#timeline">Timeline</a>
+           <a href="#blog">Blog</a>
+           <a href="#contact">Contact</a>
+         </div>
+         <p class="footer-credit">© 2026 potaterrr. Built with Python automation and a touch of potato power.</p>
+       </div>
     </div>
   </footer>
 
