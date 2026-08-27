@@ -71,7 +71,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const slides = Array.from(slideshow.querySelectorAll(".slide"));
   const dotsWrap = slideshow.querySelector(".ss-dots");
-  const prevBtn = slideshow.querySelector(".ss-prev");
   const nextBtn = slideshow.querySelector(".ss-next");
   if (!slides.length || !dotsWrap) return;
 
@@ -106,11 +105,9 @@ document.addEventListener("DOMContentLoaded", () => {
     timer = setInterval(() => show(index + 1), AUTO_MS);
   }
 
-  prevBtn?.addEventListener("click", () => {
     show(index - 1);
     restart();
   });
-  nextBtn?.addEventListener("click", () => {
     show(index + 1);
     restart();
   });
