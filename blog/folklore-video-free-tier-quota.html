@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>When "free tier" means zero: folklore video and the Gemini quota wall — potaterrr</title>
+  <meta name="description" content="The folklore topic queue works and the scripts draft themselves, then video generation hits a hard 429. Building a free AI folklore-video pipeline on Make.com." />
+  <meta property="og:title" content="When "free tier" means zero: folklore video and the Gemini quota wall — potaterrr" />
+  <meta property="og:description" content="A working weekly queue, a drafting script, and a Gemini Veo free-tier quota of literally zero. The story of an AI folklore-video pipeline gone quiet." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/folklore-video-free-tier-quota.html" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-i-work">How I Work</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-08-27">Aug 27, 2026</time>
+              <span class="reading-time">6 min read</span>
+            </div>
+            <h1 class="post-title">When "free tier" means zero: folklore video and the Gemini quota wall</h1>
+          </header>
+          <div class="post-body">
+            <p>I wanted an absolutely free pipeline that generates folklore videos and posts them for me. The topic research works. The scripts are great. And then the actual video generation hit a wall that isn't a bug or a misconfiguration — it's a number on a billing page: <strong>zero</strong>.</p>
+            <p>This is the story of a Make.com pipeline split in two: one half humming along on autopilot, the other half politely doing nothing because the thing it needs costs money.</p>
+
+            <h2>The pipeline that works</h2>
+            <p><strong>Folklore: Research &amp; Queue</strong> runs weekly. Gemini generates five unique, obscure folklore topics — myths, legends, cryptids, spirits — with a catchy title, a summary, and a source URL, all returned as clean JSON. The scenario parses that and appends the rows to Google Sheets. Every Monday it refills the queue.</p>
+            <p>This half is genuinely finished. It runs unattended, writes to the sheet, and never complains. It's the boring, valuable part of automation: the research is queued before I even think about it.</p>
+
+            <h2>The pipeline that stops</h2>
+            <p><strong>Folklore: Generate &amp; Publish</strong> is where the magic was supposed to happen. It watches the queue, and for each topic it:</p>
+            <ol>
+              <li>Drafts a 60-second TikTok/Reels script — hook (0–3s), story (3–50s), CTA (50–60s) — with hashtags and <code>[Visual: ...]</code> vertical cues.</li>
+              <li>Feeds that script to Gemini Veo to render a 9:16 vertical video.</li>
+              <li>Uploads it to Facebook Reels, then documents the run on Telegram for a manual TikTok upload.</li>
+            </ol>
+            <p>Step one works beautifully. Step two is where it collapses — not because the logic is wrong, but because of the quota:</p>
+<pre><code>[429] You exceeded your current quota.
+generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0
+generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0</code></pre>
+            <p>That <code>limit: 0</code> is doing a lot of work. The free tier for video generation isn't "small" — it's nonexistent here. There are effectively no free requests for the model the scenario is calling. No retry count, no backoff, no clever scheduling fixes a quota of zero.</p>
+
+            <h2>What the error is really telling me</h2>
+            <p>When something fails with an obvious fix, you fix it. When it fails with <code>429</code>, you check rate limits. But a 429 with <code>limit: 0</code> is a different animal — it's not a transient spike you can wait out. It's a pricing decision wearing an error message. The README I wrote for the project puts it plainly: the <em>failure isn't a flaw in the scenario design, it's the external API's free-tier allocation for video models</em>.</p>
+            <p>The lesson so far: <strong>research and draft on the model's cheap side, but verify the expensive model's free tier before you build the whole pipeline on it.</strong> I assumed "there's a free tier for Gemini" and skipped reading whether it applied to Veo video. It didn't.</p>
+
+            <h2>The paths forward</h2>
+            <p><strong>Option 1 — go text-only, stay free.</strong> Drop the video step, publish the scripts as Telegram/Facebook text posts instead. Fully within quota, zero cost. Downside: no video, which is the whole point of a folklore channel.</p>
+            <p><strong>Option 2 — swap the video provider.</strong> Look at alternatives with real free tiers: Hugging Face inference, community-hosted models, anything other than Veo. Keeps video, costs a rework of one module and a hunt for quota that may not exist anywhere.</p>
+            <p><strong>Option 3 — batch and intervene manually.</strong> Keep the queue automated and run generation by hand when quota resets or a free window opens. Keeps cost at zero, sacrifices the "set and forget" promise.</p>
+            <p><strong>Option 4 — spend a little.</strong> Gemini's paid video pricing is genuinely cheap. The automation value — an entire channel created, scripted, rendered and posted by a weekly cron — probably justifies the few cents per video. But "absolutely free" was the constraint I set for myself, so this is the one I'm least willing to reach for without checking the others first.</p>
+
+            <h2>The takeaway</h2>
+            <p>Half of this pipeline is production-ready automation that ran from day one. The other half is a reminder that "free" is never a single switch — it's a set of per-model quotas, and the most expensive capability is often the one allocated nothing at all. Check the <code>limit</code> before you build on a free API, not after the first execution log turns red.</p>
+            <p>The queue keeps filling. The scripts keep getting better. The video is waiting for a decision — text-only, a new provider, or the small bill. Whichever I pick, I'll know exactly which number on the billing page made me pick it. 🥔</p>
+          </div>
+          <nav class="post-nav">
+            <a href="make-com-free-plan-ops-math.html">&larr; The free-plan ops math</a>
+            <a href="why-my-ai-never-sends-emails.html">Why my AI never sends emails &rarr;</a>
+          </nav>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>
