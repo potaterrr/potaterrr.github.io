@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35 20" shape-rendering="crispEdges">
+  <!-- Body Outline & Main Shapes -->
+  <path fill="#2c1a0e" d="M10 3h16v1H8h18v1H7h2v1H5h22v1H4h23v1H4h23v1H4h23v1H4h23v1H4h23v1H5h22v1H6h20v1H7h18v1H9h14v1H11h10v1h-8v1" />
+  <path fill="#a36e3c" d="M10 4h16v1H8h18v1H7h20v1H5h22v1H5h22v1H5h22v1H5h22v1H5h22v1H6h20v1H7h18v1H10h12" />
+  <path fill="#b37e49" d="M11 4h14v1H9h16v1H8h18v1H6h20v1H6h20v1H6h20v1H6h20v1H7h18" />
+  
+  <!-- Eyes & Mouth -->
+  <path fill="#0d0805" d="M10 11h2v2h-2zm8 0h2v2h-2zm-5 3h3v1h-3z" />
+  <path fill="#ffffff" d="M10 11h1v1h-1zm8 0h1v1h-1zm-4 3h1v1h-1z" />
+  
+  <!-- Blush -->
+  <path fill="#f38ba8" d="M7 13h2v2H7zm14 0h2v2h-2z" />
+  
+  <!-- Tail -->
+  <path fill="#2c1a0e" d="M27 10h1v1h-1zm1-2h1v2h-1zm1-2h1v2h-1zm1-2h2v2h-2zm2-2h3v2h-3z" />
+  <path fill="#d99b61" d="M28 9h1v1h-1zm1-2h1v2h-1zm1-2h1v2h-1zm1-2h2v1h-2z" />
+  <!-- Feet -->
+  <path fill="#2c1a0e" d="M10 17h3v2h-3zm12 0h3v2h-3z" />
+</svg>
