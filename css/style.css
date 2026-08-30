@@ -570,8 +570,8 @@ code {
 }
 
 .fab-contact {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   border: none;
   background: transparent;
   cursor: pointer;
@@ -726,10 +726,10 @@ code {
     right: 16px;
   }
   
-  .fab-contact {
-    width: 48px;
-    height: 48px;
-  }
+.fab-contact {
+  width: 68px;
+  height: 68px;
+}
   
   .contact-panel {
     width: 240px;
