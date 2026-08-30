@@ -377,5 +377,46 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="js/main.js"></script>
+    
+    <!-- Floating Action Button for Contact -->
+    <div class="fab-contact-wrapper" aria-label="Contact options">
+      <button class="fab-contact" id="fab-contact" aria-expanded="false" aria-controls="contact-panel">
+        📞
+      </button>
+      <div class="contact-panel" id="contact-panel" role="dialog" aria-modal="true">
+        <div class="contact-panel-header">
+          <h2>Get in Touch</h2>
+          <button class="contact-panel-close" id="contact-panel-close" aria-label="Close contact panel">×</button>
+        </div>
+        <div class="contact-panel-body">
+          <div class="contact-grid">
+            <a class="contact-card telegram" href="https://t.me/portaterrrr" target="_blank" rel="noopener">
+              <span class="contact-icon">✈️</span>
+              <span class="contact-name">Telegram</span>
+              <span class="contact-handle">@portaterrrr</span>
+              <span class="contact-note">preferred</span>
+            </a>
+            <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
+              <span class="contact-icon">📘</span>
+              <span class="contact-name">Facebook</span>
+              <span class="contact-handle">Potaterrr</span>
+              <span class="contact-note">message the page</span>
+            </a>
+            <a class="contact-card email" href="mailto:kristiandyanbusiness@gmail.com">
+              <span class="contact-icon">📧</span>
+              <span class="contact-name">Email</span>
+              <span class="contact-handle">kristiandyanbusiness@gmail.com</span>
+              <span class="contact-note">say hi</span>
+            </a>
+            <button class="contact-card discord" id="discord-fab" data-user-id="684383261744431104" type="button">
+              <span class="contact-icon">💬</span>
+              <span class="contact-name">Discord</span>
+              <span class="contact-handle" id="discord-copy-value-fab">potaterrr</span>
+              <span class="contact-note">click to copy · open profile ↗</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>
