@@ -1060,3 +1060,82 @@ textarea:focus-visible {
   outline-offset: 2px;
   border-color: var(--accent);
 }
+
+/* Potato FAB Styles */
+.potato-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  z-index: 9999;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Rotating Ring */
+.circular-text {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: rotateText 12s linear infinite;
+}
+
+@keyframes rotateText {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Irregular Organic Potato Shape */
+.potato-body {
+  width: 52px;
+  height: 52px;
+  background: #fef3c7;
+  border: 2px solid #b45309;
+  /* Asymmetric border-radius to mimic a potato blob */
+  border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(180, 83, 9, 0.25);
+  transition: all 0.3s ease;
+}
+
+/* Hover Effects */
+.potato-fab:hover {
+  transform: scale(1.12);
+}
+
+.potato-fab:hover .potato-body {
+  background: #fde68a;
+  box-shadow: 0 12px 28px rgba(180, 83, 9, 0.4);
+  /* Slight morph on hover */
+  border-radius: 40% 60% 30% 70% / 60% 30% 70% 40%;
+}
+
+.potato-fab:hover .circular-text {
+  animation-duration: 6s; /* Spins faster on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .potato-fab {
+    bottom: 16px;
+    right: 16px;
+    width: 70px;
+    height: 70px;
+  }
+  
+  .potato-body {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .circular-text svg {
+    width: 80px;
+    height: 80px;
+  }
+}

@@ -65,59 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Floating Action Button for Contact
-  const fabContact = document.getElementById("fab-contact");
-  const contactPanel = document.getElementById("contact-panel");
-  const contactPanelClose = document.getElementById("contact-panel-close");
-  const discordFab = document.getElementById("discord-fab");
-
-  if (fabContact && contactPanel && contactPanelClose) {
-    // Toggle contact panel
-    fabContact.addEventListener("click", () => {
-      const isOpen = contactPanel.classList.contains("show");
-      contactPanel.classList.toggle("show");
-      fabContact.setAttribute("aria-expanded", String(!isOpen));
-      
-      // Focus management
-      if (!isOpen) {
-        contactPanelClose.focus();
-      } else {
-        fabContact.focus();
-      }
-    });
-
-    // Close panel when clicking close button
-    contactPanelClose.addEventListener("click", () => {
-      contactPanel.classList.remove("show");
-      fabContact.setAttribute("aria-expanded", "false");
-      fabContact.focus();
-    });
-
-    // Close panel when clicking outside
-    document.addEventListener("click", (event) => {
-      if (contactPanel.classList.contains("show") && 
-          !contactPanel.contains(event.target) && 
-          !fabContact.contains(event.target)) {
-        contactPanel.classList.remove("show");
-        fabContact.setAttribute("aria-expanded", "false");
-        fabContact.focus();
-      }
-    });
-
-    // Close panel with Escape key
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && contactPanel.classList.contains("show")) {
-        contactPanel.classList.remove("show");
-        fabContact.setAttribute("aria-expanded", "false");
-        fabContact.focus();
-      }
-    });
-
-    // Prevent clicks inside panel from closing it
-    contactPanel.addEventListener("click", (event) => {
-      event.stopPropagation();
-    });
-  }
-
   // Discord button in FAB panel
   if (discordFab) {
     discordFab.addEventListener("click", async (event) => {
