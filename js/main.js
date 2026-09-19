@@ -35,54 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
   }
 
-  const toast = document.getElementById("toast");
-  let toastTimer;
-  const showToast = (message) => {
-    if (!toast) return;
-    toast.textContent = message;
-    toast.classList.add("show");
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
-  };
-
-  const discordCard = document.getElementById("discord-card");
-  if (discordCard) {
-    discordCard.addEventListener("click", async (event) => {
-      const username = document.getElementById("discord-copy-value")?.textContent.trim() || "potaterrr";
-      try {
-        await navigator.clipboard.writeText(username);
-        showToast(`Copied "${username}" to clipboard`);
-      } catch {
-        showToast(`Discord: ${username}`);
-      }
-      if (event.detail > 1 || event.altKey) return;
-      window.open(
-        `https://discord.com/users/${discordCard.dataset.userId}`,
-        "_blank",
-        "noopener"
-      );
-    });
-  }
-
-  // Floating Action Button for Contact
-  // Discord button in FAB panel
-  if (discordFab) {
-    discordFab.addEventListener("click", async (event) => {
-      const username = document.getElementById("discord-copy-value-fab")?.textContent.trim() || "potaterrr";
-      try {
-        await navigator.clipboard.writeText(username);
-        showToast(`Copied "${username}" to clipboard`);
-      } catch {
-        showToast(`Discord: ${username}`);
-      }
-      if (event.detail > 1 || event.altKey) return;
-      window.open(
-        `https://discord.com/users/684383261744431104`,
-        "_blank",
-        "noopener"
-      );
-    });
-  }
 });
 
 document.addEventListener("DOMContentLoaded", () => {
