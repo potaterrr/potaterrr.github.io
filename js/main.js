@@ -113,12 +113,51 @@ document.addEventListener("DOMContentLoaded", () => {
   show(0);
   restart();
 
+  // Typing effect for the install command (starts when scrolled into view)
+  const typeEl = document.getElementById("install-cmd");
+  if (typeEl) {
+    const command = typeEl.dataset.command || "";
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let typed = false;
+    const typeCommand = () => {
+      if (typed) return;
+      typed = true;
+      if (reducedMotion || !command) {
+        typeEl.textContent = command;
+        return;
+      }
+      let i = 0;
+      const tick = () => {
+        i += 1;
+        typeEl.textContent = command.slice(0, i);
+        if (i < command.length) setTimeout(tick, 26 + Math.random() * 40);
+      };
+      tick();
+    };
+    if ("IntersectionObserver" in window) {
+      const typer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              typeCommand();
+              typer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      typer.observe(typeEl);
+    } else {
+      typeCommand();
+    }
+  }
+
   // One-click copy for the install command
   const copyBtn = document.getElementById("copy-install");
   const installCmd = document.getElementById("install-cmd");
   if (copyBtn && installCmd) {
     copyBtn.addEventListener("click", async () => {
-      const text = installCmd.textContent.trim();
+      const text = (installCmd.dataset.command || installCmd.textContent).trim();
       try {
         await navigator.clipboard.writeText(text);
       } catch (err) {

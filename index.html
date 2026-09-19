@@ -159,12 +159,23 @@
     <section class="section section-alt" id="setup">
       <div class="container">
         <h2 class="section-title reveal"><span class="hash">#</span> Setup</h2>
-        <p class="setup-lead reveal">Curious about my setup? Install using this line:</p>
-        <div class="install-box reveal">
-          <code id="install-cmd">curl -fsSL https://potaterrr.github.io/install | sh</code>
-          <button class="copy-btn" id="copy-install" type="button" aria-label="Copy install command to clipboard">
-            <span class="copy-btn-label">Copy</span>
-          </button>
+        <p class="setup-lead reveal">🥔 Want to know what potato I'm running?</p>
+        <div class="terminal reveal" id="install-terminal">
+          <div class="terminal-bar">
+            <span class="terminal-dot red"></span>
+            <span class="terminal-dot yellow"></span>
+            <span class="terminal-dot green"></span>
+            <span class="terminal-title">potaterrr@linux: ~</span>
+            <span class="terminal-potato" aria-hidden="true">🥔</span>
+          </div>
+          <div class="terminal-body">
+            <span class="prompt" aria-hidden="true">$</span>
+            <code id="install-cmd" data-command="curl -fsSL https://potaterrr.github.io/install | sh"></code>
+            <span class="cursor" aria-hidden="true"></span>
+            <button class="copy-btn" id="copy-install" type="button" aria-label="Copy install command to clipboard">
+              <span class="copy-btn-label">Copy</span>
+            </button>
+          </div>
         </div>
         <p class="setup-note reveal">Works on Debian/Ubuntu, Fedora, Arch, openSUSE, Alpine and Void — <a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">see what it installs →</a></p>
       </div>
