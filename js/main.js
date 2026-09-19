@@ -112,4 +112,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   show(0);
   restart();
+
+  // One-click copy for the install command
+  const copyBtn = document.getElementById("copy-install");
+  const installCmd = document.getElementById("install-cmd");
+  if (copyBtn && installCmd) {
+    copyBtn.addEventListener("click", async () => {
+      const text = installCmd.textContent.trim();
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (err) {
+        // Fallback for non-secure contexts / older browsers
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      const label = copyBtn.querySelector(".copy-btn-label");
+      const original = label ? label.textContent : "Copy";
+      copyBtn.classList.add("copied");
+      if (label) label.textContent = "Copied!";
+      setTimeout(() => {
+        copyBtn.classList.remove("copied");
+        if (label) label.textContent = original;
+      }, 1600);
+    });
+  }
 });
