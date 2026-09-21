@@ -13,6 +13,21 @@
   --radius: 14px;
 }
 
+/* Light theme — activated by <html data-theme="light"> (set by js/main.js,
+   persisted in localStorage, falls back to system preference). */
+html[data-theme="light"] {
+  --bg: #faf7f0;
+  --bg-alt: #f1ede3;
+  --surface: #ffffff;
+  --border: #e0dacb;
+  --text: #22201a;
+  --muted: #6b6455;
+  --accent: #b45309;
+  --accent-soft: rgba(180, 83, 9, 0.1);
+  --green: #1f7a5f;
+  --nav-bg: rgba(250, 247, 240, 0.86);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -65,7 +80,7 @@ code {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(13, 17, 23, 0.82);
+  background: var(--nav-bg, rgba(13, 17, 23, 0.82));
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -1066,4 +1081,33 @@ textarea:focus-visible {
     justify-content: center;
     width: 100%;
   }
+}
+
+/* Theme toggle button (nav) */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin-left: 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

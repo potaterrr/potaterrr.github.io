@@ -182,3 +182,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Theme: apply persisted/system theme + wire up the toggle button
+(function () {
+  const STORAGE_KEY = "theme";
+  const root = document.documentElement;
+
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+      ? "light"
+      : "dark";
+  }
+
+  function currentTheme() {
+    return root.getAttribute("data-theme") || systemTheme();
+  }
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      root.setAttribute("data-theme", "light");
+    } else {
+      root.removeAttribute("data-theme");
+    }
+    const btn = document.querySelector(".theme-toggle");
+    if (btn) {
+      btn.textContent = theme === "light" ? "🌙" : "☀️";
+      const label = theme === "light" ? "Switch to dark mode" : "Switch to light mode";
+      btn.setAttribute("aria-label", label);
+      btn.setAttribute("aria-pressed", String(theme === "light"));
+      btn.title = label;
+    }
+  }
+
+  // Follow system preference changes unless the visitor made an explicit choice
+  const media = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
+  if (media && typeof media.addEventListener === "function") {
+    media.addEventListener("change", (e) => {
+      if (!localStorage.getItem(STORAGE_KEY)) applyTheme(e.matches ? "light" : "dark");
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    applyTheme(currentTheme());
+
+    const navLinks = document.querySelector(".nav-links");
+    if (!navLinks || document.querySelector(".theme-toggle")) return;
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "theme-toggle";
+    btn.addEventListener("click", () => {
+      const next = currentTheme() === "light" ? "dark" : "light";
+      try {
+        localStorage.setItem(STORAGE_KEY, next);
+      } catch (err) {
+        /* private mode etc. — theme just won't persist */
+      }
+      applyTheme(next);
+    });
+    navLinks.insertAdjacentElement("afterend", btn);
+    applyTheme(currentTheme());
+  });
+})();
