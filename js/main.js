@@ -222,6 +222,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function flipTheme() {
+    const next = currentTheme() === "light" ? "dark" : "light";
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch (err) {
+      /* private mode etc. — theme just won't persist */
+    }
+    applyTheme(next);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     applyTheme(currentTheme());
 
@@ -231,16 +241,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "theme-toggle";
-    btn.addEventListener("click", () => {
-      const next = currentTheme() === "light" ? "dark" : "light";
-      try {
-        localStorage.setItem(STORAGE_KEY, next);
-      } catch (err) {
-        /* private mode etc. — theme just won't persist */
-      }
-      applyTheme(next);
-    });
+    btn.addEventListener("click", flipTheme);
     navLinks.insertAdjacentElement("afterend", btn);
     applyTheme(currentTheme());
+
+    // Easter egg: double-tap/double-click the potato FAB to flip the theme.
+    // All FAB clicks are intercepted so the first tap of a double-tap doesn't
+    // navigate; a confirmed single tap opens the Telegram link after a short
+    // wait (matching its normal target="_blank" behavior).
+    const fab = document.querySelector(".potato-fab");
+    if (fab) {
+      let lastTap = 0;
+      let singleTimer = null;
+      const fabUrl = fab.getAttribute("href");
+      fab.addEventListener("click", (e) => {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastTap < 400) {
+          clearTimeout(singleTimer);
+          lastTap = 0;
+          fab.classList.remove("fab-spin");
+          void fab.offsetWidth; // restart the animation
+          fab.classList.add("fab-spin");
+          flipTheme();
+        } else {
+          lastTap = now;
+          clearTimeout(singleTimer);
+          singleTimer = setTimeout(() => {
+            if (fabUrl) window.open(fabUrl, "_blank", "noopener");
+          }, 400);
+        }
+      });
+    }
   });
 })();

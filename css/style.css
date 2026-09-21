@@ -11,6 +11,10 @@
   --mono: ui-monospace, "JetBrains Mono", "Fira Code", "Cascadia Code", Menlo, Consolas, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --radius: 14px;
+  /* Potato FAB — brand colors on the dark theme */
+  --fab-bg: #fef3c7;
+  --fab-border: #b45309;
+  --fab-text: #d97706;
 }
 
 /* Light theme — activated by <html data-theme="light"> (set by js/main.js,
@@ -26,6 +30,10 @@ html[data-theme="light"] {
   --accent-soft: rgba(180, 83, 9, 0.1);
   --green: #1f7a5f;
   --nav-bg: rgba(250, 247, 240, 0.86);
+  /* Potato FAB adapts to light mode */
+  --fab-bg: #fef3c7;
+  --fab-border: #b45309;
+  --fab-text: #d97706;
 }
 
 * {
@@ -559,6 +567,16 @@ code {
 @media (max-width: 680px) {
   .nav-toggle {
     display: block;
+    order: 3;
+    margin-left: 12px;
+  }
+
+  /* Keep the theme toggle beside the hamburger (nav-links is a dropdown here) */
+  .theme-toggle {
+    order: 2;
+    margin-left: 0;
+    width: 34px;
+    height: 34px;
   }
 
   .nav-links {
@@ -877,8 +895,8 @@ textarea:focus-visible {
 .potato-body {
   width: 52px;
   height: 52px;
-  background: #fef3c7;
-  border: 2px solid #b45309;
+  background: var(--fab-bg, #fef3c7);
+  border: 2px solid var(--fab-border, #b45309);
   /* Asymmetric border-radius to mimic a potato blob */
   border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%;
   display: flex;
@@ -902,6 +920,27 @@ textarea:focus-visible {
 
 .potato-fab:hover .circular-text {
   animation-duration: 6s; /* Spins faster on hover */
+}
+
+/* Ring text follows the theme (SVG fill overridden by CSS) */
+.circular-text text {
+  fill: var(--fab-text, #d97706);
+}
+
+/* Easter egg: potato spin when double-tapped to flip the theme */
+.potato-fab.fab-spin {
+  animation: fabSpin 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fabSpin {
+  from { transform: rotate(0deg) scale(1); }
+  60%  { transform: rotate(300deg) scale(1.22); }
+  to   { transform: rotate(360deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .circular-text { animation: none; }
+  .potato-fab.fab-spin { animation: none; }
 }
 
 /* Responsive adjustments */
