@@ -127,17 +127,25 @@
               </ul>
             </div>
           </article>
-          <article class="card card-pending reveal">
-            <span class="status-badge">Pending</span>
+          <article class="card reveal">
             <div class="card-body">
-              <h3>Folklore AI Video Pipeline</h3>
-              <p>An AI folklore-content pipeline on <strong>Make.com</strong>: a weekly research scenario has Gemini generate 5 folklore topics and queues them to Google Sheets, while a generate &amp; publish scenario drafts a 60-second script, renders vertical 9:16 video with <strong>Gemini Veo</strong>, and posts to Facebook Reels + Telegram.</p>
+              <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore ↗</a></h3>
+              <p>The research stage of a folklore-story video pipeline: a <strong>zero-dependency</strong> Python scraper pulls Philippine mythology stories from Wikipedia and feeds them to <strong>Make.com</strong> or <strong>n8n</strong>, where Gemini drafts the script and a Gmail draft waits for review.</p>
               <ul class="feature-list">
-                <li>Working weekly topic research &amp; queue (Gemini → Google Sheets)</li>
-                <li>60-sec viral script drafting with hooks, story &amp; CTA</li>
-                <li>Gemini Veo text-to-video for a vertical 9:16 clip</li>
-                <li>Auto-post to Facebook Reels and Telegram for manual TikTok upload</li>
-                <li>Paused on Gemini API free-tier quota — buy-in awaiting a plan decision</li>
+                <li><strong>Zero pip dependencies</strong> — stdlib <code>urllib</code> + <code>json</code>, Python 3.9+ is all it needs</li>
+                <li>Built-in dedupe remembers delivered titles, so each run pushes only new stories</li>
+                <li>Ships importable Make.com and n8n blueprints plus a full testing report</li>
+              </ul>
+            </div>
+          </article>
+          <article class="card reveal">
+            <div class="card-body">
+              <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a></h3>
+              <p>An automated news curation pipeline for a Facebook page: Python fetches tech &amp; AI RSS feeds, filters by keyword, and hands a digest to <strong>Make.com</strong> — Gemini drafts the post, Imagen generates the graphic, Facebook Pages publishes.</p>
+              <ul class="feature-list">
+                <li><strong>GitHub Actions</strong> cron runs it every Sunday at 6:00 AM PHT</li>
+                <li>Keyword filtering + seen-articles dedupe so nothing posts twice</li>
+                <li>A random banner image from the repo rides along with every digest</li>
               </ul>
             </div>
           </article>
@@ -235,6 +243,33 @@
         <h2 class="section-title reveal"><span class="hash">#</span> Timeline</h2>
         <ol class="timeline">
           <li class="timeline-item reveal">
+            <time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time>
+            <article class="card timeline-card">
+              <div class="card-body">
+                <h3><a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">Dotfiles go public with a one-line installer ↗</a></h3>
+                <p>The full potato setup — Bash, Neovim, Starship, Fastfetch, Hyprland, Waybar, Wofi and GTK — now installable on Debian, Fedora, Arch, openSUSE, Alpine and Void with a single command: <code>curl -fsSL https://potaterrr.github.io/install | sh</code>.</p>
+              </div>
+            </article>
+          </li>
+          <li class="timeline-item reveal">
+            <time class="timeline-date" datetime="2026-09-13">Sep 13, 2026</time>
+            <article class="card timeline-card">
+              <div class="card-body">
+                <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore released ↗</a></h3>
+                <p>The folklore pipeline lives again — as free software: a zero-dependency Wikipedia folklore scraper feeding Make.com or n8n, with importable blueprints, built-in dedupe and a full testing report.</p>
+              </div>
+            </article>
+          </li>
+          <li class="timeline-item reveal">
+            <time class="timeline-date" datetime="2026-09-10">Sep 10, 2026</time>
+            <article class="card timeline-card">
+              <div class="card-body">
+                <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news goes live ↗</a></h3>
+                <p>Weekly AI &amp; tech digest automation: Python fetches Hacker News, Phoronix, The Verge and friends, filters by keyword, and ships the digest to Make.com for Gemini drafting, Imagen graphics and Facebook Pages publishing.</p>
+              </div>
+            </article>
+          </li>
+          <li class="timeline-item reveal">
             <time class="timeline-date" datetime="2026-08-29">Aug 29, 2026</time>
             <article class="card timeline-card">
               <div class="card-body">
@@ -326,6 +361,13 @@
           <div class="slideshow-track">
             <article class="card slide active">
               <div class="card-body">
+                <p class="post-meta"><time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time> <span class="reading-time">5 min</span></p>
+                <h3><a href="/blog/my-dotfiles-one-line-install.html">My dotfiles, one line</a></h3>
+                <p>Bash, Neovim, Hyprland and friends — installed and stowed on six distro families by a single curl | sh. How the bootstrap and GNU Stow make it safe.</p>
+              </div>
+            </article>
+            <article class="card slide">
+              <div class="card-body">
                 <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
                 <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
                 <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
@@ -378,6 +420,12 @@
             <span class="contact-handle">@potaterrrr</span>
             <span class="contact-note">preferred</span>
           </a>
+          <a class="contact-card whatsapp" href="https://wa.me/potaiterrr" target="_blank" rel="noopener">
+            <span class="contact-icon">💬</span>
+            <span class="contact-name">WhatsApp</span>
+            <span class="contact-handle">@potaiterrr</span>
+            <span class="contact-note">chat anytime</span>
+          </a>
           <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
             <span class="contact-icon">📘</span>
             <span class="contact-name">Facebook</span>
@@ -406,15 +454,15 @@
   <script src="js/main.js"></script>
     
     <!-- Floating Action Button Container -->
-    <a href="https://t.me/potaterrrr" class="potato-fab" aria-label="Contact Christian on Telegram">
+    <a href="#contact" class="potato-fab" aria-label="Got questions? Let’s get farming — jump to the contact section">
       
       <!-- Rotating Circular Text Ring -->
       <div class="circular-text">
         <svg viewBox="0 0 100 100" width="100" height="100">
           <path id="textPath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
-          <text fill="#d97706" font-size="9.5" font-weight="700" letter-spacing="1.2">
+          <text fill="#d97706" font-size="9" font-weight="700" letter-spacing="1">
             <textPath href="#textPath" startOffset="0%">
-              GOT QUESTIONS? TELEGRAM ME. 🥔
+              GOT QUESTIONS? LET'S GET FARMING 🥔
             </textPath>
           </text>
         </svg>
@@ -422,15 +470,7 @@
 
       <!-- Organic Potato Core Icon -->
       <div class="potato-body">
-        <svg viewBox="0 0 24 24" width="28" height="28" fill="#eab308">
-          <!-- Custom SVG Potato Shape -->
-          <path d="M12 2C8.5 2 5.5 4.2 4.3 7.5C3.2 10.8 4 14.5 6 17.5C8 20.5 11.5 22 15 21.5C18.5 21 21 18.5 21.5 15C22 11.5 20.5 8 18 5.5C16 3.5 14 2 12 2Z" fill="#d97706" stroke="#78350f" stroke-width="1.5" stroke-linejoin="round"/>
-          <!-- Potato Dots/Eyes -->
-          <circle cx="8.5" cy="8.5" r="1" fill="#78350f"/>
-          <circle cx="14.5" cy="11.5" r="1.2" fill="#78350f"/>
-          <circle cx="10" cy="15.5" r="0.8" fill="#78350f"/>
-          <circle cx="16" cy="6.5" r="0.7" fill="#78350f"/>
-        </svg>
+        <img src="assets/pfp.jpeg" alt="" width="48" height="48" />
       </div>
 
     </a>
