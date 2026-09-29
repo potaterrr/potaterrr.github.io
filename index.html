@@ -49,455 +49,571 @@
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
-  <nav class="nav">
-    <div class="container nav-inner">
-      <a href="#top" class="brand">🥔 potaterrr</a>
-      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-      <ul class="nav-links">
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#how-i-work">How I Work</a></li>
-        <li><a href="#timeline">Timeline</a></li>
-        <li><a href="#blog">Blog</a></li>
-        <li><a href="#contact" class="nav-cta">Contact</a></li>
-      </ul>
+
+  <!-- Intro boot overlay (once per session, reduced-motion safe) -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro-term" role="presentation">
+      <p class="intro-line">$ ssh potaterrr@github.io</p>
+      <p class="intro-line">mashing the boring stuff<span class="intro-dots"></span></p>
+      <p class="intro-line"><span class="intro-bar"><span class="intro-bar-fill"></span></span></p>
     </div>
+  </div>
+
+  <div class="shell">
+    <!-- ============ Profile rail (desktop ≥1100px) ============ -->
+    <aside class="rail" id="rail" aria-label="Profile and site navigation">
+      <a href="#top" class="rail-id" aria-label="potaterrr — back to top">
+        <span class="rail-avatar"><img src="assets/pfp.jpeg" alt="" width="84" height="84" /></span>
+        <span class="rail-name">Christian John</span>
+        <span class="rail-handle">🥔 potaterrr</span>
+      </a>
+
+      <ul class="rail-socials" aria-label="Contact profiles">
+        <li><a href="https://t.me/potaterrrr" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram — preferred">✈️</a></li>
+        <li><a href="https://wa.me/potaiterrr" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">💬</a></li>
+        <li><a href="https://github.com/potaterrr" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">🐙</a></li>
+        <li><a href="mailto:kristiandyanbusiness@gmail.com" aria-label="Email" title="Email">📧</a></li>
+      </ul>
+
+      <nav class="rail-nav" aria-label="Sections">
+        <ul>
+          <li><a href="#top" data-section="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li>
+          <li><a href="#projects" data-section="projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li>
+          <li><a href="#skills" data-section="skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li>
+          <li><a href="#timeline" data-section="timeline"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>Timeline</a></li>
+          <li><a href="#blog" data-section="blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg>Blog</a></li>
+          <li><a href="#contact" data-section="contact" class="rail-cta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg>Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="rail-foot">
+        <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+        <button type="button" class="a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- ============ Scrolling content panel ============ -->
+    <div class="panel" id="main-content">
+
+      <header class="hero-bento" id="top">
+        <canvas class="contour" id="contour" aria-hidden="true"></canvas>
+        <div class="container hero-inner">
+          <p class="hero-kicker reveal">$ whoami</p>
+          <h1 class="reveal">Hi, I'm <span class="accent">Christian John</span><br />but everybody calls me <span class="accent">potaterrr</span> 🥔</h1>
+          <p class="tagline reveal">Python automation developer growing pipelines that connect data to <strong>Make.com</strong> and <strong>n8n</strong> — from job scrapers to trading-signal engines to AI agents that write follow-up emails for me.</p>
+          <p class="hero-sub reveal">If it's repetitive, I'll automate it. If it involves potatoes, even better.</p>
+
+          <nav class="bento reveal" aria-label="Explore the site">
+            <a class="bento-tile bento-featured" href="#projects">
+              <span class="bento-label"><span class="bento-icon">📮</span>Featured build</span>
+              <span class="bento-title">Dead Lead Follow-up</span>
+              <span class="bento-desc">AI drafts the check-in emails into Gmail drafts — a human approves, nothing auto-sends.</span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-projects" href="#projects">
+              <span class="bento-label"><span class="bento-icon">🗂️</span>Projects</span>
+              <span class="bento-reel" aria-hidden="true"><span class="bento-reel-item" data-reel>scrapers</span></span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-install" href="#setup">
+              <span class="bento-label"><span class="bento-icon">🥔</span>My dotfiles</span>
+              <span class="bento-cmd" aria-hidden="true">$ curl -fsSL potaterrr.github.io/install | sh</span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-skills" href="#skills">
+              <span class="bento-label"><span class="bento-icon">🧰</span>Skills</span>
+              <span class="bento-chips" aria-hidden="true"><i>Python</i><i>n8n</i><i>Make.com</i><i>LLMs</i><i>CI/CD</i></span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-now" href="#timeline">
+              <span class="bento-label"><span class="bento-icon">🕒</span>Now</span>
+              <span class="bento-desc">Dotfiles go public with a one-line installer — six distro families, one command.</span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-blog" href="#blog">
+              <span class="bento-label"><span class="bento-icon">✍️</span>Blog</span>
+              <span class="bento-desc">My dotfiles, one line — how the bootstrap and GNU Stow make it safe.</span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+            <a class="bento-tile bento-contact" href="#contact">
+              <span class="bento-label"><span class="bento-icon">📮</span>Contact</span>
+              <span class="bento-desc">Telegram preferred — open to freelance automation work.</span>
+              <span class="bento-arrow" aria-hidden="true">↗</span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      <main>
+        <!-- Tools marquee -->
+        <div class="marquee" aria-hidden="true">
+          <div class="marquee-track">
+            <span class="marquee-seq">
+              <i>🐍 Python</i><i>🔀 n8n</i><i>⚙️ Make.com</i><i>🧠 OpenRouter LLMs</i><i>🪝 Webhooks</i><i>🚀 GitHub Actions</i><i>📊 yfinance</i><i>📞 Vapi</i><i>☎️ Twilio</i><i>🗓️ Google Calendar</i><i>📨 Gmail API</i><i>✅ ClickUp</i><i>🟢 Node.js</i><i>🐚 Bash</i><i>🪟 Hyprland</i><i>🌱 GNU Stow</i>
+            </span>
+          </div>
+        </div>
+
+        <section class="section" id="projects">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Featured Projects</h2>
+
+            <!-- 3D barrel carousel -->
+            <div class="barrel reveal" id="project-barrel">
+              <div class="barrel-stage">
+                <div class="barrel-ring" id="barrel-ring">
+                  <article class="card barrel-slide">
+                    <div class="card-body">
+                      <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up ↗</a></h3>
+                      <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
+                      <ul class="feature-list">
+                        <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
+                        <li>Personalization from custom fields: lead name, company, original interest notes</li>
+                        <li>Anti-hallucination guardrails: the only link in any email is mine</li>
+                      </ul>
+                    </div>
+                  </article>
+                  <article class="card barrel-slide">
+                    <div class="card-body">
+                      <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist ↗</a></h3>
+                      <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
+                      <ul class="feature-list">
+                        <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
+                        <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
+                        <li>Includes platform scorecard + plug-in checklist for going live</li>
+                      </ul>
+                    </div>
+                  </article>
+                  <article class="card barrel-slide">
+                    <div class="card-body">
+                      <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
+                      <p>A Python scraper that searches OnlineJobs.ph for remote jobs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each listing as JSON to a Make.com webhook for downstream automation.</p>
+                      <ul class="feature-list">
+                        <li>Extracts title, salary, employment type, and full job description per listing</li>
+                        <li>Keyword dedupe + polite, human-like request delays</li>
+                      </ul>
+                    </div>
+                  </article>
+                  <article class="card barrel-slide">
+                    <div class="card-body">
+                      <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker ↗</a></h3>
+                      <p>An automated trading-signal pipeline that evaluates an <strong>SMA crossover strategy</strong> on daily stock prices and dispatches <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals as JSON to a Make.com webhook.</p>
+                      <ul class="feature-list">
+                        <li>~400 days of historical closes via <strong>yfinance</strong> (50/200-day defaults)</li>
+                        <li>Runs automatically on GitHub Actions every weekday at 21:00 UTC</li>
+                      </ul>
+                    </div>
+                  </article>
+                  <article class="card barrel-slide">
+                    <div class="card-body">
+                      <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore ↗</a></h3>
+                      <p>The research stage of a folklore-story video pipeline: a <strong>zero-dependency</strong> Python scraper pulls Philippine mythology stories from Wikipedia and feeds them to <strong>Make.com</strong> or <strong>n8n</strong>, where Gemini drafts the script and a Gmail draft waits for review.</p>
+                      <ul class="feature-list">
+                        <li><strong>Zero pip dependencies</strong> — Python 3.9+ is all it needs</li>
+                        <li>Ships importable Make.com and n8n blueprints plus a full testing report</li>
+                      </ul>
+                    </div>
+                  </article>
+                </div>
+              </div>
+              <div class="barrel-controls">
+                <button type="button" class="barrel-btn" id="barrel-prev" aria-label="Previous project">&#8249;</button>
+                <div class="barrel-dots" id="barrel-dots" role="tablist" aria-label="Featured projects"></div>
+                <button type="button" class="barrel-btn" id="barrel-next" aria-label="Next project">&#8250;</button>
+              </div>
+              <p class="barrel-hint" aria-hidden="true">drag · swipe · arrow keys</p>
+            </div>
+
+            <h2 class="section-title reveal"><span class="hash">#</span> Other Projects</h2>
+            <div class="grid grid-3">
+              <article class="card reveal">
+                <div class="card-body">
+                  <h3><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">make-commits ↗</a></h3>
+                  <p>A Make.com automation that posts every GitHub push to a Facebook Page as a digest — instantly, via webhooks. Built and running entirely on the Make.com free tier.</p>
+                  <ul class="feature-list">
+                    <li>Instant pipeline: <code>git push</code> → Facebook post lands seconds later (webhooks, no polling)</li>
+                    <li>One post per push listing every commit message as a bullet (~2 ops per push)</li>
+                    <li>Ships with a sanitized scenario blueprint + step-by-step setup guide</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="card reveal">
+                <div class="card-body">
+                  <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a></h3>
+                  <p>An automated news curation pipeline for a Facebook page: Python fetches tech &amp; AI RSS feeds, filters by keyword, and hands a digest to <strong>Make.com</strong> — Gemini drafts the post, Imagen generates the graphic, Facebook Pages publishes.</p>
+                  <ul class="feature-list">
+                    <li><strong>GitHub Actions</strong> cron runs it every Sunday at 6:00 AM PHT</li>
+                    <li>Keyword filtering + seen-articles dedupe so nothing posts twice</li>
+                    <li>A random banner image from the repo rides along with every digest</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="card reveal">
+                <div class="card-body">
+                  <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
+                  <p>Automations need raw material. This one mines OnlineJobs.ph for automation gigs and feeds the pipeline — the first cog in the potato machine.</p>
+                  <ul class="feature-list">
+                    <li>Scheduled by GitHub Actions from day one</li>
+                    <li>Pushes clean JSON per listing into a Make.com webhook</li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-alt" id="setup">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Setup</h2>
+            <p class="setup-lead reveal">🥔 Want to know what potato I'm running?</p>
+            <div class="terminal reveal" id="install-terminal">
+              <div class="terminal-bar">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">potaterrr@linux: ~</span>
+                <span class="terminal-potato" aria-hidden="true">🥔</span>
+              </div>
+              <div class="terminal-body">
+                <span class="prompt" aria-hidden="true">$</span>
+                <code id="install-cmd" data-command="curl -fsSL https://potaterrr.github.io/install | sh"></code>
+                <span class="cursor" aria-hidden="true"></span>
+                <button class="copy-btn" id="copy-install" type="button" aria-label="Copy install command to clipboard">
+                  <span class="copy-btn-label">Copy</span>
+                </button>
+              </div>
+            </div>
+            <p class="setup-note reveal">Works on Debian/Ubuntu, Fedora, Arch, openSUSE, Alpine and Void — <a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">see what it installs →</a></p>
+          </div>
+        </section>
+
+        <section class="section" id="skills">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Skills</h2>
+            <div class="grid grid-3">
+              <article class="card skill reveal">
+                <span class="skill-icon">🐍</span>
+                <h3>Python automation</h3>
+                <p>Scrapers, schedulers and pipelines that run unattended and fail loudly instead of silently.</p>
+              </article>
+              <article class="card skill reveal">
+                <span class="skill-icon">🔀</span>
+                <h3>n8n workflows</h3>
+                <p>Self-hosted orchestration with clean logic, error branches and modular design.</p>
+              </article>
+              <article class="card skill reveal">
+                <span class="skill-icon">⚙️</span>
+                <h3>Make.com scenarios</h3>
+                <p>Connecting apps and data with minimized API calls and zero redundant steps.</p>
+              </article>
+              <article class="card skill reveal">
+                <span class="skill-icon">🪝</span>
+                <h3>Webhooks &amp; APIs</h3>
+                <p>Event-driven glue between systems — Postman and dev consoles are my stethoscope.</p>
+              </article>
+              <article class="card skill reveal">
+                <span class="skill-icon">🧠</span>
+                <h3>LLM pipelines</h3>
+                <p>OpenRouter-powered agents with guardrails, structured output and human checkpoints.</p>
+              </article>
+              <article class="card skill reveal">
+                <span class="skill-icon">🚀</span>
+                <h3>CI/CD &amp; ops</h3>
+                <p>GitHub Actions cron jobs, env-driven config, monitoring and fallback alerts.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="section section-alt" id="how-i-work">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> How I Work</h2>
+            <p class="section-lead reveal">Understanding how systems communicate beats memorizing platform features. Every workflow I design is:</p>
+            <div class="grid grid-3">
+              <article class="card principle reveal">
+                <h3><span class="num">01</span> Resilient</h3>
+                <p>Error handling and fallback alerts built in.</p>
+              </article>
+              <article class="card principle reveal">
+                <h3><span class="num">02</span> Scalable</h3>
+                <p>Clean logic, modular design.</p>
+              </article>
+              <article class="card principle reveal">
+                <h3><span class="num">03</span> Optimized</h3>
+                <p>Minimized API calls and data redundancy.</p>
+              </article>
+            </div>
+            <blockquote class="quote reveal">When things break, I reach for Postman, developer consoles, and logs to find the bottleneck fast.<br /><em>(The logs are always lying. Check them anyway.)</em></blockquote>
+          </div>
+        </section>
+
+        <section class="section" id="timeline">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Timeline</h2>
+            <ol class="timeline">
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">Dotfiles go public with a one-line installer ↗</a></h3>
+                    <p>The full potato setup — Bash, Neovim, Starship, Fastfetch, Hyprland, Waybar, Wofi and GTK — now installable on Debian, Fedora, Arch, openSUSE, Alpine and Void with a single command: <code>curl -fsSL https://potaterrr.github.io/install | sh</code>.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-09-13">Sep 13, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore released ↗</a></h3>
+                    <p>The folklore pipeline lives again — as free software: a zero-dependency Wikipedia folklore scraper feeding Make.com or n8n, with importable blueprints, built-in dedupe and a full testing report.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-09-10">Sep 10, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news goes live ↗</a></h3>
+                    <p>Weekly AI &amp; tech digest automation: Python fetches Hacker News, Phoronix, The Verge and friends, filters by keyword, and ships the digest to Make.com for Gemini drafting, Imagen graphics and Facebook Pages publishing.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-29">Aug 29, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3>Signal Checker Gains Forex Support</h3>
+                    <p>The SMA crossover signal-checker now handles forex pairs like USD/PHP and EURUSD with automatic yfinance format conversion. Users can specify symbols intuitively (e.g., "USD/PHP") while the tool internally converts to yfinance format (USDPHP=X) for accurate data retrieval. Existing stock functionality remains unchanged.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-27">Aug 27, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3>Folklore AI video pipeline: research live, publishing blocked</h3>
+                    <p>Weekly folklore topic research is running on Make.com, but the generate &amp; publish stage is stuck on Gemini API free-tier quota (429) for video generation. Fully working text pipeline; video awaits a plan decision.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist (HIPAA Compliant Available) released ↗</a></h3>
+                    <p>One receptionist, three engines: an AI that answers missed calls, books calendar slots and alerts the owner — implemented on Make, n8n and Zapier over a shared Vapi voice layer, with a full platform scorecard.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-25">Aug 25, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/potaterrr.github.io" target="_blank" rel="noopener">Launched potaterrr.github.io ↗</a></h3>
+                    <p>This very site: a dark dev-theme portfolio shipped as a single static page and deployed to GitHub Pages automatically through GitHub Actions.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-25">Aug 25, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up released ↗</a></h3>
+                    <p>AI-powered lead resurrection goes public: an OpenRouter LLM drafts personalized check-ins, files them as Gmail drafts for human approval, and tracks every lead through ClickUp.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-24">Aug 24, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper hardened ↗</a></h3>
+                    <p>v2 pass: real salary and employment-type extraction, full descriptions instead of teasers, bot-check retries, and one-job-per-keyword queue discipline for Make.com.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-23">Aug 23, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker goes live ↗</a></h3>
+                    <p>SMA crossover engine over ~400 days of yfinance closes pushing <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals to a Make.com webhook every weekday at 21:00 UTC.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-18">Aug 18, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">First automation shipped: job-scrapper ↗</a></h3>
+                    <p>A Python scraper watching OnlineJobs.ph for automation gigs, pushing matches as JSON into a Make.com webhook — scheduled by GitHub Actions from day one.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-08-17">Aug 17, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
+                    <h3><a href="https://github.com/potaterrr" target="_blank" rel="noopener">potaterrr joins GitHub ↗</a></h3>
+                    <p>Profile repo created and the automation journey begins. The rule is simple: if it's repetitive, it gets automated. 🥔</p>
+                  </div>
+                </article>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="section section-alt" id="blog">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Blog</h2>
+            <div class="slideshow reveal" id="blog-slideshow">
+              <div class="slideshow-track">
+                <article class="card slide active">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time> <span class="reading-time">5 min</span></p>
+                    <h3><a href="/blog/my-dotfiles-one-line-install.html">My dotfiles, one line</a></h3>
+                    <p>Bash, Neovim, Hyprland and friends — installed and stowed on six distro families by a single curl | sh. How the bootstrap and GNU Stow make it safe.</p>
+                  </div>
+                </article>
+                <article class="card slide">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
+                    <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
+                    <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
+                  </div>
+                </article>
+                <article class="card slide">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">8 min</span></p>
+                    <h3><a href="/blog/why-my-ai-never-sends-emails.html">Why my AI never sends emails</a></h3>
+                    <p>Human-in-the-loop AI outreach: the LLM drafts into Gmail, a human approves, and guardrails keep hallucinations out of your inbox.</p>
+                  </div>
+                </article>
+                <article class="card slide">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
+                    <h3><a href="/blog/feeding-make-com-from-python.html">Feeding Make.com from Python</a></h3>
+                    <p>Flat JSON payloads, polite scraping and queue discipline: how job-scrapper keeps its downstream automations cheap and quiet.</p>
+                  </div>
+                </article>
+                <article class="card slide">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">6 min</span></p>
+                    <h3><a href="/blog/make-com-free-plan-ops-math.html">The free-plan ops math</a></h3>
+                    <p>Polling every 15 minutes burns 2,880 ops/month before anything happens. The arithmetic that should decide every trigger choice.</p>
+                  </div>
+                </article>
+                <article class="card slide">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-27">Aug 27, 2026</time> <span class="reading-time">6 min</span></p>
+                    <h3><a href="/blog/folklore-video-free-tier-quota.html">When "free tier" means zero: building folklore video on the Gemini quota wall</a></h3>
+                    <p>The queue works, the script drafts, and then the video hits a hard 429. Everything I hit building a free AI folklore-video pipeline on Make.com.</p>
+                  </div>
+                </article>
+              </div>
+              <button class="ss-arrow ss-prev" type="button" aria-label="Previous post">&#8249;</button>
+              <button class="ss-arrow ss-next" type="button" aria-label="Next post">&#8250;</button>
+              <div class="ss-dots" role="tablist" aria-label="Blog posts"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="contact">
+          <div class="container">
+            <h2 class="section-title reveal"><span class="hash">#</span> Contact</h2>
+            <p class="section-lead reveal">You can reach me anywhere below.</p>
+            <div class="contact-grid reveal">
+              <a class="contact-card telegram" href="https://t.me/potaterrrr" target="_blank" rel="noopener">
+                <span class="contact-icon">✈️</span>
+                <span class="contact-name">Telegram</span>
+                <span class="contact-handle">@potaterrrr</span>
+                <span class="contact-note">preferred</span>
+              </a>
+              <a class="contact-card whatsapp" href="https://wa.me/potaiterrr" target="_blank" rel="noopener">
+                <span class="contact-icon">💬</span>
+                <span class="contact-name">WhatsApp</span>
+                <span class="contact-handle">@potaiterrr</span>
+                <span class="contact-note">chat anytime</span>
+              </a>
+              <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
+                <span class="contact-icon">📘</span>
+                <span class="contact-name">Facebook</span>
+                <span class="contact-handle">Potaterrr</span>
+                <span class="contact-note">message the page</span>
+              </a>
+              <a class="contact-card email" href="mailto:kristiandyanbusiness@gmail.com">
+                <span class="contact-icon">📧</span>
+                <span class="contact-name">Email</span>
+                <span class="contact-handle">kristiandyanbusiness@gmail.com</span>
+                <span class="contact-note">say hi</span>
+              </a>
+            </div>
+            <p class="contact-outro reveal">Open to discussing new technologies, automation strategies, or freelance opportunities. Recently enhanced with HIPAA-compliant voice receptionists and forex-capable signal checkers. If your leads are gathering dust, I know a workflow for that. 🥔</p>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="container footer-inner">
+          <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+          <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Floating Action Button Container -->
+  <a href="#contact" class="potato-fab" aria-label="Got questions? Let’s get farming — jump to the contact section">
+
+    <!-- Rotating Circular Text Ring -->
+    <div class="circular-text">
+      <svg viewBox="0 0 100 100" width="100" height="100">
+        <path id="textPath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+        <text fill="#d97706" font-size="9" font-weight="700" letter-spacing="1">
+          <textPath href="#textPath" startOffset="0%">
+            GOT QUESTIONS? LET'S GET FARMING 🥔
+          </textPath>
+        </text>
+      </svg>
+    </div>
+
+    <!-- Organic Potato Core Icon -->
+    <div class="potato-body">
+      <img src="assets/pfp.jpeg" alt="" width="48" height="48" />
+    </div>
+
+  </a>
+
+  <!-- Mobile floating tab bar -->
+  <nav class="tabbar" aria-label="Quick navigation">
+    <a href="#projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg><span>Projects</span></a>
+    <a href="#skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg><span>Skills</span></a>
+    <a href="#blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg><span>Blog</span></a>
+    <a href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg><span>Contact</span></a>
+    <button type="button" class="tabbar-a11y a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg><span>A11y</span>
+    </button>
   </nav>
 
-  <header class="hero" id="top">
-    <div class="container hero-inner">
-      <p class="hero-kicker reveal">$ whoami</p>
-      <h1 class="reveal">Hi, I'm <span class="accent">Christian John</span><br />but everybody calls me <span class="accent">potaterrr</span> 🥔</h1>
-      <p class="tagline reveal">Python automation developer growing pipelines that connect data to <strong>Make.com</strong> and <strong>n8n</strong> — from job scrapers to trading-signal engines to AI agents that write follow-up emails for me.</p>
-      <p class="hero-sub reveal">If it's repetitive, I'll automate it. If it involves potatoes, even better.</p>
-      <ul class="chips reveal" aria-label="Tech stack">
-        <li>Python</li>
-        <li>n8n</li>
-        <li>Make.com</li>
-        <li>OpenRouter LLMs</li>
-        <li>GitHub Actions</li>
-        <li>Webhooks</li>
-      </ul>
-      <div class="cta-row reveal">
-        <a class="btn btn-primary" href="#projects">View projects</a>
-        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+  <!-- Accessibility menu -->
+  <div class="a11y-menu" id="a11y-menu" hidden>
+    <h3>Accessibility</h3>
+    <div class="a11y-row">
+      <span id="a11y-motion-label">Reduce motion</span>
+      <button type="button" class="a11y-switch" id="a11y-motion" role="switch" aria-checked="false" aria-labelledby="a11y-motion-label"><span class="a11y-knob"></span></button>
+    </div>
+    <div class="a11y-row">
+      <span id="a11y-font-label">Text size</span>
+      <div class="a11y-stepper" role="group" aria-labelledby="a11y-font-label">
+        <button type="button" id="a11y-font-minus" aria-label="Decrease text size">−</button>
+        <span id="a11y-font-value">100%</span>
+        <button type="button" id="a11y-font-plus" aria-label="Increase text size">+</button>
       </div>
     </div>
-  </header>
-
-  <main>
-    <section class="section" id="projects">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Featured Projects</h2>
-        <div class="grid grid-2">
-<article class="card card-featured reveal card-pending">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up ↗</a></h3>
-              <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
-              <ul class="feature-list">
-                <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
-                <li>Personalization from custom fields: lead name, company, original interest notes</li>
-                <li>Anti-hallucination guardrails: the only link in any email is mine</li>
-                <li>Full setup guide, config reference and production-tested lessons learned in the README</li>
-              </ul>
-            </div>
-          </article>
-<article class="card card-featured reveal card-pending">
-  <span class="status-badge">HIPAA Compliant Available</span>
-  <div class="card-body">
-    <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist ↗</a></h3>
-              <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
-              <ul class="feature-list">
-                <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
-                <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
-                <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
-                <li>Includes platform scorecard + plug-in checklist for going live</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-
-        <h2 class="section-title reveal"><span class="hash">#</span> Other Projects</h2>
-        <div class="grid grid-3">
-          <article class="card reveal">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
-              <p>A Python scraper that searches <a href="https://www.onlinejobs.ph" target="_blank" rel="noopener">OnlineJobs.ph</a> for remote jobs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each listing as JSON to a Make.com webhook for downstream automation.</p>
-              <ul class="feature-list">
-                <li>Extracts title, salary, employment type, and full job description per listing</li>
-                <li>Keyword dedupe + polite, human-like request delays</li>
-                <li>Fallback notifications so downstream automations never stall</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker ↗</a></h3>
-              <p>An automated trading-signal pipeline that evaluates an <strong>SMA crossover strategy</strong> on daily stock prices and dispatches <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals as JSON to a Make.com webhook.</p>
-              <ul class="feature-list">
-                <li>~400 days of historical closes via <strong>yfinance</strong> (50/200-day defaults)</li>
-                <li>Fully configurable through environment variables (symbol, SMA windows, webhook URL)</li>
-                <li>Runs automatically on GitHub Actions every weekday at 21:00 UTC</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">make-commits ↗</a></h3>
-              <p>A Make.com automation that posts every GitHub push to a Facebook Page as a digest — instantly, via webhooks. Built and running entirely on the Make.com free tier.</p>
-              <ul class="feature-list">
-                <li>Instant pipeline: <code>git push</code> → Facebook post lands seconds later (webhooks, no polling)</li>
-                <li>One post per push listing every commit message as a bullet (~2 ops per push)</li>
-                <li>Ships with a sanitized scenario blueprint + step-by-step setup guide</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore ↗</a></h3>
-              <p>The research stage of a folklore-story video pipeline: a <strong>zero-dependency</strong> Python scraper pulls Philippine mythology stories from Wikipedia and feeds them to <strong>Make.com</strong> or <strong>n8n</strong>, where Gemini drafts the script and a Gmail draft waits for review.</p>
-              <ul class="feature-list">
-                <li><strong>Zero pip dependencies</strong> — stdlib <code>urllib</code> + <code>json</code>, Python 3.9+ is all it needs</li>
-                <li>Built-in dedupe remembers delivered titles, so each run pushes only new stories</li>
-                <li>Ships importable Make.com and n8n blueprints plus a full testing report</li>
-              </ul>
-            </div>
-          </article>
-          <article class="card reveal">
-            <div class="card-body">
-              <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a></h3>
-              <p>An automated news curation pipeline for a Facebook page: Python fetches tech &amp; AI RSS feeds, filters by keyword, and hands a digest to <strong>Make.com</strong> — Gemini drafts the post, Imagen generates the graphic, Facebook Pages publishes.</p>
-              <ul class="feature-list">
-                <li><strong>GitHub Actions</strong> cron runs it every Sunday at 6:00 AM PHT</li>
-                <li>Keyword filtering + seen-articles dedupe so nothing posts twice</li>
-                <li>A random banner image from the repo rides along with every digest</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="setup">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Setup</h2>
-        <p class="setup-lead reveal">🥔 Want to know what potato I'm running?</p>
-        <div class="terminal reveal" id="install-terminal">
-          <div class="terminal-bar">
-            <span class="terminal-dot red"></span>
-            <span class="terminal-dot yellow"></span>
-            <span class="terminal-dot green"></span>
-            <span class="terminal-title">potaterrr@linux: ~</span>
-            <span class="terminal-potato" aria-hidden="true">🥔</span>
-          </div>
-          <div class="terminal-body">
-            <span class="prompt" aria-hidden="true">$</span>
-            <code id="install-cmd" data-command="curl -fsSL https://potaterrr.github.io/install | sh"></code>
-            <span class="cursor" aria-hidden="true"></span>
-            <button class="copy-btn" id="copy-install" type="button" aria-label="Copy install command to clipboard">
-              <span class="copy-btn-label">Copy</span>
-            </button>
-          </div>
-        </div>
-        <p class="setup-note reveal">Works on Debian/Ubuntu, Fedora, Arch, openSUSE, Alpine and Void — <a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">see what it installs →</a></p>
-      </div>
-    </section>
-
-    <section class="section" id="skills">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Skills</h2>
-        <div class="grid grid-3">
-          <article class="card skill reveal">
-            <span class="skill-icon">🐍</span>
-            <h3>Python automation</h3>
-            <p>Scrapers, schedulers and pipelines that run unattended and fail loudly instead of silently.</p>
-          </article>
-          <article class="card skill reveal">
-            <span class="skill-icon">🔀</span>
-            <h3>n8n workflows</h3>
-            <p>Self-hosted orchestration with clean logic, error branches and modular design.</p>
-          </article>
-          <article class="card skill reveal">
-            <span class="skill-icon">⚙️</span>
-            <h3>Make.com scenarios</h3>
-            <p>Connecting apps and data with minimized API calls and zero redundant steps.</p>
-          </article>
-          <article class="card skill reveal">
-            <span class="skill-icon">🪝</span>
-            <h3>Webhooks &amp; APIs</h3>
-            <p>Event-driven glue between systems — Postman and dev consoles are my stethoscope.</p>
-          </article>
-          <article class="card skill reveal">
-            <span class="skill-icon">🧠</span>
-            <h3>LLM pipelines</h3>
-            <p>OpenRouter-powered agents with guardrails, structured output and human checkpoints.</p>
-          </article>
-          <article class="card skill reveal">
-            <span class="skill-icon">🚀</span>
-            <h3>CI/CD &amp; ops</h3>
-            <p>GitHub Actions cron jobs, env-driven config, monitoring and fallback alerts.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="how-i-work">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> How I Work</h2>
-        <p class="section-lead reveal">Understanding how systems communicate beats memorizing platform features. Every workflow I design is:</p>
-        <div class="grid grid-3">
-          <article class="card principle reveal">
-            <h3><span class="num">01</span> Resilient</h3>
-            <p>Error handling and fallback alerts built in.</p>
-          </article>
-          <article class="card principle reveal">
-            <h3><span class="num">02</span> Scalable</h3>
-            <p>Clean logic, modular design.</p>
-          </article>
-          <article class="card principle reveal">
-            <h3><span class="num">03</span> Optimized</h3>
-            <p>Minimized API calls and data redundancy.</p>
-          </article>
-        </div>
-        <blockquote class="quote reveal">When things break, I reach for Postman, developer consoles, and logs to find the bottleneck fast.<br /><em>(The logs are always lying. Check them anyway.)</em></blockquote>
-      </div>
-    </section>
-
-    <section class="section" id="timeline">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Timeline</h2>
-        <ol class="timeline">
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/dotfiles" target="_blank" rel="noopener">Dotfiles go public with a one-line installer ↗</a></h3>
-                <p>The full potato setup — Bash, Neovim, Starship, Fastfetch, Hyprland, Waybar, Wofi and GTK — now installable on Debian, Fedora, Arch, openSUSE, Alpine and Void with a single command: <code>curl -fsSL https://potaterrr.github.io/install | sh</code>.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-09-13">Sep 13, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore released ↗</a></h3>
-                <p>The folklore pipeline lives again — as free software: a zero-dependency Wikipedia folklore scraper feeding Make.com or n8n, with importable blueprints, built-in dedupe and a full testing report.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-09-10">Sep 10, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news goes live ↗</a></h3>
-                <p>Weekly AI &amp; tech digest automation: Python fetches Hacker News, Phoronix, The Verge and friends, filters by keyword, and ships the digest to Make.com for Gemini drafting, Imagen graphics and Facebook Pages publishing.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-29">Aug 29, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3>Signal Checker Gains Forex Support</h3>
-                <p>The SMA crossover signal-checker now handles forex pairs like USD/PHP and EURUSD with automatic yfinance format conversion. Users can specify symbols intuitively (e.g., "USD/PHP") while the tool internally converts to yfinance format (USDPHP=X) for accurate data retrieval. Existing stock functionality remains unchanged.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-27">Aug 27, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3>Folklore AI video pipeline: research live, publishing blocked</h3>
-                <p>Weekly folklore topic research is running on Make.com, but the generate &amp; publish stage is stuck on Gemini API free-tier quota (429) for video generation. Fully working text pipeline; video awaits a plan decision.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist (HIPAA Compliant Available) released ↗</a></h3>
-                <p>One receptionist, three engines: an AI that answers missed calls, books calendar slots and alerts the owner — implemented on Make, n8n and Zapier over a shared Vapi voice layer, with a full platform scorecard.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-25">Aug 25, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/potaterrr.github.io" target="_blank" rel="noopener">Launched potaterrr.github.io ↗</a></h3>
-                <p>This very site: a dark dev-theme portfolio shipped as a single static page and deployed to GitHub Pages automatically through GitHub Actions.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-25">Aug 25, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up released ↗</a></h3>
-                <p>AI-powered lead resurrection goes public: an OpenRouter LLM drafts personalized check-ins, files them as Gmail drafts for human approval, and tracks every lead through ClickUp.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-24">Aug 24, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper hardened ↗</a></h3>
-                <p>v2 pass: real salary and employment-type extraction, full descriptions instead of teasers, bot-check retries, and one-job-per-keyword queue discipline for Make.com.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-23">Aug 23, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker goes live ↗</a></h3>
-                <p>SMA crossover engine over ~400 days of yfinance closes pushing <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals to a Make.com webhook every weekday at 21:00 UTC.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-18">Aug 18, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">First automation shipped: job-scrapper ↗</a></h3>
-                <p>A Python scraper watching OnlineJobs.ph for automation gigs, pushing matches as JSON into a Make.com webhook — scheduled by GitHub Actions from day one.</p>
-              </div>
-            </article>
-          </li>
-          <li class="timeline-item reveal">
-            <time class="timeline-date" datetime="2026-08-17">Aug 17, 2026</time>
-            <article class="card timeline-card">
-              <div class="card-body">
-                <h3><a href="https://github.com/potaterrr" target="_blank" rel="noopener">potaterrr joins GitHub ↗</a></h3>
-                <p>Profile repo created and the automation journey begins. The rule is simple: if it's repetitive, it gets automated. 🥔</p>
-              </div>
-            </article>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section section-alt" id="blog">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Blog</h2>
-        <div class="slideshow reveal" id="blog-slideshow">
-          <div class="slideshow-track">
-            <article class="card slide active">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time> <span class="reading-time">5 min</span></p>
-                <h3><a href="/blog/my-dotfiles-one-line-install.html">My dotfiles, one line</a></h3>
-                <p>Bash, Neovim, Hyprland and friends — installed and stowed on six distro families by a single curl | sh. How the bootstrap and GNU Stow make it safe.</p>
-              </div>
-            </article>
-            <article class="card slide">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
-                <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
-                <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
-              </div>
-            </article>
-            <article class="card slide">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">8 min</span></p>
-                <h3><a href="/blog/why-my-ai-never-sends-emails.html">Why my AI never sends emails</a></h3>
-                <p>Human-in-the-loop AI outreach: the LLM drafts into Gmail, a human approves, and guardrails keep hallucinations out of your inbox.</p>
-              </div>
-            </article>
-            <article class="card slide">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
-                <h3><a href="/blog/feeding-make-com-from-python.html">Feeding Make.com from Python</a></h3>
-                <p>Flat JSON payloads, polite scraping and queue discipline: how job-scrapper keeps its downstream automations cheap and quiet.</p>
-              </div>
-            </article>
-            <article class="card slide">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">6 min</span></p>
-                <h3><a href="/blog/make-com-free-plan-ops-math.html">The free-plan ops math</a></h3>
-                <p>Polling every 15 minutes burns 2,880 ops/month before anything happens. The arithmetic that should decide every trigger choice.</p>
-              </div>
-            </article>
-            <article class="card slide">
-              <div class="card-body">
-                <p class="post-meta"><time class="timeline-date" datetime="2026-08-27">Aug 27, 2026</time> <span class="reading-time">6 min</span></p>
-                <h3><a href="/blog/folklore-video-free-tier-quota.html">When "free tier" means zero: building folklore video on the Gemini quota wall</a></h3>
-                <p>The queue works, the script drafts, and then the video hits a hard 429. Everything I hit building a free AI folklore-video pipeline on Make.com.</p>
-              </div>
-            </article>
-          </div>
-          <button class="ss-arrow ss-prev" type="button" aria-label="Previous post">&#8249;</button>
-          <button class="ss-arrow ss-next" type="button" aria-label="Next post">&#8250;</button>
-          <div class="ss-dots" role="tablist" aria-label="Blog posts"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Contact</h2>
-        <p class="section-lead reveal">You can reach me anywhere below.</p>
-        <div class="contact-grid reveal">
-          <a class="contact-card telegram" href="https://t.me/potaterrrr" target="_blank" rel="noopener">
-            <span class="contact-icon">✈️</span>
-            <span class="contact-name">Telegram</span>
-            <span class="contact-handle">@potaterrrr</span>
-            <span class="contact-note">preferred</span>
-          </a>
-          <a class="contact-card whatsapp" href="https://wa.me/potaiterrr" target="_blank" rel="noopener">
-            <span class="contact-icon">💬</span>
-            <span class="contact-name">WhatsApp</span>
-            <span class="contact-handle">@potaiterrr</span>
-            <span class="contact-note">chat anytime</span>
-          </a>
-          <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
-            <span class="contact-icon">📘</span>
-            <span class="contact-name">Facebook</span>
-            <span class="contact-handle">Potaterrr</span>
-            <span class="contact-note">message the page</span>
-          </a>
-          <a class="contact-card email" href="mailto:kristiandyanbusiness@gmail.com">
-            <span class="contact-icon">📧</span>
-            <span class="contact-name">Email</span>
-            <span class="contact-handle">kristiandyanbusiness@gmail.com</span>
-            <span class="contact-note">say hi</span>
-          </a>
-        </div>
-        <p class="contact-outro reveal">Open to discussing new technologies, automation strategies, or freelance opportunities. Recently enhanced with HIPAA-compliant voice receptionists and forex-capable signal checkers. If your leads are gathering dust, I know a workflow for that. 🥔</p>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer-inner">
-      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
-      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
-    </div>
-  </footer>
+  </div>
 
   <script src="js/main.js"></script>
-    
-    <!-- Floating Action Button Container -->
-    <a href="#contact" class="potato-fab" aria-label="Got questions? Let’s get farming — jump to the contact section">
-      
-      <!-- Rotating Circular Text Ring -->
-      <div class="circular-text">
-        <svg viewBox="0 0 100 100" width="100" height="100">
-          <path id="textPath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
-          <text fill="#d97706" font-size="9" font-weight="700" letter-spacing="1">
-            <textPath href="#textPath" startOffset="0%">
-              GOT QUESTIONS? LET'S GET FARMING 🥔
-            </textPath>
-          </text>
-        </svg>
-      </div>
-
-      <!-- Organic Potato Core Icon -->
-      <div class="potato-body">
-        <img src="assets/pfp.jpeg" alt="" width="48" height="48" />
-      </div>
-
-    </a>
 </body>
 </html>
