@@ -209,31 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const n = slides.length;
       let index = 0;
 
-      const layout = () => {
-        const stage = ring.parentElement;
-        const h = Math.max(...slides.map((s) => s.scrollHeight));
-        stage.style.height = `${h}px`;
-      };
-
       const show = (i) => {
         index = (i + n) % n;
-        ring.style.transform = "none";
-        const stageW = ring.parentElement.clientWidth || 700;
-        const shift = Math.min(stageW * 0.28, 190);
-        slides.forEach((s, j) => {
-          let rel = (j - index + n) % n;
-          if (rel > n / 2) rel -= n; // signed offset: -2..2
-          const front = rel === 0;
-          const depth = Math.min(Math.abs(rel), 1);
-          s.style.transform =
-            `translateX(-50%) rotateY(${rel * -32}deg) ` +
-            `translateX(${rel * shift}px) scale(${1 - depth * 0.12})`;
-          s.style.filter = front ? "none" : `brightness(${1 - depth * 0.45})`;
-          s.style.opacity = Math.abs(rel) <= 2 ? "1" : "0.25";
-          s.style.pointerEvents = front ? "auto" : "none";
-          s.style.zIndex = String(3 - Math.min(Math.abs(rel), 3));
-          s.classList.toggle("is-front", front);
-        });
+        slides.forEach((s, j) => s.classList.toggle("is-front", j === index));
         dotsWrap.querySelectorAll("button").forEach((d, j) => {
           d.classList.toggle("active", j === index);
           d.setAttribute("aria-selected", String(j === index));
@@ -269,11 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
         dragX = null;
       });
 
-      window.addEventListener("resize", () => {
-        layout();
-        show(index);
-      });
-      layout();
       show(0);
     }
   }

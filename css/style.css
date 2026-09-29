@@ -314,12 +314,6 @@ code {
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
 }
 
-/* Inside the 3D barrel, hover must not transform the card — it fights the
-   carousel's own transforms and made the slides jitter. */
-.barrel-slide:hover {
-  transform: none;
-}
-
 .card-body {
   padding: 26px;
 }
@@ -1561,6 +1555,13 @@ html.reduce-motion *::after {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  align-items: center;
+}
+
+.bento-chips img {
+  width: 22px;
+  height: 22px;
+  filter: invert(61%) sepia(72%) saturate(530%) hue-rotate(352deg) brightness(96%) contrast(92%);
 }
 
 .bento-chips i {
@@ -1640,10 +1641,9 @@ html.reduce-motion *::after {
 
 html.reduce-motion .marquee-track { animation: none; }
 
-/* ---------- Project barrel carousel (coverflow fan)
-   Slides are stacked and centered; depth comes from rotateY + translateX,
-   NOT translateZ. Nothing ever extends the layout, so nothing below can
-   twitch when the scrollbar appears or the ring rotates. ---------- */
+/* ---------- Featured projects slider
+   The front card sits in normal flow (section height always fits it) and
+   the others fade in on top. No 3D, no measuring, nothing to twitch. ---------- */
 .barrel {
   max-width: 780px;
   margin: 0 auto 40px;
@@ -1651,37 +1651,30 @@ html.reduce-motion .marquee-track { animation: none; }
 
 .barrel-stage {
   position: relative;
-  perspective: 1600px;
   touch-action: pan-y;
-  transition: height var(--dur-med) var(--ease-out);
-}
-
-.barrel-ring {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-  transition: transform var(--dur-slow) var(--ease-out);
 }
 
 .barrel-slide {
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 100%;
+  inset: 0;
   margin: 0;
-  backface-visibility: hidden;
-  /* --i: signed offset from the front slide (-2, -1, 0, 1, 2) */
-  transform: translateX(-50%)
-    rotateY(calc(var(--i, 0) * -32deg))
-    translateX(calc(var(--i, 0) * min(30vw, 190px)))
-    scale(calc(1 - min(abs(var(--i, 0)), 1) * 0.12));
-  filter: brightness(calc(1 - min(abs(var(--i, 0)), 1) * 0.45));
-  transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-med) ease, filter var(--dur-med) ease;
-  overflow-y: auto;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(26px);
+  transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out), visibility 0s linear var(--dur-med);
 }
 
 .barrel-slide.is-front {
-  z-index: 3;
+  position: relative;
+  inset: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  z-index: 2;
+  transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out);
 }
 
 .barrel-controls {
