@@ -45,6 +45,9 @@ html[data-theme="light"] {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
+  /* The barrel's 3D fan must never widen the page — a scrollbar appearing
+     and vanishing is what made the layout below the carousel twitch. */
+  overflow-x: clip;
 }
 
 body {
@@ -311,6 +314,12 @@ code {
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
 }
 
+/* Inside the 3D barrel, hover must not transform the card — it fights the
+   carousel's own transforms and made the slides jitter. */
+.barrel-slide:hover {
+  transform: none;
+}
+
 .card-body {
   padding: 26px;
 }
@@ -381,6 +390,15 @@ code {
   font-size: 1.6rem;
   display: inline-block;
   margin-bottom: 12px;
+}
+
+/* Real tool logos on the skill cards (Simple Icons glyphs, amber-tinted) */
+.skill-icon-img {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  margin-bottom: 12px;
+  filter: invert(61%) sepia(72%) saturate(530%) hue-rotate(352deg) brightness(96%) contrast(92%);
 }
 
 .skill h3 {
@@ -1600,6 +1618,16 @@ html.reduce-motion *::after {
   font-size: 0.85rem;
   color: var(--muted);
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tool logos in the marquee — tinted to the amber accent (black SVG glyphs) */
+.marquee-seq i img {
+  width: 16px;
+  height: 16px;
+  filter: invert(61%) sepia(72%) saturate(530%) hue-rotate(352deg) brightness(96%) contrast(92%);
 }
 
 @keyframes marquee-scroll {
@@ -1612,7 +1640,10 @@ html.reduce-motion *::after {
 
 html.reduce-motion .marquee-track { animation: none; }
 
-/* ---------- Project barrel carousel ---------- */
+/* ---------- Project barrel carousel (coverflow fan)
+   Slides are stacked and centered; depth comes from rotateY + translateX,
+   NOT translateZ. Nothing ever extends the layout, so nothing below can
+   twitch when the scrollbar appears or the ring rotates. ---------- */
 .barrel {
   max-width: 780px;
   margin: 0 auto 40px;
@@ -1620,7 +1651,7 @@ html.reduce-motion .marquee-track { animation: none; }
 
 .barrel-stage {
   position: relative;
-  perspective: 1400px;
+  perspective: 1600px;
   touch-action: pan-y;
   transition: height var(--dur-med) var(--ease-out);
 }
@@ -1634,16 +1665,23 @@ html.reduce-motion .marquee-track { animation: none; }
 
 .barrel-slide {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 50%;
+  width: 100%;
   margin: 0;
   backface-visibility: hidden;
-  transform: rotateY(calc(var(--i, 0) * var(--barrel-step, 72deg))) translateZ(var(--barrel-r, 420px));
-  transition: opacity var(--dur-med) ease;
+  /* --i: signed offset from the front slide (-2, -1, 0, 1, 2) */
+  transform: translateX(-50%)
+    rotateY(calc(var(--i, 0) * -32deg))
+    translateX(calc(var(--i, 0) * min(30vw, 190px)))
+    scale(calc(1 - min(abs(var(--i, 0)), 1) * 0.12));
+  filter: brightness(calc(1 - min(abs(var(--i, 0)), 1) * 0.45));
+  transition: transform var(--dur-slow) var(--ease-out), opacity var(--dur-med) ease, filter var(--dur-med) ease;
   overflow-y: auto;
 }
 
 .barrel-slide.is-front {
-  z-index: 2;
+  z-index: 3;
 }
 
 .barrel-controls {

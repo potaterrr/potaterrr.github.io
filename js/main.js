@@ -207,30 +207,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (ring && slides.length && dotsWrap) {
       const n = slides.length;
-      const stepDeg = 360 / n;
       let index = 0;
 
       const layout = () => {
         const stage = ring.parentElement;
         const h = Math.max(...slides.map((s) => s.scrollHeight));
         stage.style.height = `${h}px`;
-        const w = stage.clientWidth;
-        const radius = Math.round(w / 2 / Math.tan(Math.PI / n)) + 60;
-        ring.style.setProperty("--barrel-step", `${stepDeg}deg`);
-        ring.style.setProperty("--barrel-r", `${radius}px`);
-        slides.forEach((s, i) => s.style.setProperty("--i", String(i)));
       };
 
       const show = (i) => {
         index = (i + n) % n;
-        ring.style.transform = `rotateY(${-index * stepDeg}deg)`;
+        ring.style.transform = "none";
+        const stageW = ring.parentElement.clientWidth || 700;
+        const shift = Math.min(stageW * 0.28, 190);
         slides.forEach((s, j) => {
-          const rel = (j - index + n) % n;
-          const behind = rel > n / 2;
-          s.classList.toggle("is-front", rel === 0);
-          s.style.opacity = behind || rel === 0 ? "1" : "0.35";
-          s.style.pointerEvents = rel === 0 ? "auto" : "none";
-          s.style.zIndex = String(rel === 0 ? 3 : behind ? 1 : 2 - rel);
+          let rel = (j - index + n) % n;
+          if (rel > n / 2) rel -= n; // signed offset: -2..2
+          const front = rel === 0;
+          const depth = Math.min(Math.abs(rel), 1);
+          s.style.transform =
+            `translateX(-50%) rotateY(${rel * -32}deg) ` +
+            `translateX(${rel * shift}px) scale(${1 - depth * 0.12})`;
+          s.style.filter = front ? "none" : `brightness(${1 - depth * 0.45})`;
+          s.style.opacity = Math.abs(rel) <= 2 ? "1" : "0.25";
+          s.style.pointerEvents = front ? "auto" : "none";
+          s.style.zIndex = String(3 - Math.min(Math.abs(rel), 3));
+          s.classList.toggle("is-front", front);
         });
         dotsWrap.querySelectorAll("button").forEach((d, j) => {
           d.classList.toggle("active", j === index);
