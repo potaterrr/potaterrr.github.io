@@ -1764,6 +1764,12 @@ html.reduce-motion .marquee-track { animation: none; }
     align-items: center;
     gap: 2px;
     padding: 7px 13px;
+    /* .a11y-trigger hard-codes a 36x36 box — undo it so the A11y tab
+       sizes like its siblings instead of a square stuck by Contact */
+    width: auto;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
     border-radius: 999px;
     font-family: var(--mono);
     font-size: 0.62rem;
