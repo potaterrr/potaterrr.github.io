@@ -35,7 +35,7 @@
     "description": "Python automation developer building pipelines that connect data to Make.com and n8n.",
     "sameAs": [
       "https://github.com/potaterrr",
-      "https://t.me/potaterrrr",
+      "https://t.me/portaterrrr",
       "https://www.facebook.com/profile.php?id=61593886946042",
       "https://wa.me/potaiterrr"
     ],
@@ -69,7 +69,7 @@
       </a>
 
       <ul class="rail-socials" aria-label="Contact profiles">
-        <li><a href="https://t.me/potaterrrr" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram — preferred">✈️</a></li>
+        <li><a href="https://t.me/portaterrrr" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram — preferred">✈️</a></li>
         <li><a href="https://wa.me/potaiterrr" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp">💬</a></li>
         <li><a href="https://github.com/potaterrr" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">🐙</a></li>
         <li><a href="mailto:kristiandyanbusiness@gmail.com" aria-label="Email" title="Email">📧</a></li>
@@ -173,8 +173,8 @@
                       <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
                       <ul class="feature-list">
                         <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
-                        <li>Personalization from custom fields: lead name, company, original interest notes</li>
                         <li>Anti-hallucination guardrails: the only link in any email is mine</li>
+                        <li>Full setup guide, config reference and production-tested lessons in the README</li>
                       </ul>
                     </div>
                   </article>
@@ -185,37 +185,7 @@
                       <ul class="feature-list">
                         <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
                         <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
-                        <li>Includes platform scorecard + plug-in checklist for going live</li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
-                      <p>A Python scraper that searches OnlineJobs.ph for remote jobs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each listing as JSON to a Make.com webhook for downstream automation.</p>
-                      <ul class="feature-list">
-                        <li>Extracts title, salary, employment type, and full job description per listing</li>
-                        <li>Keyword dedupe + polite, human-like request delays</li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker ↗</a></h3>
-                      <p>An automated trading-signal pipeline that evaluates an <strong>SMA crossover strategy</strong> on daily stock prices and dispatches <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals as JSON to a Make.com webhook.</p>
-                      <ul class="feature-list">
-                        <li>~400 days of historical closes via <strong>yfinance</strong> (50/200-day defaults)</li>
-                        <li>Runs automatically on GitHub Actions every weekday at 21:00 UTC</li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore ↗</a></h3>
-                      <p>The research stage of a folklore-story video pipeline: a <strong>zero-dependency</strong> Python scraper pulls Philippine mythology stories from Wikipedia and feeds them to <strong>Make.com</strong> or <strong>n8n</strong>, where Gemini drafts the script and a Gmail draft waits for review.</p>
-                      <ul class="feature-list">
-                        <li><strong>Zero pip dependencies</strong> — Python 3.9+ is all it needs</li>
-                        <li>Ships importable Make.com and n8n blueprints plus a full testing report</li>
+                        <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
                       </ul>
                     </div>
                   </article>
@@ -233,33 +203,56 @@
             <div class="grid grid-3">
               <article class="card reveal">
                 <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">make-commits ↗</a></h3>
-                  <p>A Make.com automation that posts every GitHub push to a Facebook Page as a digest — instantly, via webhooks. Built and running entirely on the Make.com free tier.</p>
+                  <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
+                  <p>A Python scraper that searches OnlineJobs.ph for remote jobs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each listing as JSON to a Make.com webhook for downstream automation.</p>
                   <ul class="feature-list">
-                    <li>Instant pipeline: <code>git push</code> → Facebook post lands seconds later (webhooks, no polling)</li>
-                    <li>One post per push listing every commit message as a bullet (~2 ops per push)</li>
-                    <li>Ships with a sanitized scenario blueprint + step-by-step setup guide</li>
+                    <li>Extracts title, salary, employment type, and <strong>full job description</strong> per listing</li>
+                    <li>Keyword dedupe + polite, human-like request delays</li>
+                    <li>Fallback notifications so downstream automations never stall</li>
                   </ul>
                 </div>
               </article>
               <article class="card reveal">
                 <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a></h3>
-                  <p>An automated news curation pipeline for a Facebook page: Python fetches tech &amp; AI RSS feeds, filters by keyword, and hands a digest to <strong>Make.com</strong> — Gemini drafts the post, Imagen generates the graphic, Facebook Pages publishes.</p>
+                  <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker ↗</a></h3>
+                  <p>An automated trading-signal pipeline that evaluates an <strong>SMA crossover strategy</strong> on daily stock prices and dispatches <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals as JSON to a Make.com webhook.</p>
+                  <ul class="feature-list">
+                    <li>~400 days of historical closes via <strong>yfinance</strong> (50/200-day defaults)</li>
+                    <li>Fully configurable through environment variables (symbol, SMA windows, webhook URL)</li>
+                    <li>Runs automatically on GitHub Actions every weekday at 21:00 UTC</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="card reveal">
+                <div class="card-body">
+                  <h3><a href="https://github.com/potaterrr/ai-folklore" target="_blank" rel="noopener">ai-folklore ↗</a> (theory)</h3>
+                  <p>The research stage of a folklore-story video pipeline: <strong>research → AI script → (Veo video) → publish</strong>. A zero-dependency Python scraper pulls folklore stories (Philippine mythology front-loaded) from Wikipedia and feeds them to Make.com or n8n — Gemini writes the script, a Gmail draft waits for review.</p>
+                  <ul class="feature-list">
+                    <li><strong>Zero pip dependencies</strong> — stdlib <code>urllib</code> + <code>json</code>, Python 3.9+ is all it needs</li>
+                    <li>Built-in dedupe remembers delivered titles, so each run pushes only new stories</li>
+                    <li>Ships with importable Make.com and n8n blueprints plus a full testing report</li>
+                  </ul>
+                </div>
+              </article>
+              <article class="card reveal">
+                <div class="card-body">
+                  <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a> (personal automation)</h3>
+                  <p>An automated news curation pipeline for the <strong>AI Tech &amp; Automation Hub</strong> Facebook page: a Python script fetches tech &amp; AI RSS feeds (Hacker News, Phoronix, The Verge…), filters by keyword, and POSTs a digest to a Make.com webhook that drafts the post with Gemini, generates a graphic with Imagen, and publishes to Facebook Pages.</p>
                   <ul class="feature-list">
                     <li><strong>GitHub Actions</strong> cron runs it every Sunday at 6:00 AM PHT</li>
-                    <li>Keyword filtering + seen-articles dedupe so nothing posts twice</li>
+                    <li>Keyword filtering + <code>seen_articles.json</code> dedupe so nothing posts twice</li>
                     <li>A random banner image from the repo rides along with every digest</li>
                   </ul>
                 </div>
               </article>
               <article class="card reveal">
                 <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
-                  <p>Automations need raw material. This one mines OnlineJobs.ph for automation gigs and feeds the pipeline — the first cog in the potato machine.</p>
+                  <h3><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">make-commits ↗</a></h3>
+                  <p>A Make.com automation that posts every GitHub push to a Facebook Page as a digest — instantly, via webhooks. Built and running entirely on the Make.com free tier.</p>
                   <ul class="feature-list">
-                    <li>Scheduled by GitHub Actions from day one</li>
-                    <li>Pushes clean JSON per listing into a Make.com webhook</li>
+                    <li>Instant pipeline: <code>git push</code> → Facebook post lands seconds later (webhooks, no polling)</li>
+                    <li>One post per push listing every commit message as a bullet (~2 ops per push)</li>
+                    <li>Ships with a sanitized scenario blueprint + step-by-step setup guide</li>
                   </ul>
                 </div>
               </article>
@@ -528,10 +521,10 @@
             <h2 class="section-title reveal"><span class="hash">#</span> Contact</h2>
             <p class="section-lead reveal">You can reach me anywhere below.</p>
             <div class="contact-grid reveal">
-              <a class="contact-card telegram" href="https://t.me/potaterrrr" target="_blank" rel="noopener">
+              <a class="contact-card telegram" href="https://t.me/portaterrrr" target="_blank" rel="noopener">
                 <span class="contact-icon">✈️</span>
                 <span class="contact-name">Telegram</span>
-                <span class="contact-handle">@potaterrrr</span>
+                <span class="contact-handle">@portaterrrr</span>
                 <span class="contact-note">preferred</span>
               </a>
               <a class="contact-card whatsapp" href="https://wa.me/potaiterrr" target="_blank" rel="noopener">
