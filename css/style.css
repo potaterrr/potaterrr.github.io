@@ -2149,32 +2149,67 @@ body.intro-lock {
   border-color: var(--accent);
 }
 
-.hiw-viewport {
-  overflow: hidden;
+.hiw-canvas-wrap {
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--surface);
-  touch-action: pan-y;
-  cursor: grab;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--border) 1.5px, transparent 1.5px);
+  background-size: 26px 26px;
+  overflow-x: auto;
+  padding: 8px 6px;
 }
 
-.hiw-viewport:active {
-  cursor: grabbing;
+.hiw-canvas {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  overflow: visible;
 }
 
-.hiw-track {
-  display: flex;
-  transition: transform var(--dur-med, 0.45s) var(--ease-out, ease);
-  will-change: transform;
+.hiw-node {
+  cursor: pointer;
+  outline: none;
 }
 
-.hiw-slide {
-  flex: 0 0 100%;
-  min-width: 100%;
-  padding: 22px 24px 26px;
+.hiw-node-rect {
+  fill: var(--surface);
+  stroke: var(--border);
+  stroke-width: 2;
+  transition: stroke 0.2s ease, fill 0.2s ease;
 }
 
-.hiw-slide-head {
+.hiw-node:hover .hiw-node-rect,
+.hiw-node:focus-visible .hiw-node-rect {
+  stroke: var(--accent);
+}
+
+.hiw-node:focus-visible .hiw-node-rect {
+  stroke-width: 3;
+}
+
+.hiw-node.is-active .hiw-node-rect {
+  stroke: var(--accent);
+  fill: var(--accent-soft);
+}
+
+.hiw-node.is-done .hiw-node-rect {
+  stroke: var(--green);
+}
+
+.hiw-node-emoji {
+  font-size: 15px;
+  fill: var(--text);
+}
+
+.hiw-node-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  fill: var(--text);
+  font-family: var(--sans);
+}
+
+.hiw-detail-head {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -2513,51 +2548,92 @@ body.intro-lock {
   font-size: 0.9rem;
 }
 
-.hiw-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 16px;
+.hiw-node.is-active .hiw-node-rect {
+  filter: drop-shadow(0 0 6px var(--accent));
 }
 
-.hiw-arrow {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.hiw-badge {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.hiw-node.is-done .hiw-badge {
+  opacity: 1;
+}
+
+.hiw-badge circle {
+  fill: var(--green);
+}
+
+.hiw-badge path {
+  stroke: #ffffff;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hiw-tip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.hiw-node:hover .hiw-tip,
+.hiw-node:focus-visible .hiw-tip {
+  opacity: 1;
+}
+
+.hiw-tip rect {
+  fill: var(--surface);
+  stroke: var(--border);
+}
+
+.hiw-tip-title {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--accent);
+  font-family: var(--sans);
+}
+
+.hiw-tip-line {
+  font-size: 10.5px;
+  fill: var(--muted);
+  font-family: var(--sans);
+}
+
+.hiw-edge-base {
+  stroke: var(--border);
+  stroke-width: 3;
+  fill: none;
+}
+
+.hiw-edge-flow {
+  stroke: var(--accent);
+  stroke-width: 3;
+  fill: none;
+  stroke-dasharray: 8 34;
+  stroke-dashoffset: 42;
+  animation: hiw-flow 2.8s linear infinite;
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+}
+
+.hiw-edge.is-active .hiw-edge-flow {
+  opacity: 1;
+  animation-duration: 1.1s;
+}
+
+@keyframes hiw-flow {
+  to { stroke-dashoffset: 0; }
+}
+
+.hiw-detail {
+  margin-top: 14px;
   border: 1px solid var(--border);
+  border-radius: var(--radius);
   background: var(--surface);
-  color: var(--text);
-  font-size: 22px;
-  line-height: 1;
-  cursor: pointer;
-  transition: border-color var(--dur-fast, 0.15s) ease, background var(--dur-fast, 0.15s) ease;
-}
-
-.hiw-arrow:hover {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-
-.hiw-dots {
-  display: flex;
-  gap: 8px;
-}
-
-.hiw-dots button {
-  width: 9px;
-  height: 9px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--border);
-  cursor: pointer;
-  transition: background var(--dur-fast, 0.15s) ease, transform var(--dur-fast, 0.15s) ease;
-}
-
-.hiw-dots button.active {
-  background: var(--accent);
-  transform: scale(1.25);
+  padding: 18px 20px 20px;
 }
 
 .hiw-status {
@@ -2591,10 +2667,6 @@ body.intro-lock {
 
   .hiw-lead-card input {
     width: 100%;
-  }
-
-  .hiw-slide {
-    padding: 18px 16px 22px;
   }
 
   .hiw-board {

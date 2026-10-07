@@ -1,13 +1,16 @@
 /* potaterrr.github.io — "How it works" pipeline demos.
-   Vanilla JS, zero dependencies, zero APIs: both featured projects are
-   simulated step-by-step in carousels. The voice-receptionist data mirrors
-   simulator/payload-*.json in the voice-receptionist repo. All text that
-   derives from visitor input is inserted with textContent only. */
+   SVG node-graph canvas styled after a flow-visualizer: dotted grid,
+   node rects, animated flow-light edges, hover "Purpose" tooltips.
+   Vanilla JS, zero dependencies, zero APIs. The voice-receptionist data
+   mirrors simulator/payload-*.json in the voice-receptionist repo. All
+   visitor-derived text is inserted with textContent only. */
 (function () {
   "use strict";
 
   const hiwRoot = document.getElementById("hiw");
   if (!hiwRoot) return;
+
+  const SVGNS = "http://www.w3.org/2000/svg";
 
   const still = () =>
     document.documentElement.classList.contains("reduce-motion") ||
@@ -16,6 +19,13 @@
   const el = (tag, cls, text) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  };
+
+  const svgEl = (tag, cls, text) => {
+    const n = document.createElementNS(SVGNS, tag);
+    if (cls) n.setAttribute("class", cls);
     if (text != null) n.textContent = text;
     return n;
   };
@@ -34,7 +44,7 @@
     return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) + "T14:00";
   };
 
-  /* ---------- shared builders ---------- */
+  /* ---------- shared visual builders (detail panel) ---------- */
 
   const hint = (v, text) =>
     v.appendChild(el("p", "hiw-hint", text || "▶ run the pipeline to populate this stage"));
@@ -105,12 +115,14 @@
     "Potater";
 
   const DLF = {
-    ready: "Ready — hit “Run the pipeline”.",
+    ready: "Ready — hit “Run the pipeline” or click any node.",
     done: "Pipeline complete — AI drafted, human approved, nothing auto-sent. 🥔",
     stages: [
       {
-        icon: "⏰", name: "Schedule Trigger", type: "n8n · scheduleTrigger", pause: 950,
+        icon: "⏰", name: "Schedule Trigger", short: "Schedule Trigger",
+        type: "n8n · scheduleTrigger", pause: 950,
         desc: "The pipeline wakes up every morning at 10:00 — nobody clicks anything.",
+        tip: ["Fires daily at 10:00, Asia/Manila.", "No clicks, no cron-fu."],
         build(v) {
           logBlock(v, [
             "› workflow activated · cron 0 10 * * 1-5",
@@ -120,22 +132,26 @@
         },
       },
       {
-        icon: "📋", name: "Get Dead Leads", type: "n8n · clickUp.getAll", pause: 1200,
+        icon: "📋", name: "Get Dead Leads", short: "Get Dead Leads",
+        type: "n8n · clickUp.getAll", pause: 1200,
         desc: "Pulls every task still marked TO DO from the ClickUp list — the board is the database.",
+        tip: ["Fetches ClickUp tasks still marked", "TO DO — filter runs server-side."],
         build(v, ctx) {
           board(v, ctx.lead.name, "todo");
           boardNote(v, "server-side filter: status = TO DO · lead queued with 2 others");
         },
       },
       {
-        icon: "✍️", name: "Generate AI Follow-up", type: "langchain · aiAgent", pause: 600,
+        icon: "✍️", name: "Generate AI Follow-up", short: "AI Follow-up",
+        type: "langchain · aiAgent", pause: 600,
         desc: "An LLM writes a short, warm check-in from the lead's custom fields. Prompt rules forbid invented links or names.",
+        tip: ["LLM writes a short check-in from", "name, company and interest notes."],
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", "openrouter · google/gemini-2.5-flash-lite"));
           const out = el("div", "hiw-type");
           v.appendChild(out);
           const text = dlfEmail(ctx.lead);
-          if (still()) {
+          if (!ctx.live || still()) {
             out.textContent = text;
             out.classList.add("done");
             return null;
@@ -160,23 +176,29 @@
         },
       },
       {
-        icon: "📨", name: "Create a draft", type: "n8n · gmail.draft", pause: 1300,
+        icon: "📨", name: "Create a draft", short: "Create a draft",
+        type: "n8n · gmail.draft", pause: 1300,
         desc: "Files the email as a Gmail draft with a booking button — and never sends it.",
+        tip: ["Files a Gmail draft with a booking", "button. Never auto-sends."],
         build(v, ctx) {
           mailCard(v, ctx.lead, dlfEmail(ctx.lead));
         },
       },
       {
-        icon: "🏷️", name: "Set Draft Done", type: "n8n · clickUp.update", pause: 1100,
+        icon: "🏷️", name: "Set Draft Done", short: "Set Draft Done",
+        type: "n8n · clickUp.update", pause: 1100,
         desc: "The task flips to Draft Done in the same run, so tomorrow's sweep never double-drafts.",
+        tip: ["Flips the task to Draft Done so", "tomorrow's run skips it."],
         build(v, ctx) {
           board(v, ctx.lead.name, "draft");
           boardNote(v, "duplicate protection: status advance + draft existence = one draft per lead");
         },
       },
       {
-        icon: "🫵", name: "You", type: "human in the loop", pause: 1200,
+        icon: "🫵", name: "You", short: "You",
+        type: "human in the loop", pause: 1200,
         desc: "The only unskippable step: a person opens the draft, edits if needed, and hits send. AI drafts; human approves.",
+        tip: ["A human reads, edits and sends.", "AI drafts; human approves."],
         build(v, ctx) {
           mailCard(v, ctx.lead, dlfEmail(ctx.lead));
           const gate = el("div", "hiw-gate");
@@ -185,16 +207,23 @@
           btn.type = "button";
           gate.appendChild(btn);
           v.appendChild(gate);
+          const finish = () => {
+            v.textContent = "";
+            board(v, ctx.lead.name, "sent");
+            boardNote(v, "✉️ sent by a human — lifecycle: TO DO → Draft Done → Follow-up Sent");
+            ctx.status("📮 Draft sent — lead resurrected. 🥔");
+          };
+          if (!ctx.live) {
+            btn.addEventListener("click", finish, { once: true });
+            return null;
+          }
           const isLive = ctx.token;
           return new Promise((done) => {
             btn.addEventListener(
               "click",
               () => {
                 if (!isLive()) { done(); return; }
-                v.textContent = "";
-                board(v, ctx.lead.name, "sent");
-                boardNote(v, "✉️ sent by a human — lifecycle: TO DO → Draft Done → Follow-up Sent");
-                ctx.status("📮 Draft sent — lead resurrected. 🥔");
+                finish();
                 done();
               },
               { once: true }
@@ -255,19 +284,23 @@
   };
 
   const VR = {
-    ready: "Ready — pick a call, then hit “Run the call”.",
+    ready: "Ready — pick a call, then hit “Run the call” or click any node.",
     done: "Call handled end-to-end — the caller never waited, the owner never lifted a finger. 🥔",
     stages: [
       {
-        icon: "📵", name: "Missed call → Vapi", type: "Vapi + Twilio", pause: 1200,
+        icon: "📵", name: "Missed call → Vapi", short: "Missed call",
+        type: "Vapi + Twilio", pause: 1200,
         desc: "Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.",
+        tip: ["Twilio routes the missed call to a", "Vapi agent — answers 24/7."],
         build(v, ctx) {
           callCard(v, ctx.sc);
         },
       },
       {
-        icon: "🗣️", name: "Conversation", type: "Vapi assistant", pause: 2000,
+        icon: "🗣️", name: "Conversation", short: "Conversation",
+        type: "Vapi assistant", pause: 2100,
         desc: "Natural chat: answers service and pricing questions from the salon config, and captures name, number, intent and preferred slot as structured data.",
+        tip: ["Captures name, number, intent and", "slot as structured data."],
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", "🎙 vapi assistant · Potaterrr Salon"));
           const wrap = el("div", "hiw-chat");
@@ -283,8 +316,10 @@
         },
       },
       {
-        icon: "🧾", name: "End-of-call report", type: "webhook · POST", pause: 1500,
+        icon: "🧾", name: "End-of-call report", short: "Call report",
+        type: "webhook · POST", pause: 1500,
         desc: "Vapi POSTs one structured JSON report to the branch webhook. Same contract whether the branch runs on Make, n8n or Zapier — swap platforms by changing a single URL.",
+        tip: ["One JSON contract POSTed to the", "branch webhook (Make/n8n/Zapier)."],
         build(v, ctx) {
           const sc = ctx.sc;
           const payload = {
@@ -309,8 +344,10 @@
         },
       },
       {
-        icon: "🔍", name: "Conflict-check", type: "Google Calendar · freebusy", pause: 1400,
+        icon: "🔍", name: "Conflict-check", short: "Conflict-check",
+        type: "Google Calendar · freebusy", pause: 1400,
         desc: "Booking intent? The pipeline checks the calendar before touching anything. Questions skip straight to logging.",
+        tip: ["Checks Google Calendar freebusy", "before touching anything."],
         build(v, ctx) {
           const sc = ctx.sc;
           if (sc.intent === "book_appointment") {
@@ -341,8 +378,10 @@
         },
       },
       {
-        icon: "📅", name: "Book & log", type: "Google Calendar + log store", pause: 1400,
+        icon: "📅", name: "Book & log", short: "Book & log",
+        type: "Google Calendar + log store", pause: 1400,
         desc: "Free slot → the event “Salon: {service} — {name}” is created and the call is logged. Taken, past, or no booking? Logged as conflict / no_booking for the record.",
+        tip: ["Books the slot — or logs it as", "no_booking / conflict."],
         build(v, ctx) {
           const sc = ctx.sc;
           if (sc.intent === "book_appointment" && !sc.bad) {
@@ -354,8 +393,10 @@
         },
       },
       {
-        icon: "📣", name: "Owner alert", type: "Telegram / Gmail", pause: 1100,
+        icon: "📣", name: "Owner alert", short: "Owner alert",
+        type: "Telegram / Gmail", pause: 1100,
         desc: "The owner gets a summary the second the call ends — zero missed leads, zero phone tag. The channel is just a config value per branch.",
+        tip: ["Owner gets a Telegram / Gmail", "summary instantly."],
         build(v, ctx) {
           v.appendChild(el("div", "hiw-tg", ctx.sc.alert));
         },
@@ -387,103 +428,177 @@
 
   const DEMOS = { dlf: DLF, vr: VR };
 
-  /* ---------- carousel ---------- */
+  /* ---------- SVG canvas (nodes, edges, tooltips) ---------- */
 
-  function buildCarousel(panel, key) {
-    const demo = DEMOS[key];
-    const track = panel.querySelector(".hiw-track");
-    const dotsWrap = panel.querySelector(".hiw-dots");
-    const viewport = panel.querySelector(".hiw-viewport");
+  const NODE_W = 150;
+  const NODE_H = 64;
+  const POS = [
+    { x: 30, y: 46 }, { x: 245, y: 46 }, { x: 460, y: 46 },
+    { x: 460, y: 252 }, { x: 245, y: 252 }, { x: 30, y: 252 },
+  ];
+  const EDGE_D = [
+    "M 180 78 H 245",
+    "M 395 78 H 460",
+    "M 535 110 V 252",
+    "M 460 284 H 395",
+    "M 245 284 H 180",
+  ];
 
-    const slides = demo.stages.map((st, i) => {
-      const art = el("article", "hiw-slide");
-      const head = el("div", "hiw-slide-head");
-      head.appendChild(el("span", "hiw-stage-num", String(i + 1).padStart(2, "0")));
-      head.appendChild(el("span", "hiw-node-icon", st.icon));
-      head.appendChild(el("span", "hiw-node-name", st.name));
-      if (st.type) head.appendChild(el("span", "hiw-node-type", st.type));
-      art.appendChild(head);
-      art.appendChild(el("p", "hiw-node-desc", st.desc));
-      const vis = el("div", "hiw-visual");
-      art.appendChild(vis);
-      track.appendChild(art);
-      return vis;
+  function buildSvg(svg, key, stages) {
+    const defs = svgEl("defs");
+    const filt = svgEl("filter");
+    filt.setAttribute("id", "hiw-glow-" + key);
+    filt.setAttribute("x", "-20%");
+    filt.setAttribute("y", "-20%");
+    filt.setAttribute("width", "140%");
+    filt.setAttribute("height", "140%");
+    const blur = svgEl("feGaussianBlur");
+    blur.setAttribute("stdDeviation", "4");
+    blur.setAttribute("result", "blur");
+    const comp = svgEl("feComposite");
+    comp.setAttribute("in", "SourceGraphic");
+    comp.setAttribute("in2", "blur");
+    comp.setAttribute("operator", "over");
+    filt.appendChild(blur);
+    filt.appendChild(comp);
+    defs.appendChild(filt);
+    svg.appendChild(defs);
+
+    const edgeEls = EDGE_D.map((d) => {
+      const g = svgEl("g", "hiw-edge");
+      const base = svgEl("path", "hiw-edge-base");
+      base.setAttribute("d", d);
+      const flow = svgEl("path", "hiw-edge-flow");
+      flow.setAttribute("d", d);
+      flow.setAttribute("filter", "url(#hiw-glow-" + key + ")");
+      g.appendChild(base);
+      g.appendChild(flow);
+      svg.appendChild(g);
+      return g;
     });
 
-    const dots = demo.stages.map((st, i) => {
-      const d = document.createElement("button");
-      d.type = "button";
-      d.setAttribute("role", "tab");
-      d.setAttribute("aria-label", "Stage " + (i + 1) + ": " + st.name);
-      d.addEventListener("click", () => show(i));
-      dotsWrap.appendChild(d);
-      return d;
-    });
+    const nodeEls = stages.map((stg, i) => {
+      const p = POS[i];
+      const g = svgEl("g", "hiw-node");
+      g.setAttribute("transform", "translate(" + p.x + "," + p.y + ")");
+      g.setAttribute("tabindex", "0");
+      g.setAttribute("role", "button");
+      g.setAttribute("aria-label", "Stage " + (i + 1) + ": " + stg.name);
 
-    let index = 0;
-    const show = (i) => {
-      index = (i + demo.stages.length) % demo.stages.length;
-      track.style.transform = "translateX(-" + index * 100 + "%)";
-      dots.forEach((d, j) => {
-        d.classList.toggle("active", j === index);
-        d.setAttribute("aria-selected", String(j === index));
+      const rect = svgEl("rect", "hiw-node-rect");
+      rect.setAttribute("width", String(NODE_W));
+      rect.setAttribute("height", String(NODE_H));
+      rect.setAttribute("rx", "10");
+      g.appendChild(rect);
+
+      const emoji = svgEl("text", "hiw-node-emoji", stg.icon);
+      emoji.setAttribute("x", "14");
+      emoji.setAttribute("y", "27");
+      g.appendChild(emoji);
+
+      const label = svgEl("text", "hiw-node-label", stg.short || stg.name);
+      label.setAttribute("x", "14");
+      label.setAttribute("y", "49");
+      g.appendChild(label);
+
+      const badge = svgEl("g", "hiw-badge");
+      const circ = svgEl("circle");
+      circ.setAttribute("cx", "137");
+      circ.setAttribute("cy", "12");
+      circ.setAttribute("r", "9");
+      const check = svgEl("path");
+      check.setAttribute("d", "M 133 12 l 3 3 l 6 -7");
+      badge.appendChild(circ);
+      badge.appendChild(check);
+      g.appendChild(badge);
+
+      const lines = stg.tip || [stg.desc];
+      const tipW = 224;
+      const tipH = 30 + lines.length * 17;
+      const below = p.y < 150;
+      const tx = Math.max(5, Math.min(p.x, 640 - tipW - 6)) - p.x;
+      const ty = below ? NODE_H + 10 : -10 - tipH;
+      const tip = svgEl("g", "hiw-tip");
+      tip.setAttribute("transform", "translate(" + tx + "," + ty + ")");
+      const trect = svgEl("rect");
+      trect.setAttribute("width", String(tipW));
+      trect.setAttribute("height", String(tipH));
+      trect.setAttribute("rx", "8");
+      tip.appendChild(trect);
+      const ttitle = svgEl("text", "hiw-tip-title", "Purpose:");
+      ttitle.setAttribute("x", "10");
+      ttitle.setAttribute("y", "20");
+      tip.appendChild(ttitle);
+      lines.forEach((ln, li) => {
+        const t = svgEl("text", "hiw-tip-line", ln);
+        t.setAttribute("x", "10");
+        t.setAttribute("y", String(38 + li * 17));
+        tip.appendChild(t);
       });
-    };
+      g.appendChild(tip);
 
-    panel.querySelector(".hiw-prev").addEventListener("click", () => show(index - 1));
-    panel.querySelector(".hiw-next").addEventListener("click", () => show(index + 1));
-    viewport.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") { e.preventDefault(); show(index - 1); }
-      if (e.key === "ArrowRight") { e.preventDefault(); show(index + 1); }
+      svg.appendChild(g);
+      return g;
     });
 
-    let dragX = null;
-    viewport.addEventListener("pointerdown", (e) => { dragX = e.clientX; });
-    window.addEventListener("pointerup", (e) => {
-      if (dragX === null) return;
-      const dx = e.clientX - dragX;
-      if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
-      dragX = null;
-    });
-
-    return {
-      panel, demo, show, slides,
-      runBtn: panel.querySelector(".hiw-run"),
-      resetBtn: panel.querySelector(".hiw-reset"),
-      statusEl: panel.querySelector(".hiw-status"),
-    };
+    return { edgeEls, nodeEls };
   }
 
-  /* ---------- runner ---------- */
+  /* ---------- per-project wiring ---------- */
 
-  function wireRun(c, key) {
-    const st = state[key];
-    const runBtn = c.runBtn;
-    const resetBtn = c.resetBtn;
-    const statusEl = c.statusEl;
-
-    const renderStage = (i, ctx) => {
-      const v = c.slides[i];
-      v.textContent = "";
-      return c.demo.stages[i].build(v, ctx);
+  function buildDemo(key) {
+    const demo = DEMOS[key];
+    const panel = document.getElementById("hiw-panel-" + key);
+    if (!panel) return null;
+    const svg = panel.querySelector(".hiw-canvas");
+    const detail = {
+      num: panel.querySelector(".hiw-detail .hiw-stage-num"),
+      icon: panel.querySelector(".hiw-detail .hiw-node-icon"),
+      name: panel.querySelector(".hiw-detail .hiw-node-name"),
+      type: panel.querySelector(".hiw-detail .hiw-node-type"),
+      desc: panel.querySelector(".hiw-detail .hiw-node-desc"),
+      visual: panel.querySelector(".hiw-detail .hiw-visual"),
     };
+    const statusEl = panel.querySelector(".hiw-status");
+    const runBtn = panel.querySelector(".hiw-run");
+    const resetBtn = panel.querySelector(".hiw-reset");
+    if (!svg || !detail.visual || !statusEl || !runBtn) return null;
 
-    const initialCtx = () => ({
-      lead: readLead(c.panel),
-      sc: activeScenario(c.panel),
-      status: () => {},
-      token: () => false,
+    const st = state[key];
+    const { edgeEls, nodeEls } = buildSvg(svg, key, demo.stages);
+    let sel = 0;
+
+    const browsingCtx = () => ({
+      lead: readLead(panel),
+      sc: activeScenario(panel),
+      live: false,
+      token: () => true,
+      status: (t) => { statusEl.textContent = t; },
     });
+
+    const select = (i, ctx) => {
+      sel = (i + demo.stages.length) % demo.stages.length;
+      const stg = demo.stages[sel];
+      detail.num.textContent = String(sel + 1).padStart(2, "0");
+      detail.icon.textContent = stg.icon;
+      detail.name.textContent = stg.name;
+      detail.type.textContent = stg.type || "";
+      detail.desc.textContent = stg.desc;
+      nodeEls.forEach((n, j) => n.classList.toggle("is-active", j === sel));
+      edgeEls.forEach((e, j) => e.classList.toggle("is-active", j === sel - 1));
+      detail.visual.textContent = "";
+      return stg.build(detail.visual, ctx);
+    };
 
     const reset = () => {
       st.runId += 1;
       runBtn.disabled = false;
       resetBtn.hidden = true;
-      statusEl.textContent = c.demo.ready;
-      c.show(0);
-      renderStage(0, initialCtx());
+      statusEl.textContent = demo.ready;
+      nodeEls.forEach((n) => n.classList.remove("is-done", "is-active"));
+      edgeEls.forEach((e) => e.classList.remove("is-active"));
+      select(0, browsingCtx());
     };
-    c.reset = reset;
 
     const dwell = async (id, ms) => {
       const end = Date.now() + (still() ? Math.min(ms, 80) : ms);
@@ -500,22 +615,23 @@
       resetBtn.hidden = false;
 
       const ctx = {
-        lead: readLead(c.panel),
-        sc: activeScenario(c.panel),
+        lead: readLead(panel),
+        sc: activeScenario(panel),
+        live: true,
         token: () => id === st.runId,
         status: (t) => { if (id === st.runId) statusEl.textContent = t; },
       };
 
       try {
-        for (let i = 0; i < c.demo.stages.length; i++) {
+        for (let i = 0; i < demo.stages.length; i++) {
           if (id !== st.runId) return;
-          c.show(i);
-          statusEl.textContent = c.demo.stages[i].name + "…";
-          await renderStage(i, ctx);
+          statusEl.textContent = demo.stages[i].name + "…";
+          await select(i, ctx);
           if (id !== st.runId) return;
-          await dwell(id, c.demo.stages[i].pause || 950);
+          nodeEls[i].classList.add("is-done");
+          await dwell(id, demo.stages[i].pause || 950);
         }
-        if (id === st.runId) statusEl.textContent = c.demo.done;
+        if (id === st.runId) statusEl.textContent = demo.done;
       } finally {
         if (id === st.runId) {
           runBtn.disabled = false;
@@ -526,9 +642,33 @@
 
     resetBtn.addEventListener("click", reset);
 
-    c.panel.querySelectorAll(".hiw-scenario").forEach((chip) => {
+    nodeEls.forEach((g, i) => {
+      g.addEventListener("click", () => {
+        if (i === sel) return;
+        select(i, browsingCtx());
+      });
+      g.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          select(i, browsingCtx());
+        }
+      });
+    });
+
+    svg.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        select(sel - 1, browsingCtx());
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        select(sel + 1, browsingCtx());
+      }
+    });
+
+    panel.querySelectorAll(".hiw-scenario").forEach((chip) => {
       chip.addEventListener("click", () => {
-        c.panel.querySelectorAll(".hiw-scenario").forEach((o) => {
+        panel.querySelectorAll(".hiw-scenario").forEach((o) => {
           o.classList.toggle("is-active", o === chip);
           o.setAttribute("aria-pressed", String(o === chip));
         });
@@ -537,16 +677,15 @@
     });
 
     reset();
+    return { panel, reset };
   }
 
-  /* ---------- wiring ---------- */
+  /* ---------- global wiring ---------- */
 
-  const carousels = {};
+  const handles = {};
   ["dlf", "vr"].forEach((key) => {
-    const panel = document.getElementById("hiw-panel-" + key);
-    if (!panel) return;
-    carousels[key] = buildCarousel(panel, key);
-    wireRun(carousels[key], key);
+    const h = buildDemo(key);
+    if (h) handles[key] = h;
   });
 
   const switchBtns = Array.prototype.slice.call(hiwRoot.querySelectorAll("[data-hiw-switch]"));
@@ -558,11 +697,11 @@
       b.setAttribute("aria-selected", String(on));
       b.tabIndex = on ? 0 : -1;
     });
-    Object.keys(carousels).forEach((k) => {
-      const c = carousels[k];
+    Object.keys(handles).forEach((k) => {
+      const h = handles[k];
       const show = k === key;
-      if (!show && !c.panel.hidden) c.reset();
-      c.panel.hidden = !show;
+      if (!show && !h.panel.hidden) h.reset();
+      h.panel.hidden = !show;
     });
   };
 

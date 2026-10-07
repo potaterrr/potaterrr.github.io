@@ -350,13 +350,18 @@
                     <button type="button" class="hiw-reset" hidden>↺ Reset</button>
                   </div>
                 </div>
-                <div class="hiw-viewport" tabindex="0" aria-label="Workflow stages — arrow keys or drag to browse">
-                  <div class="hiw-track"></div>
+                <div class="hiw-canvas-wrap">
+                  <svg class="hiw-canvas" id="hiw-svg-dlf" viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Dead Lead Follow-up pipeline map — click a node for details"></svg>
                 </div>
-                <div class="hiw-controls">
-                  <button type="button" class="hiw-arrow hiw-prev" aria-label="Previous stage">&#8249;</button>
-                  <div class="hiw-dots" role="tablist" aria-label="Workflow stages"></div>
-                  <button type="button" class="hiw-arrow hiw-next" aria-label="Next stage">&#8250;</button>
+                <div class="hiw-detail" id="hiw-detail-dlf">
+                  <div class="hiw-detail-head">
+                    <span class="hiw-stage-num">01</span>
+                    <span class="hiw-node-icon">⏰</span>
+                    <span class="hiw-node-name">Schedule Trigger</span>
+                    <span class="hiw-node-type">n8n · scheduleTrigger</span>
+                  </div>
+                  <p class="hiw-node-desc">The pipeline wakes up every morning at 10:00 — nobody clicks anything.</p>
+                  <div class="hiw-visual"></div>
                 </div>
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the pipeline”.</p>
               </div>
@@ -373,13 +378,18 @@
                     <button type="button" class="hiw-reset" hidden>↺ Reset</button>
                   </div>
                 </div>
-                <div class="hiw-viewport" tabindex="0" aria-label="Workflow stages — arrow keys or drag to browse">
-                  <div class="hiw-track"></div>
+                <div class="hiw-canvas-wrap">
+                  <svg class="hiw-canvas" id="hiw-svg-vr" viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="AI Voice Receptionist call-flow map — click a node for details"></svg>
                 </div>
-                <div class="hiw-controls">
-                  <button type="button" class="hiw-arrow hiw-prev" aria-label="Previous stage">&#8249;</button>
-                  <div class="hiw-dots" role="tablist" aria-label="Workflow stages"></div>
-                  <button type="button" class="hiw-arrow hiw-next" aria-label="Next stage">&#8250;</button>
+                <div class="hiw-detail" id="hiw-detail-vr">
+                  <div class="hiw-detail-head">
+                    <span class="hiw-stage-num">01</span>
+                    <span class="hiw-node-icon">📵</span>
+                    <span class="hiw-node-name">Missed call → Vapi</span>
+                    <span class="hiw-node-type">Vapi + Twilio</span>
+                  </div>
+                  <p class="hiw-node-desc">Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.</p>
+                  <div class="hiw-visual"></div>
                 </div>
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the call”.</p>
               </div>
