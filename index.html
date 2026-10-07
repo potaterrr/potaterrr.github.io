@@ -79,6 +79,7 @@
         <ul>
           <li><a href="#top" data-section="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li>
           <li><a href="#projects" data-section="projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li>
+          <li><a href="#how-it-works" data-section="how-it-works"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" /></svg>Demo</a></li>
           <li><a href="#skills" data-section="skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li>
           <li><a href="#timeline" data-section="timeline"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>Timeline</a></li>
           <li><a href="#blog" data-section="blog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg>Blog</a></li>
@@ -106,7 +107,7 @@
           <p class="hero-sub reveal">If it's repetitive, I'll automate it. If it involves potatoes, even better.</p>
 
           <nav class="bento reveal" aria-label="Explore the site">
-            <a class="bento-tile bento-featured" href="#projects">
+            <a class="bento-tile bento-featured" href="#how-it-works" data-hiw-open="dlf">
               <span class="bento-label"><span class="bento-icon">📮</span>Featured build</span>
               <span class="bento-title">Dead Lead Follow-up</span>
               <span class="bento-desc">AI drafts the check-in emails into Gmail drafts — a human approves, nothing auto-sends.</span>
@@ -169,23 +170,25 @@
                 <div class="barrel-ring" id="barrel-ring">
                   <article class="card barrel-slide">
                     <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">Dead Lead Follow-up ↗</a></h3>
+                      <h3><a href="#how-it-works" data-hiw-open="dlf">Dead Lead Follow-up</a></h3>
                       <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
                       <ul class="feature-list">
                         <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
                         <li>Anti-hallucination guardrails: the only link in any email is mine</li>
                         <li>Full setup guide, config reference and production-tested lessons in the README</li>
+                        <li>▶ <a href="#how-it-works" data-hiw-open="dlf">Watch it run below</a> · <a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">repo ↗</a></li>
                       </ul>
                     </div>
                   </article>
                   <article class="card barrel-slide">
                     <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist ↗</a></h3>
+                      <h3><a href="#how-it-works" data-hiw-open="vr">AI Voice Receptionist</a></h3>
                       <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
                       <ul class="feature-list">
                         <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
                         <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
                         <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
+                        <li>▶ <a href="#how-it-works" data-hiw-open="vr">Watch a call flow run</a> · <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo ↗</a></li>
                       </ul>
                     </div>
                   </article>
@@ -323,10 +326,68 @@
           </div>
         </section>
 
-        <section class="section section-alt" id="how-i-work">
+        <section class="section section-alt" id="how-it-works">
           <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> How I Work</h2>
-            <p class="section-lead reveal">Understanding how systems communicate beats memorizing platform features. Every workflow I design is:</p>
+            <h2 class="section-title reveal"><span class="hash">#</span> How It Works</h2>
+            <p class="section-lead reveal">Pick a featured build, hit run, and step through its pipeline stage by stage. Everything is simulated right here in your browser — no APIs, no keys, no emails harmed. 🥔</p>
+
+            <div class="hiw reveal" id="hiw">
+              <div class="hiw-switch" role="tablist" aria-label="Choose a featured project">
+                <button type="button" class="hiw-switch-btn is-active" role="tab" id="hiw-tab-dlf" aria-controls="hiw-panel-dlf" aria-selected="true" data-hiw-switch="dlf">📮 Dead Lead Follow-up</button>
+                <button type="button" class="hiw-switch-btn" role="tab" id="hiw-tab-vr" aria-controls="hiw-panel-vr" aria-selected="false" tabindex="-1" data-hiw-switch="vr">📞 AI Voice Receptionist</button>
+              </div>
+
+              <div class="hiw-panel" id="hiw-panel-dlf" role="tabpanel" aria-labelledby="hiw-tab-dlf">
+                <div class="hiw-setup">
+                  <fieldset class="hiw-lead-card">
+                    <legend>📋 Tonight's dead lead — edit me</legend>
+                    <label>Name <input id="hiw-lead-name" type="text" value="Bea Mendoza" maxlength="40" autocomplete="off" /></label>
+                    <label>Company <input id="hiw-lead-company" type="text" value="Sunnyside Prints" maxlength="40" autocomplete="off" /></label>
+                    <label>Original interest <input id="hiw-lead-interest" type="text" value="automating their Etsy order fulfilment" maxlength="60" autocomplete="off" /></label>
+                  </fieldset>
+                  <div class="hiw-actions">
+                    <button type="button" class="hiw-run">▶ Run the pipeline</button>
+                    <button type="button" class="hiw-reset" hidden>↺ Reset</button>
+                  </div>
+                </div>
+                <div class="hiw-viewport" tabindex="0" aria-label="Workflow stages — arrow keys or drag to browse">
+                  <div class="hiw-track"></div>
+                </div>
+                <div class="hiw-controls">
+                  <button type="button" class="hiw-arrow hiw-prev" aria-label="Previous stage">&#8249;</button>
+                  <div class="hiw-dots" role="tablist" aria-label="Workflow stages"></div>
+                  <button type="button" class="hiw-arrow hiw-next" aria-label="Next stage">&#8250;</button>
+                </div>
+                <p class="hiw-status" aria-live="polite">Ready — hit “Run the pipeline”.</p>
+              </div>
+
+              <div class="hiw-panel" id="hiw-panel-vr" role="tabpanel" aria-labelledby="hiw-tab-vr" hidden>
+                <div class="hiw-setup">
+                  <div class="hiw-scenarios" role="group" aria-label="Pick a simulated call">
+                    <button type="button" class="hiw-scenario is-active" data-scenario="bookable" aria-pressed="true">📲 Bookable call</button>
+                    <button type="button" class="hiw-scenario" data-scenario="question" aria-pressed="false">❓ Pricing question</button>
+                    <button type="button" class="hiw-scenario" data-scenario="invalid" aria-pressed="false">⏳ Past-slot request</button>
+                  </div>
+                  <div class="hiw-actions">
+                    <button type="button" class="hiw-run">▶ Run the call</button>
+                    <button type="button" class="hiw-reset" hidden>↺ Reset</button>
+                  </div>
+                </div>
+                <div class="hiw-viewport" tabindex="0" aria-label="Workflow stages — arrow keys or drag to browse">
+                  <div class="hiw-track"></div>
+                </div>
+                <div class="hiw-controls">
+                  <button type="button" class="hiw-arrow hiw-prev" aria-label="Previous stage">&#8249;</button>
+                  <div class="hiw-dots" role="tablist" aria-label="Workflow stages"></div>
+                  <button type="button" class="hiw-arrow hiw-next" aria-label="Next stage">&#8250;</button>
+                </div>
+                <p class="hiw-status" aria-live="polite">Ready — hit “Run the call”.</p>
+              </div>
+
+              <p class="hiw-note">Same nodes as production, zero side effects: the real workflow only ever drafts emails (never sends) and runs calls in simulation. <a href="#contact">Want one of your own? →</a></p>
+            </div>
+
+            <p class="section-lead hiw-principles-lead reveal">And whatever the pipeline, every workflow I design is:</p>
             <div class="grid grid-3">
               <article class="card principle reveal">
                 <h3><span class="num">01</span> Resilient</h3>
@@ -611,5 +672,6 @@
   </div>
 
   <script src="js/main.js"></script>
+  <script src="js/hiw.js"></script>
 </body>
 </html>

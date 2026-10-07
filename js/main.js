@@ -1,7 +1,7 @@
 /* potaterrr.github.io — vanilla JS, no dependencies.
    Sections: year, reveals, blog slideshow, install terminal, theme,
    FAB easter egg, contour background, rail scrollspy, project barrel,
-   mobile tab bar, intro overlay, accessibility menu. */
+   mobile tab bar, intro overlay, accessibility menu. Pipeline demos live in js/hiw.js. */
 
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ? { root: panel, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
 
-  const sectionIds = ["top", "projects", "skills", "timeline", "blog", "contact"];
+  const sectionIds = ["top", "projects", "skills", "how-it-works", "timeline", "blog", "contact"];
   const railLinks = new Map();
   document.querySelectorAll(".rail-nav a[data-section]").forEach((a) => {
     railLinks.set(a.dataset.section, a);
