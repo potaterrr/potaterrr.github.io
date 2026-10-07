@@ -350,46 +350,99 @@
                     <button type="button" class="hiw-reset" hidden>↺ Reset</button>
                   </div>
                 </div>
-                <div class="hiw-canvas-wrap">
-                  <svg class="hiw-canvas" id="hiw-svg-dlf" viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="Dead Lead Follow-up pipeline map — click a node for details"></svg>
+                <div class="hiw-wrap">
+                  <canvas class="hiw-flow" id="hiw-flow-dlf" width="640" height="300" role="group" aria-label="Dead Lead Follow-up pipeline map — click a node for details" tabindex="0"></canvas>
+                  <button type="button" class="hiw-pause" data-pause="dlf" aria-label="Pause packet animation" aria-pressed="false">⏸</button>
                 </div>
-                <div class="hiw-detail" id="hiw-detail-dlf">
-                  <div class="hiw-detail-head">
-                    <span class="hiw-stage-num">01</span>
-                    <span class="hiw-node-icon">⏰</span>
-                    <span class="hiw-node-name">Schedule Trigger</span>
-                    <span class="hiw-node-type">n8n · scheduleTrigger</span>
+                <div class="hiw-metrics">
+                  <div class="hiw-metric"><span class="hiw-metric-label">Current Stage</span><span class="hiw-metric-value" id="hiw-m-stage-dlf">Schedule Trigger</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Live Packets</span><span class="hiw-metric-value" id="hiw-m-packets-dlf">15</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Status</span><span class="hiw-metric-value hiw-metric-ok" id="hiw-m-status-dlf">healthy</span></div>
+                </div>
+                <div class="hiw-inspect" id="hiw-detail-dlf">
+                  <div class="hiw-ins-head">
+                    <span class="hiw-ins-dot"></span>
+                    <span class="hiw-ins-icon">⏰</span>
+                    <span class="hiw-ins-name">Schedule Trigger</span>
+                    <span class="hiw-ins-tag">n8n · scheduleTrigger</span>
                   </div>
-                  <p class="hiw-node-desc">The pipeline wakes up every morning at 10:00 — nobody clicks anything.</p>
+                  <p class="hiw-ins-desc">The pipeline wakes up every morning at 10:00 — nobody clicks anything.</p>
                   <div class="hiw-visual"></div>
+                </div>
+                <div class="hiw-console">
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Pipeline velocity</span>
+                    <div class="hiw-slider-row">
+                      <input type="range" class="hiw-slider" id="hiw-speed-dlf" min="0" max="3" step="0.5" value="1" aria-label="Packet speed" />
+                      <span class="hiw-slider-val" id="hiw-speed-val-dlf">1.0x</span>
+                    </div>
+                  </div>
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Failure drill</span>
+                    <div class="hiw-select-wrap">
+                      <select class="hiw-select hiw-drill" id="hiw-drill-dlf" aria-label="Simulate a pipeline disturbance">
+                        <option value="none">No errors</option>
+                        <option value="429">LLM rate limit (429)</option>
+                        <option value="dup">Duplicate lead</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the pipeline”.</p>
               </div>
 
               <div class="hiw-panel" id="hiw-panel-vr" role="tabpanel" aria-labelledby="hiw-tab-vr" hidden>
                 <div class="hiw-setup">
-                  <div class="hiw-scenarios" role="group" aria-label="Pick a simulated call">
-                    <button type="button" class="hiw-scenario is-active" data-scenario="bookable" aria-pressed="true">📲 Bookable call</button>
-                    <button type="button" class="hiw-scenario" data-scenario="question" aria-pressed="false">❓ Pricing question</button>
-                    <button type="button" class="hiw-scenario" data-scenario="invalid" aria-pressed="false">⏳ Past-slot request</button>
-                  </div>
                   <div class="hiw-actions">
                     <button type="button" class="hiw-run">▶ Run the call</button>
                     <button type="button" class="hiw-reset" hidden>↺ Reset</button>
                   </div>
                 </div>
-                <div class="hiw-canvas-wrap">
-                  <svg class="hiw-canvas" id="hiw-svg-vr" viewBox="0 0 640 372" xmlns="http://www.w3.org/2000/svg" role="group" aria-label="AI Voice Receptionist call-flow map — click a node for details"></svg>
+                <div class="hiw-wrap">
+                  <canvas class="hiw-flow" id="hiw-flow-vr" width="640" height="300" role="group" aria-label="AI Voice Receptionist call-flow map — click a node for details" tabindex="0"></canvas>
+                  <button type="button" class="hiw-pause" data-pause="vr" aria-label="Pause packet animation" aria-pressed="false">⏸</button>
                 </div>
-                <div class="hiw-detail" id="hiw-detail-vr">
-                  <div class="hiw-detail-head">
-                    <span class="hiw-stage-num">01</span>
-                    <span class="hiw-node-icon">📵</span>
-                    <span class="hiw-node-name">Missed call → Vapi</span>
-                    <span class="hiw-node-type">Vapi + Twilio</span>
+                <div class="hiw-metrics">
+                  <div class="hiw-metric"><span class="hiw-metric-label">Current Stage</span><span class="hiw-metric-value" id="hiw-m-stage-vr">Missed call</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Live Packets</span><span class="hiw-metric-value" id="hiw-m-packets-vr">15</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Status</span><span class="hiw-metric-value hiw-metric-ok" id="hiw-m-status-vr">healthy</span></div>
+                </div>
+                <div class="hiw-inspect" id="hiw-detail-vr">
+                  <div class="hiw-ins-head">
+                    <span class="hiw-ins-dot"></span>
+                    <span class="hiw-ins-icon">📵</span>
+                    <span class="hiw-ins-name">Missed call → Vapi</span>
+                    <span class="hiw-ins-tag">Vapi + Twilio</span>
                   </div>
-                  <p class="hiw-node-desc">Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.</p>
+                  <p class="hiw-ins-desc">Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.</p>
                   <div class="hiw-visual"></div>
+                </div>
+                <div class="hiw-console">
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Pipeline velocity</span>
+                    <div class="hiw-slider-row">
+                      <input type="range" class="hiw-slider" id="hiw-speed-vr" min="0" max="3" step="0.5" value="1" aria-label="Packet speed" />
+                      <span class="hiw-slider-val" id="hiw-speed-val-vr">1.0x</span>
+                    </div>
+                  </div>
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Call type</span>
+                    <div class="hiw-toggle">
+                      <button type="button" class="hiw-chip is-active" data-scenario="bookable" aria-pressed="true">Bookable</button>
+                      <button type="button" class="hiw-chip" data-scenario="question" aria-pressed="false">Question</button>
+                      <button type="button" class="hiw-chip" data-scenario="invalid" aria-pressed="false">Past slot</button>
+                    </div>
+                  </div>
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Branch platform</span>
+                    <div class="hiw-select-wrap">
+                      <select class="hiw-select hiw-platform" id="hiw-platform-vr" aria-label="Which platform branch handles the call">
+                        <option value="make">Make.com</option>
+                        <option value="n8n" selected>n8n · self-hosted</option>
+                        <option value="zapier">Zapier</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the call”.</p>
               </div>

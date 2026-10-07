@@ -10,8 +10,6 @@
   const hiwRoot = document.getElementById("hiw");
   if (!hiwRoot) return;
 
-  const SVGNS = "http://www.w3.org/2000/svg";
-
   const still = () =>
     document.documentElement.classList.contains("reduce-motion") ||
     (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
@@ -19,13 +17,6 @@
   const el = (tag, cls, text) => {
     const n = document.createElement(tag);
     if (cls) n.className = cls;
-    if (text != null) n.textContent = text;
-    return n;
-  };
-
-  const svgEl = (tag, cls, text) => {
-    const n = document.createElementNS(SVGNS, tag);
-    if (cls) n.setAttribute("class", cls);
     if (text != null) n.textContent = text;
     return n;
   };
@@ -339,6 +330,7 @@
               summary: sc.summary,
             },
           };
+          v.appendChild(el("p", "hiw-model", (PLATFORM_LABEL[ctx.platform] || "Branch webhook") + " · receives this report"));
           v.appendChild(el("p", "hiw-model", "POST /webhook · content-type: application/json"));
           v.appendChild(el("pre", "hiw-json", JSON.stringify(payload, null, 2)));
         },
@@ -398,6 +390,7 @@
         desc: "The owner gets a summary the second the call ends — zero missed leads, zero phone tag. The channel is just a config value per branch.",
         tip: ["Owner gets a Telegram / Gmail", "summary instantly."],
         build(v, ctx) {
+          v.appendChild(el("p", "hiw-model", CHANNEL_LABEL[ctx.platform] || "Alert channel"));
           v.appendChild(el("div", "hiw-tg", ctx.sc.alert));
         },
       },
@@ -422,151 +415,353 @@
   };
 
   const activeScenario = (panel) => {
-    const chip = panel.querySelector(".hiw-scenario.is-active");
+    const chip = panel.querySelector(".hiw-chip.is-active");
     return SCENARIOS[(chip && chip.getAttribute("data-scenario")) || "bookable"];
   };
 
   const DEMOS = { dlf: DLF, vr: VR };
 
-  /* ---------- SVG canvas (nodes, edges, tooltips) ---------- */
+  const NODE_COLORS = ["#22c55e", "#3b82f6", "#a855f7", "#06b6d4", "#f59e0b", "#ec4899"];
+  const PER_LINK = 4;
+  const CW = 640;
+  const CH = 300;
 
-  const NODE_W = 150;
-  const NODE_H = 64;
-  const POS = [
-    { x: 30, y: 46 }, { x: 245, y: 46 }, { x: 460, y: 46 },
-    { x: 460, y: 252 }, { x: 245, y: 252 }, { x: 30, y: 252 },
-  ];
-  const EDGE_D = [
-    "M 180 78 H 245",
-    "M 395 78 H 460",
-    "M 535 110 V 252",
-    "M 460 284 H 395",
-    "M 245 284 H 180",
-  ];
+  const cssVar = (name, fb) => {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fb;
+  };
 
-  function buildSvg(svg, key, stages) {
-    const defs = svgEl("defs");
-    const filt = svgEl("filter");
-    filt.setAttribute("id", "hiw-glow-" + key);
-    filt.setAttribute("x", "-20%");
-    filt.setAttribute("y", "-20%");
-    filt.setAttribute("width", "140%");
-    filt.setAttribute("height", "140%");
-    const blur = svgEl("feGaussianBlur");
-    blur.setAttribute("stdDeviation", "4");
-    blur.setAttribute("result", "blur");
-    const comp = svgEl("feComposite");
-    comp.setAttribute("in", "SourceGraphic");
-    comp.setAttribute("in2", "blur");
-    comp.setAttribute("operator", "over");
-    filt.appendChild(blur);
-    filt.appendChild(comp);
-    defs.appendChild(filt);
-    svg.appendChild(defs);
+  const PLATFORM_LABEL = {
+    make: "Make.com scenario",
+    n8n: "n8n · self-hosted",
+    zapier: "Zapier Catch Hook",
+  };
 
-    const edgeEls = EDGE_D.map((d) => {
-      const g = svgEl("g", "hiw-edge");
-      const base = svgEl("path", "hiw-edge-base");
-      base.setAttribute("d", d);
-      const flow = svgEl("path", "hiw-edge-flow");
-      flow.setAttribute("d", d);
-      flow.setAttribute("filter", "url(#hiw-glow-" + key + ")");
-      g.appendChild(base);
-      g.appendChild(flow);
-      svg.appendChild(g);
-      return g;
-    });
+  const CHANNEL_LABEL = {
+    make: "Make → Telegram bot (Data Store config)",
+    n8n: "n8n → Telegram bot (Config node)",
+    zapier: "Zapier → Gmail alert",
+  };
 
-    const nodeEls = stages.map((stg, i) => {
-      const p = POS[i];
-      const g = svgEl("g", "hiw-node");
-      g.setAttribute("transform", "translate(" + p.x + "," + p.y + ")");
-      g.setAttribute("tabindex", "0");
-      g.setAttribute("role", "button");
-      g.setAttribute("aria-label", "Stage " + (i + 1) + ": " + stg.name);
+  /* ---------- canvas flow engine (ForceGraph-style, dependency-free) ---------- */
 
-      const rect = svgEl("rect", "hiw-node-rect");
-      rect.setAttribute("width", String(NODE_W));
-      rect.setAttribute("height", String(NODE_H));
-      rect.setAttribute("rx", "10");
-      g.appendChild(rect);
+  function buildFlow(canvas, hooks) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = CW * dpr;
+    canvas.height = CH * dpr;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
 
-      const emoji = svgEl("text", "hiw-node-emoji", stg.icon);
-      emoji.setAttribute("x", "14");
-      emoji.setAttribute("y", "27");
-      g.appendChild(emoji);
+    const nodes = [];   /* filled by init(demo) */
+    const edges = [];
+    let sel = -1;
+    let active = -1;
+    const done = new Set();
+    let hover = -1;
+    let velocity = 1;
+    let paused = false;
+    let job = null; /* { edge, t, speed } */
+    let pal = null;
+    let palAge = 99;
+    let raf = null;
+    let running = true;
 
-      const label = svgEl("text", "hiw-node-label", stg.short || stg.name);
-      label.setAttribute("x", "14");
-      label.setAttribute("y", "49");
-      g.appendChild(label);
+    const bez = (e, t) => {
+      const u = 1 - t;
+      const x = u * u * e.x0 + 2 * u * t * e.cx + t * t * e.x1;
+      const y = u * u * e.y0 + 2 * u * t * e.cy + t * t * e.y1;
+      return { x, y };
+    };
 
-      const badge = svgEl("g", "hiw-badge");
-      const circ = svgEl("circle");
-      circ.setAttribute("cx", "137");
-      circ.setAttribute("cy", "12");
-      circ.setAttribute("r", "9");
-      const check = svgEl("path");
-      check.setAttribute("d", "M 133 12 l 3 3 l 6 -7");
-      badge.appendChild(circ);
-      badge.appendChild(check);
-      g.appendChild(badge);
+    const refreshPal = () => {
+      pal = {
+        border: cssVar("--border", "#232c3a"),
+        text: cssVar("--text", "#e6edf3"),
+        muted: cssVar("--muted", "#94a3b8"),
+        accent: cssVar("--accent", "#f0b429"),
+        green: cssVar("--green", "#2ea886"),
+        surface: cssVar("--surface", "#161d28"),
+      };
+      palAge = 0;
+    };
 
-      const lines = stg.tip || [stg.desc];
-      const tipW = 224;
-      const tipH = 30 + lines.length * 17;
-      const below = p.y < 150;
-      const tx = Math.max(5, Math.min(p.x, 640 - tipW - 6)) - p.x;
-      const ty = below ? NODE_H + 10 : -10 - tipH;
-      const tip = svgEl("g", "hiw-tip");
-      tip.setAttribute("transform", "translate(" + tx + "," + ty + ")");
-      const trect = svgEl("rect");
-      trect.setAttribute("width", String(tipW));
-      trect.setAttribute("height", String(tipH));
-      trect.setAttribute("rx", "8");
-      tip.appendChild(trect);
-      const ttitle = svgEl("text", "hiw-tip-title", "Purpose:");
-      ttitle.setAttribute("x", "10");
-      ttitle.setAttribute("y", "20");
-      tip.appendChild(ttitle);
-      lines.forEach((ln, li) => {
-        const t = svgEl("text", "hiw-tip-line", ln);
-        t.setAttribute("x", "10");
-        t.setAttribute("y", String(38 + li * 17));
-        tip.appendChild(t);
+    const init = (demo) => {
+      nodes.length = 0;
+      edges.length = 0;
+      demo.stages.forEach((s, i) => {
+        nodes.push({ x: 70 + i * 100, y: 150, color: NODE_COLORS[i % NODE_COLORS.length], icon: s.icon, label: s.short || s.name, sub: s.type || "" });
       });
-      g.appendChild(tip);
+      for (let i = 0; i < nodes.length - 1; i++) {
+        const a = nodes[i];
+        const b = nodes[i + 1];
+        edges.push({
+          x0: a.x + 24, y0: a.y, x1: b.x - 24, y1: b.y,
+          cx: (a.x + b.x) / 2, cy: a.y - 13,
+          ts: [0, 0.25, 0.5, 0.75].map((o) => o),
+          active: false,
+        });
+      }
+      refreshPal();
+    };
 
-      svg.appendChild(g);
-      return g;
+    const drawNode = (n, i) => {
+      const isSel = i === sel;
+      const isActive = i === active;
+      /* outer halo ring */
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 27, 0, Math.PI * 2);
+      ctx.strokeStyle = n.color + (isActive ? "66" : "26");
+      ctx.lineWidth = 3;
+      if (isActive) {
+        ctx.shadowColor = n.color;
+        ctx.shadowBlur = 16;
+      }
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+      /* selection ring */
+      if (isSel) {
+        ctx.beginPath();
+        ctx.setLineDash([4, 4]);
+        ctx.arc(n.x, n.y, 33, 0, Math.PI * 2);
+        ctx.strokeStyle = pal.text;
+        ctx.globalAlpha = 0.45;
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.globalAlpha = 1;
+      }
+      /* core */
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 22, 0, Math.PI * 2);
+      ctx.fillStyle = pal.surface;
+      ctx.fill();
+      ctx.strokeStyle = n.color;
+      ctx.lineWidth = isActive ? 4 : 3;
+      ctx.stroke();
+      /* done check */
+      if (done.has(i)) {
+        ctx.beginPath();
+        ctx.arc(n.x + 16, n.y - 16, 7.5, 0, Math.PI * 2);
+        ctx.fillStyle = pal.green;
+        ctx.fill();
+        ctx.strokeStyle = pal.surface;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(n.x + 12.5, n.y - 16);
+        ctx.lineTo(n.x + 15.2, n.y - 13.2);
+        ctx.lineTo(n.x + 19.8, n.y - 18.6);
+        ctx.strokeStyle = "#ffffff";
+        ctx.lineWidth = 1.8;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.stroke();
+      }
+      /* glyph + labels */
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.font = "15px system-ui, sans-serif";
+      ctx.fillStyle = n.color;
+      ctx.fillText(n.icon, n.x, n.y + 1);
+      const below = i % 2 === 0;
+      ctx.font = "bold 13px system-ui, sans-serif";
+      ctx.fillStyle = pal.text;
+      ctx.fillText(n.label, n.x, n.y + (below ? 44 : -40));
+      ctx.font = "10.5px system-ui, sans-serif";
+      ctx.fillStyle = pal.muted;
+      ctx.fillText(n.sub, n.x, n.y + (below ? 58 : -54));
+    };
+
+    const frame = () => {
+      raf = requestAnimationFrame(frame);
+      if (!running) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, CW, CH);
+      if (++palAge > 45 || !pal) refreshPal();
+
+      /* edges + ambient packets */
+      edges.forEach((e, ei) => {
+        e.active = job ? job.edge === ei : active === ei + 1;
+        ctx.beginPath();
+        ctx.moveTo(e.x0, e.y0);
+        ctx.quadraticCurveTo(e.cx, e.cy, e.x1, e.y1);
+        ctx.strokeStyle = pal.border;
+        ctx.globalAlpha = e.active ? 0.95 : 0.8;
+        ctx.lineWidth = e.active ? 2 : 1.5;
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+
+        e.ts.forEach((t, pi) => {
+          if (!paused) {
+            t += 0.012 * velocity * (e.active ? 2.2 : 1);
+            if (t >= 1) t -= 1;
+            e.ts[pi] = t;
+          }
+          const p = bez(e, t);
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, e.active ? 3.4 : 2.6, 0, Math.PI * 2);
+          if (e.active) {
+            ctx.shadowColor = pal.accent;
+            ctx.shadowBlur = 8;
+          }
+          ctx.fillStyle = pal.accent;
+          ctx.globalAlpha = e.active ? 0.95 : 0.55;
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          ctx.globalAlpha = 1;
+        });
+      });
+
+      /* job packet — the run's data traveling node to node */
+      if (job) {
+        const e = edges[job.edge];
+        if (e) {
+          if (!paused) {
+            job.t += job.speed * Math.max(velocity, 0.35);
+            if (job.t >= 1) {
+              const arrived = job.edge + 1;
+              job = null;
+              if (hooks.onJobArrive) hooks.onJobArrive(arrived);
+            }
+          }
+          if (job) {
+            const p = bez(e, job.t);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 5.5, 0, Math.PI * 2);
+            ctx.shadowColor = pal.green;
+            ctx.shadowBlur = 14;
+            ctx.fillStyle = pal.green;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+        } else {
+          job = null;
+        }
+      }
+
+      nodes.forEach(drawNode);
+
+      if (hooks.packets) {
+        const n = edges.length * PER_LINK + (job ? 1 : 0);
+        hooks.packets(n);
+      }
+    };
+
+    const start = () => {
+      if (raf === null) raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      if (raf !== null) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    };
+    document.addEventListener("visibilitychange", () => {
+      running = !document.hidden;
+      if (running) start();
     });
 
-    return { edgeEls, nodeEls };
+    const toLocal = (evt) => {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: ((evt.clientX - rect.left) / rect.width) * CW,
+        y: ((evt.clientY - rect.top) / rect.height) * CH,
+      };
+    };
+    const hitTest = (mx, my) => {
+      for (let i = 0; i < nodes.length; i++) {
+        const dx = mx - nodes[i].x;
+        const dy = my - nodes[i].y;
+        if (dx * dx + dy * dy < 30 * 30) return i;
+      }
+      return -1;
+    };
+
+    canvas.addEventListener("pointermove", (e) => {
+      const p = toLocal(e);
+      hover = hitTest(p.x, p.y);
+      canvas.style.cursor = hover >= 0 ? "pointer" : "default";
+    });
+    canvas.addEventListener("pointerleave", () => {
+      hover = -1;
+    });
+    canvas.addEventListener("click", (e) => {
+      const p = toLocal(e);
+      const i = hitTest(p.x, p.y);
+      if (i >= 0 && hooks.onNodeClick) hooks.onNodeClick(i);
+    });
+    canvas.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const dir = e.key === "ArrowRight" ? 1 : -1;
+        const next = sel < 0 ? 0 : (sel + dir + nodes.length) % nodes.length;
+        if (hooks.onNodeClick) hooks.onNodeClick(next);
+      }
+    });
+
+    start();
+
+    return {
+      init,
+      select: (i) => { sel = i; },
+      setActive: (i) => { active = i; },
+      markDone: (i) => done.add(i),
+      resetMarks: () => { done.clear(); active = -1; job = null; sel = -1; },
+      spawnJob: (target) => { job = { edge: target - 1, t: 0, speed: 0.02 }; },
+      setVelocity: (v) => { velocity = v; },
+      setPaused: (p) => { paused = p; },
+      setOnArrive: (fn) => { hooks.onJobArrive = fn; },
+      hitTest,
+    };
   }
 
-  /* ---------- per-project wiring ---------- */
+  /* ---------- per-project build ---------- */
 
   function buildDemo(key) {
     const demo = DEMOS[key];
     const panel = document.getElementById("hiw-panel-" + key);
     if (!panel) return null;
-    const svg = panel.querySelector(".hiw-canvas");
-    const detail = {
-      num: panel.querySelector(".hiw-detail .hiw-stage-num"),
-      icon: panel.querySelector(".hiw-detail .hiw-node-icon"),
-      name: panel.querySelector(".hiw-detail .hiw-node-name"),
-      type: panel.querySelector(".hiw-detail .hiw-node-type"),
-      desc: panel.querySelector(".hiw-detail .hiw-node-desc"),
-      visual: panel.querySelector(".hiw-detail .hiw-visual"),
-    };
+    const canvas = panel.querySelector(".hiw-flow");
     const statusEl = panel.querySelector(".hiw-status");
     const runBtn = panel.querySelector(".hiw-run");
     const resetBtn = panel.querySelector(".hiw-reset");
-    if (!svg || !detail.visual || !statusEl || !runBtn) return null;
+    const mStage = document.getElementById("hiw-m-stage-" + key);
+    const mPackets = document.getElementById("hiw-m-packets-" + key);
+    const mStatus = document.getElementById("hiw-m-status-" + key);
+    const pauseBtn = panel.querySelector(".hiw-pause");
+    const slider = panel.querySelector(".hiw-slider");
+    const sliderVal = panel.querySelector(".hiw-slider-val");
+    const chips = Array.prototype.slice.call(panel.querySelectorAll(".hiw-chip"));
+    const drillSel = panel.querySelector(".hiw-drill");
+    const platformSel = panel.querySelector(".hiw-platform");
+    const ins = {
+      icon: panel.querySelector(".hiw-ins-icon"),
+      name: panel.querySelector(".hiw-ins-name"),
+      tag: panel.querySelector(".hiw-ins-tag"),
+      desc: panel.querySelector(".hiw-ins-desc"),
+      visual: panel.querySelector(".hiw-visual"),
+    };
+    if (!canvas || !statusEl || !runBtn || !ins.visual) return null;
 
     const st = state[key];
-    const { edgeEls, nodeEls } = buildSvg(svg, key, demo.stages);
     let sel = 0;
+
+    const flow = buildFlow(canvas, {
+      onNodeClick: (i) => select(i, browsingCtx()),
+      packets: (n) => {
+        if (mPackets) mPackets.textContent = String(n);
+      },
+    });
+    if (!flow) return null;
+    flow.init(demo);
+
+    const setStatus = (mode) => {
+      if (!mStatus) return;
+      mStatus.classList.remove("hiw-metric-ok");
+      mStatus.style.color = "";
+      if (mode === "ok") mStatus.classList.add("hiw-metric-ok");
+      if (mode === "warn") mStatus.style.color = "#f59e0b";
+      if (mode === "bad") mStatus.style.color = "#e5534b";
+    };
 
     const browsingCtx = () => ({
       lead: readLead(panel),
@@ -574,31 +769,39 @@
       live: false,
       token: () => true,
       status: (t) => { statusEl.textContent = t; },
+      drill: drillSel ? drillSel.value : "none",
+      platform: platformSel ? platformSel.value : "n8n",
     });
 
     const select = (i, ctx) => {
-      sel = (i + demo.stages.length) % demo.stages.length;
+      const len = demo.stages.length;
+      sel = (i + len) % len;
+      flow.select(sel);
       const stg = demo.stages[sel];
-      detail.num.textContent = String(sel + 1).padStart(2, "0");
-      detail.icon.textContent = stg.icon;
-      detail.name.textContent = stg.name;
-      detail.type.textContent = stg.type || "";
-      detail.desc.textContent = stg.desc;
-      nodeEls.forEach((n, j) => n.classList.toggle("is-active", j === sel));
-      edgeEls.forEach((e, j) => e.classList.toggle("is-active", j === sel - 1));
-      detail.visual.textContent = "";
-      return stg.build(detail.visual, ctx);
+      if (mStage) mStage.textContent = stg.short || stg.name;
+      if (ins.icon) ins.icon.textContent = stg.icon;
+      if (ins.name) ins.name.textContent = stg.name;
+      if (ins.tag) ins.tag.textContent = stg.type || "";
+      if (ins.desc) ins.desc.textContent = stg.desc;
+      ins.visual.textContent = "";
+      return stg.build(ins.visual, ctx);
     };
 
-    const reset = () => {
-      st.runId += 1;
-      runBtn.disabled = false;
-      resetBtn.hidden = true;
-      statusEl.textContent = demo.ready;
-      nodeEls.forEach((n) => n.classList.remove("is-done", "is-active"));
-      edgeEls.forEach((e) => e.classList.remove("is-active"));
-      select(0, browsingCtx());
-    };
+    const waitArrival = (i, id) =>
+      new Promise((res) => {
+        if (i === 0) { res(); return; }
+        flow.spawnJob(i);
+        const check = setInterval(() => {
+          if (id !== st.runId) { clearInterval(check); flow.setOnArrive(null); res(); }
+        }, 120);
+        flow.setOnArrive((n) => {
+          if (n === i) {
+            clearInterval(check);
+            flow.setOnArrive(null);
+            res();
+          }
+        });
+      });
 
     const dwell = async (id, ms) => {
       const end = Date.now() + (still() ? Math.min(ms, 80) : ms);
@@ -608,11 +811,23 @@
       }
     };
 
+    const reset = () => {
+      st.runId += 1;
+      runBtn.disabled = false;
+      resetBtn.hidden = true;
+      statusEl.textContent = demo.ready;
+      setStatus("ok");
+      flow.resetMarks();
+      select(0, browsingCtx());
+    };
+
     runBtn.addEventListener("click", async () => {
       st.runId += 1;
       const id = st.runId;
       runBtn.disabled = true;
       resetBtn.hidden = false;
+      flow.resetMarks();
+      setStatus("ok");
 
       const ctx = {
         lead: readLead(panel),
@@ -620,6 +835,8 @@
         live: true,
         token: () => id === st.runId,
         status: (t) => { if (id === st.runId) statusEl.textContent = t; },
+        drill: drillSel ? drillSel.value : "none",
+        platform: platformSel ? platformSel.value : "n8n",
       };
 
       try {
@@ -627,13 +844,37 @@
           if (id !== st.runId) return;
           statusEl.textContent = demo.stages[i].name + "…";
           await select(i, ctx);
+          if (i > 0) await waitArrival(i, id);
           if (id !== st.runId) return;
-          nodeEls[i].classList.add("is-done");
+          flow.markDone(i);
+
+          if (key === "dlf" && ctx.drill === "429" && i === 2) {
+            setStatus("bad");
+            if (mStatus) mStatus.textContent = "429";
+            ctx.status("⚠️ LLM rate-limited — backing off, then retrying…");
+            await dwell(id, 2200);
+            if (id !== st.runId) return;
+            setStatus("ok");
+            if (mStatus) mStatus.textContent = "healthy";
+            ctx.status("✓ retry succeeded — draft generated on the second attempt");
+            await dwell(id, 700);
+          }
+          if (key === "dlf" && ctx.drill === "dup" && i === 4) {
+            setStatus("warn");
+            ctx.status("✋ duplicate detected — lead already drafted, run stopped here. No second draft.");
+            await dwell(id, 1400);
+            break;
+          }
+          if (id !== st.runId) return;
           await dwell(id, demo.stages[i].pause || 950);
         }
-        if (id === st.runId) statusEl.textContent = demo.done;
+        if (id === st.runId) {
+          if (mStatus) mStatus.textContent = "healthy";
+          statusEl.textContent = demo.done;
+        }
       } finally {
         if (id === st.runId) {
+          flow.setActive(-1);
           runBtn.disabled = false;
           resetBtn.hidden = false;
         }
@@ -642,38 +883,35 @@
 
     resetBtn.addEventListener("click", reset);
 
-    nodeEls.forEach((g, i) => {
-      g.addEventListener("click", () => {
-        if (i === sel) return;
-        select(i, browsingCtx());
+    if (pauseBtn) {
+      pauseBtn.addEventListener("click", () => {
+        const nowPaused = pauseBtn.getAttribute("aria-pressed") !== "true";
+        pauseBtn.setAttribute("aria-pressed", String(nowPaused));
+        pauseBtn.textContent = nowPaused ? "▶" : "⏸";
+        flow.setPaused(nowPaused);
       });
-      g.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          select(i, browsingCtx());
-        }
+    }
+
+    if (slider) {
+      slider.addEventListener("input", () => {
+        const v = parseFloat(slider.value);
+        flow.setVelocity(v);
+        if (sliderVal) sliderVal.textContent = v.toFixed(1) + "x";
       });
-    });
+    }
 
-    svg.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") {
-        e.preventDefault();
-        select(sel - 1, browsingCtx());
-      }
-      if (e.key === "ArrowRight") {
-        e.preventDefault();
-        select(sel + 1, browsingCtx());
-      }
-    });
-
-    panel.querySelectorAll(".hiw-scenario").forEach((chip) => {
+    chips.forEach((chip) => {
       chip.addEventListener("click", () => {
-        panel.querySelectorAll(".hiw-scenario").forEach((o) => {
+        chips.forEach((o) => {
           o.classList.toggle("is-active", o === chip);
           o.setAttribute("aria-pressed", String(o === chip));
         });
         reset();
       });
+    });
+
+    [drillSel, platformSel].forEach((s) => {
+      if (s) s.addEventListener("change", reset);
     });
 
     reset();
@@ -726,4 +964,5 @@
   });
 
   openDemo("dlf");
+
 })();
