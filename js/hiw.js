@@ -461,6 +461,9 @@
       return { x, y };
     };
 
+    /* square centred on a node; `h` is half the side */
+    const sq = (x, y, h) => ctx.rect(x - h, y - h, h * 2, h * 2);
+
     const refreshPal = () => {
       pal = {
         border: cssVar("--border", "#232c3a"),
@@ -495,13 +498,15 @@
     const drawNode = (n, i) => {
       const isSel = i === sel;
       const isActive = i === active;
+      /* the step currently executing lights green; idle steps keep their own hue */
+      const glow = isActive ? pal.green : n.color;
       /* outer halo ring */
       ctx.beginPath();
-      ctx.arc(n.x, n.y, 27, 0, Math.PI * 2);
-      ctx.strokeStyle = n.color + (isActive ? "66" : "26");
+      sq(n.x, n.y, 27);
+      ctx.strokeStyle = glow + (isActive ? "66" : "26");
       ctx.lineWidth = 3;
       if (isActive) {
-        ctx.shadowColor = n.color;
+        ctx.shadowColor = glow;
         ctx.shadowBlur = 16;
       }
       ctx.stroke();
@@ -510,7 +515,7 @@
       if (isSel) {
         ctx.beginPath();
         ctx.setLineDash([4, 4]);
-        ctx.arc(n.x, n.y, 33, 0, Math.PI * 2);
+        sq(n.x, n.y, 33);
         ctx.strokeStyle = pal.text;
         ctx.globalAlpha = 0.45;
         ctx.lineWidth = 1.5;
@@ -520,10 +525,10 @@
       }
       /* core */
       ctx.beginPath();
-      ctx.arc(n.x, n.y, 22, 0, Math.PI * 2);
+      sq(n.x, n.y, 22);
       ctx.fillStyle = pal.surface;
       ctx.fill();
-      ctx.strokeStyle = n.color;
+      ctx.strokeStyle = glow;
       ctx.lineWidth = isActive ? 4 : 3;
       ctx.stroke();
       /* done check */
@@ -572,9 +577,10 @@
         ctx.beginPath();
         ctx.moveTo(e.x0, e.y0);
         ctx.quadraticCurveTo(e.cx, e.cy, e.x1, e.y1);
-        ctx.strokeStyle = pal.border;
-        ctx.globalAlpha = e.active ? 0.95 : 0.8;
-        ctx.lineWidth = e.active ? 2 : 1.5;
+        /* solid link; the one feeding the running step lights green */
+        ctx.strokeStyle = e.active ? pal.green : pal.border;
+        ctx.globalAlpha = e.active ? 0.95 : 0.9;
+        ctx.lineWidth = e.active ? 2.5 : 2;
         ctx.stroke();
         ctx.globalAlpha = 1;
 
@@ -653,7 +659,8 @@
       for (let i = 0; i < nodes.length; i++) {
         const dx = mx - nodes[i].x;
         const dy = my - nodes[i].y;
-        if (dx * dx + dy * dy < 30 * 30) return i;
+        /* 32 clears a square's corner (22 * sqrt2 ~= 31.1) */
+        if (dx * dx + dy * dy < 32 * 32) return i;
       }
       return -1;
     };
