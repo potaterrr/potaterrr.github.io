@@ -487,7 +487,9 @@
         const b = nodes[i + 1];
         edges.push({
           x0: a.x + 24, y0: a.y, x1: b.x - 24, y1: b.y,
-          cx: (a.x + b.x) / 2, cy: a.y - 13,
+          /* control point on the line itself -> the curve degenerates to a
+             straight connector, and bez() below yields straight packet motion */
+          cx: (a.x + b.x) / 2, cy: (a.y + b.y) / 2,
           ts: [0, 0.25, 0.5, 0.75].map((o) => o),
           active: false,
         });
@@ -576,7 +578,7 @@
         e.active = job ? job.edge === ei : active === ei + 1;
         ctx.beginPath();
         ctx.moveTo(e.x0, e.y0);
-        ctx.quadraticCurveTo(e.cx, e.cy, e.x1, e.y1);
+        ctx.lineTo(e.x1, e.y1);
         /* solid link; the one feeding the running step lights green */
         ctx.strokeStyle = e.active ? pal.green : pal.border;
         ctx.globalAlpha = e.active ? 0.95 : 0.9;
