@@ -1,6 +1,6 @@
 /* potaterrr.github.io — "How it works" pipeline demos.
    SVG node-graph canvas styled after a flow-visualizer: dotted grid,
-   node rects, animated flow-light edges, hover "Purpose" tooltips.
+   node rects and animated flow-light edges.
    Vanilla JS, zero dependencies, zero APIs. The voice-receptionist data
    mirrors simulator/payload-*.json in the voice-receptionist repo. All
    visitor-derived text is inserted with textContent only. */
@@ -113,7 +113,6 @@
         icon: "⏰", name: "Schedule Trigger", short: "Schedule Trigger",
         type: "n8n · scheduleTrigger", pause: 950,
         desc: "The pipeline wakes up every morning at 10:00 — nobody clicks anything.",
-        tip: ["Fires daily at 10:00, Asia/Manila.", "No clicks, no cron-fu."],
         build(v) {
           logBlock(v, [
             "› workflow activated · cron 0 10 * * 1-5",
@@ -126,7 +125,6 @@
         icon: "📋", name: "Get Dead Leads", short: "Get Dead Leads",
         type: "n8n · clickUp.getAll", pause: 1200,
         desc: "Pulls every task still marked TO DO from the ClickUp list — the board is the database.",
-        tip: ["Fetches ClickUp tasks still marked", "TO DO — filter runs server-side."],
         build(v, ctx) {
           board(v, ctx.lead.name, "todo");
           boardNote(v, "server-side filter: status = TO DO · lead queued with 2 others");
@@ -136,7 +134,6 @@
         icon: "✍️", name: "Generate AI Follow-up", short: "AI Follow-up",
         type: "langchain · aiAgent", pause: 600,
         desc: "An LLM writes a short, warm check-in from the lead's custom fields. Prompt rules forbid invented links or names.",
-        tip: ["LLM writes a short check-in from", "name, company and interest notes."],
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", "openrouter · google/gemini-2.5-flash-lite"));
           const out = el("div", "hiw-type");
@@ -170,7 +167,6 @@
         icon: "📨", name: "Create a draft", short: "Create a draft",
         type: "n8n · gmail.draft", pause: 1300,
         desc: "Files the email as a Gmail draft with a booking button — and never sends it.",
-        tip: ["Files a Gmail draft with a booking", "button. Never auto-sends."],
         build(v, ctx) {
           mailCard(v, ctx.lead, dlfEmail(ctx.lead));
         },
@@ -179,7 +175,6 @@
         icon: "🏷️", name: "Set Draft Done", short: "Set Draft Done",
         type: "n8n · clickUp.update", pause: 1100,
         desc: "The task flips to Draft Done in the same run, so tomorrow's sweep never double-drafts.",
-        tip: ["Flips the task to Draft Done so", "tomorrow's run skips it."],
         build(v, ctx) {
           board(v, ctx.lead.name, "draft");
           boardNote(v, "duplicate protection: status advance + draft existence = one draft per lead");
@@ -189,7 +184,6 @@
         icon: "🫵", name: "You", short: "You",
         type: "human in the loop", pause: 1200,
         desc: "The only unskippable step: a person opens the draft, edits if needed, and hits send. AI drafts; human approves.",
-        tip: ["A human reads, edits and sends.", "AI drafts; human approves."],
         build(v, ctx) {
           mailCard(v, ctx.lead, dlfEmail(ctx.lead));
           const gate = el("div", "hiw-gate");
@@ -282,7 +276,6 @@
         icon: "📵", name: "Missed call → Vapi", short: "Missed call",
         type: "Vapi + Twilio", pause: 1200,
         desc: "Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.",
-        tip: ["Twilio routes the missed call to a", "Vapi agent — answers 24/7."],
         build(v, ctx) {
           callCard(v, ctx.sc);
         },
@@ -291,7 +284,6 @@
         icon: "🗣️", name: "Conversation", short: "Conversation",
         type: "Vapi assistant", pause: 2100,
         desc: "Natural chat: answers service and pricing questions from the salon config, and captures name, number, intent and preferred slot as structured data.",
-        tip: ["Captures name, number, intent and", "slot as structured data."],
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", "🎙 vapi assistant · Potaterrr Salon"));
           const wrap = el("div", "hiw-chat");
@@ -310,7 +302,6 @@
         icon: "🧾", name: "End-of-call report", short: "Call report",
         type: "webhook · POST", pause: 1500,
         desc: "Vapi POSTs one structured JSON report to the branch webhook. Same contract whether the branch runs on Make, n8n or Zapier — swap platforms by changing a single URL.",
-        tip: ["One JSON contract POSTed to the", "branch webhook (Make/n8n/Zapier)."],
         build(v, ctx) {
           const sc = ctx.sc;
           const payload = {
@@ -339,7 +330,6 @@
         icon: "🔍", name: "Conflict-check", short: "Conflict-check",
         type: "Google Calendar · freebusy", pause: 1400,
         desc: "Booking intent? The pipeline checks the calendar before touching anything. Questions skip straight to logging.",
-        tip: ["Checks Google Calendar freebusy", "before touching anything."],
         build(v, ctx) {
           const sc = ctx.sc;
           if (sc.intent === "book_appointment") {
@@ -373,7 +363,6 @@
         icon: "📅", name: "Book & log", short: "Book & log",
         type: "Google Calendar + log store", pause: 1400,
         desc: "Free slot → the event “Salon: {service} — {name}” is created and the call is logged. Taken, past, or no booking? Logged as conflict / no_booking for the record.",
-        tip: ["Books the slot — or logs it as", "no_booking / conflict."],
         build(v, ctx) {
           const sc = ctx.sc;
           if (sc.intent === "book_appointment" && !sc.bad) {
@@ -388,7 +377,6 @@
         icon: "📣", name: "Owner alert", short: "Owner alert",
         type: "Telegram / Gmail", pause: 1100,
         desc: "The owner gets a summary the second the call ends — zero missed leads, zero phone tag. The channel is just a config value per branch.",
-        tip: ["Owner gets a Telegram / Gmail", "summary instantly."],
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", CHANNEL_LABEL[ctx.platform] || "Alert channel"));
           v.appendChild(el("div", "hiw-tg", ctx.sc.alert));
@@ -648,12 +636,6 @@
 
     const start = () => {
       if (raf === null) raf = requestAnimationFrame(frame);
-    };
-    const stop = () => {
-      if (raf !== null) {
-        cancelAnimationFrame(raf);
-        raf = null;
-      }
     };
     document.addEventListener("visibilitychange", () => {
       running = !document.hidden;

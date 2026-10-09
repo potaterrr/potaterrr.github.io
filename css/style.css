@@ -160,31 +160,11 @@ code {
   cursor: pointer;
 }
 
-.hero {
-  padding: 110px 0 90px;
-  background:
-    radial-gradient(600px circle at 15% 20%, rgba(240, 180, 41, 0.07), transparent 60%),
-    radial-gradient(700px circle at 85% 30%, rgba(46, 168, 134, 0.06), transparent 60%),
-    var(--bg);
-}
-
 .hero-kicker {
   font-family: var(--mono);
   color: var(--green);
   margin-bottom: 14px;
   font-size: 0.95rem;
-}
-
-.hero-kicker::before,
-.hero-kicker::after {
-  content: "";
-}
-
-.hero h1 {
-  font-size: clamp(1.9rem, 4.5vw, 3rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-bottom: 22px;
 }
 
 .accent {
@@ -203,24 +183,6 @@ code {
   color: var(--muted);
   font-size: 0.95rem;
   margin-bottom: 26px;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  list-style: none;
-  margin-bottom: 34px;
-}
-
-.chips li {
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid rgba(240, 180, 41, 0.35);
-  border-radius: 999px;
-  padding: 5px 14px;
 }
 
 .cta-row {
@@ -296,10 +258,6 @@ code {
   gap: 22px;
 }
 
-.grid-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-
 .grid-3 {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -341,21 +299,6 @@ code {
 
 .card-pending {
   position: relative;
-}
-
-.status-badge {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 3px 10px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 999px;
-  border: 1px solid rgba(240, 180, 41, 0.5);
-  color: var(--accent);
-  background: rgba(240, 180, 41, 0.12);
 }
 
 .feature-list {
@@ -484,11 +427,20 @@ code {
     transform: translateY(-4px);
     box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
   }
+
+  /* Press must keep the -4px lift. A bare `scale()` here has the same
+     specificity as `:hover` and comes later, so it would win and the
+     card would sink + shrink under the cursor on every click. */
+  .contact-card:active {
+    transform: translateY(-4px) scale(0.98);
+  }
 }
 
-/* Intentional pressed feedback replaces any residual tap flash */
-.contact-card:active {
-  transform: scale(0.98);
+/* Touch has no hover lift, so the press is the only feedback it gets. */
+@media (hover: none) {
+  .contact-card:active {
+    transform: scale(0.98);
+  }
 }
 
 .telegram:hover,
@@ -508,10 +460,6 @@ code {
 
 .email:hover,
 .email:focus-visible {
-  border-color: #ea4335;
-}
-
-.email:hover {
   border-color: #ea4335;
 }
 
@@ -1166,10 +1114,6 @@ textarea:focus-visible {
   outline-offset: 2px;
 }
 
-.whatsapp:hover {
-  border-color: #25d366;
-}
-
 /* FAB: profile photo fills the potato blob */
 .potato-body img {
   width: 100%;
@@ -1187,10 +1131,8 @@ textarea:focus-visible {
 :root {
   /* Motion tokens (from the template's discipline) */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --dur-fast: 180ms;
   --dur-med: 320ms;
-  --dur-slow: 600ms;
   /* Accessibility text-size scale (set by the a11y menu) */
   --font-scale: 1;
 }
@@ -1734,7 +1676,13 @@ html.reduce-motion .marquee-track { animation: none; }
 }
 
 /* ---------- Mobile tab bar ---------- */
+/* The bar is fixed to the viewport, so the page needs bottom padding or it
+   sits on top of the last content (contact cards + footer). */
 @media (max-width: 1099px) {
+  body {
+    padding-bottom: 96px;
+  }
+
   .tabbar {
     display: flex;
     position: fixed;
