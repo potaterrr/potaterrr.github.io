@@ -3,6 +3,18 @@
    FAB easter egg, contour background, rail scrollspy, project barrel,
    mobile tab bar, intro overlay, accessibility menu. Pipeline demos live in js/hiw.js. */
 
+/* `.panel` only becomes a scroll container at >=1100px (see style.css); below
+   that the window scrolls. Scrolling the panel element on mobile is a silent
+   no-op, so every scroll must go through here instead. */
+const desktopShell = window.matchMedia("(min-width: 1100px)");
+const scrollRoot = () => (desktopShell.matches ? document.getElementById("main-content") : null);
+const scrollToTarget = (target, behavior) => {
+  if (!target) return;
+  const root = scrollRoot();
+  if (root) root.scrollTo({ top: target.offsetTop, behavior });
+  else target.scrollIntoView({ behavior });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let motionPref = false;
@@ -144,10 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ---------- Rail scrollspy + tab-bar active state ---------- */
-  const panel = document.getElementById("main-content");
-  const spyRoot = panel || window;
-  const spyOptions = panel
-    ? { root: panel, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
+  const spyRoot = scrollRoot();
+  const spyOptions = spyRoot
+    ? { root: spyRoot, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
 
   const sectionIds = ["top", "projects", "skills", "how-it-works", "timeline", "blog", "contact"];
@@ -180,10 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- Smooth in-panel anchor scrolling ---------- */
   const scrollToId = (id) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    if (panel) panel.scrollTo({ top: target.offsetTop, behavior: reduceMotion ? "auto" : "smooth" });
-    else target.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+    scrollToTarget(document.getElementById(id), reduceMotion ? "auto" : "smooth");
   };
 
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -540,13 +548,8 @@ document.addEventListener("DOMContentLoaded", () => {
           singleTimer = setTimeout(() => {
             const id = (fab.getAttribute("href") || "#contact").slice(1);
             const target = document.getElementById(id);
-            if (target) {
-              const panel = document.getElementById("main-content");
-              if (panel) panel.scrollTo({ top: target.offsetTop, behavior: reduce ? "auto" : "smooth" });
-              else target.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-            } else {
-              window.location.hash = `#${id}`;
-            }
+            if (target) scrollToTarget(target, reduce ? "auto" : "smooth");
+            else window.location.hash = `#${id}`;
           }, 400);
         }
       });
