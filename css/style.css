@@ -906,10 +906,18 @@ textarea:focus-visible {
   .potato-fab.fab-spin { animation: none; }
 }
 
+/* The tab bar is centred at the viewport bottom; the FAB is fixed to the
+   bottom-right. They share the same band and collide around 481-700px, so
+   lift the FAB above the bar for every width where the bar is visible. */
+@media (max-width: 1099px) {
+  .potato-fab {
+    bottom: 92px;
+  }
+}
+
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .potato-fab {
-    bottom: 92px; /* sits above the mobile tab bar */
     right: 16px;
     width: 70px;
     height: 70px;
@@ -1314,8 +1322,11 @@ html.reduce-motion *::after {
   border-color: rgba(240, 180, 41, 0.35);
 }
 
+/* Contact is the call to action, so it keeps the accent text — but it must
+   NOT add a border. Every sibling gets `1px solid transparent`; a solid
+   amber one boxed just this item, and it outranked `.active` on source
+   order so the box survived even while Contact was the active section. */
 .rail-nav a.rail-cta {
-  border-color: var(--accent);
   color: var(--accent);
 }
 
@@ -1676,11 +1687,14 @@ html.reduce-motion .marquee-track { animation: none; }
 }
 
 /* ---------- Mobile tab bar ---------- */
-/* The bar is fixed to the viewport, so the page needs bottom padding or it
-   sits on top of the last content (contact cards + footer). */
+/* The bar and the FAB are fixed to the viewport, so the page needs bottom
+   clearance or they sit on top of the last content (contact cards + footer).
+   The padding goes on .footer, NOT body: body paints --bg while the footer
+   paints --bg-alt, so padding body leaves a differently-coloured band under
+   the footer. 180px clears the small-phone FAB (92 + 70) plus breathing room. */
 @media (max-width: 1099px) {
-  body {
-    padding-bottom: 96px;
+  .footer {
+    padding-bottom: 180px;
   }
 
   .tabbar {
