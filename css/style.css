@@ -1322,18 +1322,6 @@ html.reduce-motion *::after {
   border-color: rgba(240, 180, 41, 0.35);
 }
 
-/* Contact is the call to action, so it keeps the accent text — but it must
-   NOT add a border. Every sibling gets `1px solid transparent`; a solid
-   amber one boxed just this item, and it outranked `.active` on source
-   order so the box survived even while Contact was the active section. */
-.rail-nav a.rail-cta {
-  color: var(--accent);
-}
-
-.rail-nav a.rail-cta:hover {
-  background: var(--accent-soft);
-}
-
 .rail-foot {
   display: flex;
   justify-content: center;
