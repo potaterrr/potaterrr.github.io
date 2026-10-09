@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unsubscribe · potaterrr</title>
+  <meta name="description" content="Stop receiving email from potaterrr. Your address is added to a suppression list and never contacted again." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#0d1117" />
+  <link rel="icon" type="image/png" href="assets/favicon-512.png" />
+  <link rel="apple-touch-icon" href="assets/favicon-180.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="section unsub">
+      <div class="container unsub-inner">
+
+        <div id="form-state">
+          <p class="hero-kicker reveal">$ unsubscribe</p>
+          <h1 class="unsub-title reveal">No more cold emails 🥔</h1>
+          <p class="unsub-lead reveal">
+            Enter the address you were emailed at and it goes on a permanent
+            suppression list. I check that list before every send, so you
+            won't hear from me again.
+          </p>
+
+          <form id="unsub-form" class="unsub-form reveal" method="POST" novalidate>
+            <label class="unsub-label" for="email">Email address</label>
+            <input
+              class="unsub-input"
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="you@yourbusiness.com"
+              aria-describedby="unsub-help"
+            />
+            <button class="btn btn-primary unsub-submit" type="submit">Unsubscribe me</button>
+          </form>
+
+          <p id="unsub-help" class="unsub-help">
+            One click. No "manage preferences" maze, no confirmation email.
+          </p>
+        </div>
+
+        <div id="done-state" tabindex="-1" hidden>
+          <p class="hero-kicker">$ done</p>
+          <h1 class="unsub-title">You're unsubscribed</h1>
+          <p class="unsub-lead">
+            <strong id="done-email"></strong> is on the suppression list.
+            I check it before every send, so this is the last email.
+          </p>
+          <p class="unsub-help">
+            Changed your mind, or that wasn't you? Email
+            <a href="mailto:kristiandyanbusiness@gmail.com">me directly</a> and
+            I'll fix it.
+          </p>
+        </div>
+
+        <!-- POST target: keeps the browser on this page and sidesteps CORS,
+             so the form still works with JavaScript disabled. -->
+        <iframe name="unsub-target" title="" class="unsub-frame" aria-hidden="true" tabindex="-1"></iframe>
+
+        <p class="unsub-legal">
+          Christian John Vallejos · 480 Ruby Ville, Barangay 160,
+          1400 Caloocan City, Metro Manila, Philippines
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* PASTE THE SCENARIO #2 WEBHOOK URL HERE.
+       In Make: create a scenario with Webhooks -> Custom webhook ->
+       "Add a row" to a Google Sheet. Use that webhook's URL here.
+       Leaving the placeholder means submissions go nowhere. */
+    var UNSUBSCRIBE_WEBHOOK =
+      "https://hook.us2.make.com/REPLACE_WITH_YOUR_UNSUBSCRIBE_SCENARIO_URL";
+
+    var form = document.getElementById("unsub-form");
+    var input = document.getElementById("email");
+    var frame = document.querySelector(".unsub-frame");
+    var formState = document.getElementById("form-state");
+    var doneState = document.getElementById("done-state");
+    var doneEmail = document.getElementById("done-email");
+
+    /* The email in every outreach link, so the field arrives pre-filled. */
+    var prefill = new URLSearchParams(window.location.search).get("email");
+    if (prefill) input.value = prefill.trim();
+
+    var submitted = false;
+
+    /* Without JS the browser still posts the form; Make shows its raw
+       response. With JS we hide that and swap in the thank-you. */
+    frame.addEventListener("load", function () {
+      if (!submitted) return; /* the initial about:blank load */
+      doneEmail.textContent = input.value.trim();
+      formState.hidden = true;
+      doneState.hidden = false;
+      doneState.focus();
+    });
+
+    form.addEventListener("submit", function (e) {
+      var value = input.value.trim();
+      if (!value || input.validity && !input.checkValidity()) {
+        e.preventDefault();
+        input.focus();
+        return;
+      }
+      /* Point the form at Make at submit time so the constant above is the
+         only place the URL lives. */
+      form.action = UNSUBSCRIBE_WEBHOOK;
+      form.method = "POST";
+      form.target = "unsub-target";
+      submitted = true;
+      /* No preventDefault: the real POST goes to the iframe. */
+    });
+  })();
+  </script>
+  <script src="js/main.js"></script>
+</body>
+</html>
