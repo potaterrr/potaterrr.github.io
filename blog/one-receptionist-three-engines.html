@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>One receptionist, three engines — potaterrr</title>
-  <meta name="description" content="I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which automation engine to pick for whom." />
+  <meta name="description" content="I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which automation engine to pick for whom. A HIPAA-compliant build is available." />
   <meta property="og:title" content="One receptionist, three engines — potaterrr" />
   <meta property="og:description" content="Same AI receptionist, built three times on Make, n8n and Zapier. Real bugs, real trade-offs, and a scorecard for picking your engine." />
   <meta property="og:type" content="article" />
@@ -49,7 +49,7 @@
           </header>
           <div class="post-body">
             <p>Most "Make vs n8n vs Zapier" content is spec sheets copied from pricing pages. So I did something dumber and more useful: I built the <strong>same AI phone receptionist three times</strong> — once per platform — over one shared voice layer, and wrote down everything that broke.</p>
-            <p>The project: when a small business misses a call (or it's after hours), an AI voice agent answers, handles questions about services and prices, captures the caller's name, number and preferred slot as structured data, books the appointment on Google Calendar, logs everything and alerts the owner. The repo is public: <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">voice-receptionist</a>.</p>
+            <p>The project: when a small business misses a call (or it's after hours), an AI voice agent answers, handles questions about services and prices, captures the caller's name, number and preferred slot as structured data, books the appointment on Google Calendar, logs everything and alerts the owner. The repo is public: <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">voice-receptionist</a>. A <strong>🔒 HIPAA-compliant build is available</strong> for healthcare practices — BAAs, access controls and audit logging on request. The public demo is not for PHI.</p>
 
             <h2>The shared spine</h2>
             <p>All three branches consume the same contract: a Vapi <code>end-of-call-report</code> webhook carrying a transcript plus structured data (<code>caller_name</code>, <code>callback_number</code>, <code>intent</code>, <code>service</code>, <code>preferred_slot</code>). Every branch then does the identical dance — validate, conflict-check Google Calendar, book, log, alert the owner through a configurable channel.</p>

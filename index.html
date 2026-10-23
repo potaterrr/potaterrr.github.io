@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>potaterrr — Christian John · Python Automation Developer</title>
-  <meta name="description" content="Christian John, aka potaterrr (or just potater) — Python automation developer building Make.com and n8n pipelines, scrapers and AI agents. Mashing the boring stuff so you don't have to." />
+  <meta name="description" content="Christian John, aka potaterrr (or just potater) — Python automation developer building Make.com and n8n pipelines, scrapers, AI agents and HIPAA-compliant voice receptionists. Mashing the boring stuff so you don't have to." />
   <meta name="author" content="Christian John" />
-  <meta name="keywords" content="potaterrr, potater, Christian John, Python automation, Make.com, n8n, AI agents, webhooks, GitHub Actions, dotfiles, LLM pipelines" />
+  <meta name="keywords" content="potaterrr, potater, Christian John, Python automation, Make.com, n8n, AI agents, AI voice receptionist, HIPAA compliant voice agent, webhooks, GitHub Actions, dotfiles, LLM pipelines" />
   <meta name="theme-color" content="#0d1117" />
   <meta property="og:title" content="potaterrr — Python Automation Developer" />
-  <meta property="og:description" content="Mashing the boring stuff so you don't have to. Job scrapers, trading-signal engines, AI agents — if it's repetitive, it gets automated." />
+  <meta property="og:description" content="Mashing the boring stuff so you don't have to. AI voice receptionists — HIPAA-compliant build available — plus job scrapers, trading-signal engines and AI agents." />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="potaterrr" />
   <meta property="og:locale" content="en_US" />
@@ -21,7 +21,7 @@
   <meta property="og:image:alt" content="potaterrr — Python Automation Developer" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="potaterrr — Python Automation Developer" />
-  <meta name="twitter:description" content="Mashing the boring stuff so you don't have to. Job scrapers, trading-signal engines, AI agents — if it's repetitive, it gets automated." />
+  <meta name="twitter:description" content="Mashing the boring stuff so you don't have to. AI voice receptionists — HIPAA-compliant build available — plus job scrapers, trading-signal engines and AI agents." />
   <meta name="twitter:image" content="https://potaterrr.github.io/assets/og-image.png" />
   <script type="application/ld+json">
   {
@@ -39,7 +39,7 @@
       "https://www.facebook.com/profile.php?id=61593886946042",
       "https://wa.me/potaiterrr"
     ],
-    "knowsAbout": ["Python", "Make.com", "n8n", "LLM pipelines", "Webhooks", "GitHub Actions", "GNU Stow"]
+    "knowsAbout": ["Python", "Make.com", "n8n", "LLM pipelines", "AI voice receptionists", "HIPAA-compliant automation", "Webhooks", "GitHub Actions", "GNU Stow"]
   }
   </script>
   <link rel="icon" type="image/png" href="assets/favicon-512.png" />
@@ -107,10 +107,11 @@
           <p class="reveal personality">From managing high-volume queues to writing code that clears them. If it's repetitive, I'll automate it.</p>
 
           <nav class="bento reveal" aria-label="Explore the site">
-            <a class="bento-tile bento-featured" href="#how-it-works" data-hiw-open="dlf">
-              <span class="bento-label"><span class="bento-icon">📮</span>Featured build</span>
-              <span class="bento-title">Dead Lead Follow-up</span>
-              <span class="bento-desc">AI drafts the check-in emails into Gmail drafts — a human approves, nothing auto-sends.</span>
+            <a class="bento-tile bento-featured" href="#how-it-works" data-hiw-open="vr">
+              <span class="bento-label"><span class="bento-icon">📞</span>Featured build</span>
+              <span class="bento-title">AI Voice Receptionist</span>
+              <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
+              <span class="bento-desc">Answers missed calls 24/7, books real calendar slots — with a HIPAA-compliant build available for healthcare practices.</span>
               <span class="bento-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="bento-tile bento-projects" href="#projects">
@@ -170,6 +171,20 @@
                 <div class="barrel-ring" id="barrel-ring">
                   <article class="card barrel-slide">
                     <div class="card-body">
+                      <h3><a href="#how-it-works" data-hiw-open="vr">AI Voice Receptionist</a></h3>
+                      <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
+                      <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
+                      <ul class="feature-list">
+                        <li><strong>🔒 HIPAA-compliant build available</strong> — BAAs, access controls and audit logging on request</li>
+                        <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
+                        <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
+                        <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
+                        <li>▶ <a href="#how-it-works" data-hiw-open="vr">Watch a call flow run</a> · <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo ↗</a></li>
+                      </ul>
+                    </div>
+                  </article>
+                  <article class="card barrel-slide">
+                    <div class="card-body">
                       <h3><a href="#how-it-works" data-hiw-open="dlf">Dead Lead Follow-up</a></h3>
                       <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
                       <ul class="feature-list">
@@ -177,18 +192,6 @@
                         <li>Anti-hallucination guardrails: the only link in any email is mine</li>
                         <li>Full setup guide, config reference and production-tested lessons in the README</li>
                         <li>▶ <a href="#how-it-works" data-hiw-open="dlf">Watch it run below</a> · <a href="https://github.com/potaterrr/dead-lead-followup" target="_blank" rel="noopener">repo ↗</a></li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="#how-it-works" data-hiw-open="vr">AI Voice Receptionist</a></h3>
-                      <p>An AI receptionist that answers missed calls and books appointments — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Vapi + Twilio voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
-                      <ul class="feature-list">
-                        <li>Answers instantly, capturing name, number, intent and preferred slot as structured data</li>
-                        <li>Conflict-checks Google Calendar, books real slots, alerts the owner with a summary</li>
-                        <li>Simulated end-to-end today — live phone calls are a plug-in away</li>
-                        <li>▶ <a href="#how-it-works" data-hiw-open="vr">Watch a call flow run</a> · <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo ↗</a></li>
                       </ul>
                     </div>
                   </article>
@@ -333,11 +336,11 @@
 
             <div class="hiw reveal" id="hiw">
               <div class="hiw-switch" role="tablist" aria-label="Choose a featured project">
-                <button type="button" class="hiw-switch-btn is-active" role="tab" id="hiw-tab-dlf" aria-controls="hiw-panel-dlf" aria-selected="true" data-hiw-switch="dlf">📮 Dead Lead Follow-up</button>
-                <button type="button" class="hiw-switch-btn" role="tab" id="hiw-tab-vr" aria-controls="hiw-panel-vr" aria-selected="false" tabindex="-1" data-hiw-switch="vr">📞 AI Voice Receptionist</button>
+                <button type="button" class="hiw-switch-btn is-active" role="tab" id="hiw-tab-vr" aria-controls="hiw-panel-vr" aria-selected="true" data-hiw-switch="vr">📞 AI Voice Receptionist <span class="badge-hipaa">🔒 HIPAA-compliant build available</span></button>
+                <button type="button" class="hiw-switch-btn" role="tab" id="hiw-tab-dlf" aria-controls="hiw-panel-dlf" aria-selected="false" tabindex="-1" data-hiw-switch="dlf">📮 Dead Lead Follow-up</button>
               </div>
 
-              <div class="hiw-panel" id="hiw-panel-dlf" role="tabpanel" aria-labelledby="hiw-tab-dlf">
+              <div class="hiw-panel" id="hiw-panel-dlf" role="tabpanel" aria-labelledby="hiw-tab-dlf" hidden>
                 <div class="hiw-setup">
                   <fieldset class="hiw-lead-card">
                     <legend>📋 Tonight's dead lead — edit me</legend>
@@ -391,7 +394,7 @@
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the pipeline”.</p>
               </div>
 
-              <div class="hiw-panel" id="hiw-panel-vr" role="tabpanel" aria-labelledby="hiw-tab-vr" hidden>
+              <div class="hiw-panel" id="hiw-panel-vr" role="tabpanel" aria-labelledby="hiw-tab-vr">
                 <div class="hiw-setup">
                   <div class="hiw-actions">
                     <button type="button" class="hiw-run">▶ Run the call</button>
@@ -505,7 +508,8 @@
                 <time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time>
                 <article class="card timeline-card">
                   <div class="card-body">
-                    <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist (HIPAA Compliant Available) released ↗</a></h3>
+                    <h3><a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">AI Voice Receptionist released — HIPAA-compliant build available ↗</a></h3>
+                    <span class="badge-hipaa">🔒 BAAs · access controls · audit logging on request</span>
                     <p>One receptionist, three engines: an AI that answers missed calls, books calendar slots and alerts the owner — implemented on Make, n8n and Zapier over a shared Vapi voice layer, with a full platform scorecard.</p>
                   </div>
                 </article>
@@ -575,16 +579,17 @@
               <div class="slideshow-track">
                 <article class="card slide active">
                   <div class="card-body">
-                    <p class="post-meta"><time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time> <span class="reading-time">5 min</span></p>
-                    <h3><a href="/blog/my-dotfiles-one-line-install.html">My dotfiles, one line</a></h3>
-                    <p>Bash, Neovim, Hyprland and friends — installed and stowed on six distro families by a single curl | sh. How the bootstrap and GNU Stow make it safe.</p>
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
+                    <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
+                    <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
+                    <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
                   </div>
                 </article>
                 <article class="card slide">
                   <div class="card-body">
-                    <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">7 min</span></p>
-                    <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
-                    <p>I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which engine to pick for whom.</p>
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-09-15">Sep 15, 2026</time> <span class="reading-time">5 min</span></p>
+                    <h3><a href="/blog/my-dotfiles-one-line-install.html">My dotfiles, one line</a></h3>
+                    <p>Bash, Neovim, Hyprland and friends — installed and stowed on six distro families by a single curl | sh. How the bootstrap and GNU Stow make it safe.</p>
                   </div>
                 </article>
                 <article class="card slide">
@@ -653,7 +658,7 @@
                 <span class="contact-note">say hi</span>
               </a>
             </div>
-            <p class="contact-outro reveal">Open to discussing new technologies, automation strategies, or freelance opportunities. Recently enhanced with HIPAA-compliant voice receptionists and forex-capable signal checkers. If your leads are gathering dust, I know a workflow for that. 🥔</p>
+            <p class="contact-outro reveal">Open to discussing new technologies, automation strategies, or freelance opportunities. Recently shipped an AI voice receptionist — with a HIPAA-compliant build available for healthcare practices — plus forex-capable signal checkers. If your leads are gathering dust, I know a workflow for that too. 🥔</p>
           </div>
         </section>
       </main>

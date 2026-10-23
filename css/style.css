@@ -1453,6 +1453,46 @@ html.reduce-motion *::after {
   line-height: 1.5;
 }
 
+/* ---------- HIPAA compliance badge ---------- */
+.badge-hipaa {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  width: fit-content;
+  margin: 2px 0 10px;
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  color: var(--green);
+  background: rgba(46, 168, 134, 0.12);
+  border: 1px solid rgba(46, 168, 134, 0.42);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+html[data-theme="light"] .badge-hipaa {
+  color: var(--green);
+  background: rgba(31, 122, 95, 0.1);
+  border-color: rgba(31, 122, 95, 0.38);
+}
+
+.hiw-switch-btn .badge-hipaa {
+  margin: 0 0 0 8px;
+  padding: 2px 8px;
+  font-size: 0.6rem;
+  vertical-align: middle;
+}
+
+@media (max-width: 680px) {
+  .hiw-switch-btn .badge-hipaa {
+    display: none;
+  }
+}
+
 .bento-arrow {
   position: absolute;
   top: 14px;

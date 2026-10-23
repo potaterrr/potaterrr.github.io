@@ -954,6 +954,6 @@
     a.addEventListener("click", () => openDemo(a.getAttribute("data-hiw-open")));
   });
 
-  openDemo("dlf");
+  openDemo("vr");
 
 })();
