@@ -224,53 +224,60 @@
   const SCENARIOS = {
     bookable: {
       num: "+63 917 123 4567", name: "Maria Santos",
-      intent: "book_appointment", service: "haircut",
+      intent: "book_appointment", service: "general_consultation",
       slot: "TOMORROW_1400", bad: false,
       transcript: [
-        ["ai", "Thank you for calling Potaterrr Salon, how may I help you?"],
-        ["cu", "Hi, I'd like to book a haircut tomorrow afternoon."],
+        ["ai", "Thank you for calling Potaterrr Clinic, how may I help you?"],
+        ["cu", "Hi, I'd like to book a general consultation tomorrow afternoon."],
         ["ai", "Sure! May I get your name?"],
         ["cu", "Maria Santos."],
         ["ai", "Any time preference?"],
         ["cu", "Around 2 PM please."],
       ],
-      summary: "Maria Santos wants a haircut at 2 PM tomorrow.",
+      summary: "Maria Santos wants a general consultation at 2 PM tomorrow.",
       logline: "[bookable] call logged · calendar event created ✓",
-      alert: "🤖 Salon bot → owner: ✅ Booked a haircut for Maria Santos — tomorrow 14:00. Calendar updated.",
+      alert: "🤖 Clinic bot → front desk: ✅ Booked a general consultation for Maria Santos — tomorrow 14:00. Calendar updated.",
     },
     question: {
       num: "+63 920 111 1222", name: "—",
-      intent: "question", service: "hair_color",
+      intent: "question", service: "annual_physical",
       slot: null, bad: false,
       transcript: [
-        ["ai", "Thank you for calling Potaterrr Salon, how may I help you?"],
-        ["cu", "How much is hair color?"],
-        ["ai", "Hair color starts at 1,200 pesos and takes about 90 minutes."],
+        ["ai", "Thank you for calling Potaterrr Clinic, how may I help you?"],
+        ["cu", "How long does an annual physical take?"],
+        ["ai", "An annual physical takes about 45 minutes. Walk-ins are accepted until 4 PM."],
         ["cu", "Okay, I'll think about it, thanks!"],
       ],
-      summary: "Caller asked about hair color pricing, no booking made.",
+      summary: "Caller asked about annual physical duration and walk-ins; no booking made.",
       logline: "[no_booking] call logged · no event created",
-      alert: "🤖 Salon bot → owner: 💬 Caller asked about hair-color pricing — no booking, flagged for follow-up.",
+      alert: "🤖 Clinic bot → front desk: 💬 Caller asked about annual physicals and walk-ins — no booking, flagged for follow-up.",
     },
     invalid: {
       num: "+63 927 333 4444", name: "Ana Reyes",
-      intent: "book_appointment", service: "manicure",
+      intent: "book_appointment", service: "follow_up",
       slot: "2026-08-24T10:00", bad: true,
       transcript: [
-        ["ai", "Thank you for calling Potaterrr Salon, how may I help you?"],
-        ["cu", "I want a manicure last Monday morning."],
+        ["ai", "Thank you for calling Potaterrr Clinic, how may I help you?"],
+        ["cu", "I want a follow-up last Monday morning."],
         ["ai", "I'm sorry, I can only book future appointments."],
         ["cu", "Ah okay, forget it then."],
       ],
-      summary: "Ana Reyes asked for a past slot; not bookable, needs follow-up.",
+      summary: "Ana Reyes asked for a past follow-up slot; not bookable, needs follow-up.",
       logline: "[conflict] call logged · flagged for human follow-up",
-      alert: "🤖 Salon bot → owner: ⚠️ Ana Reyes asked for a past slot — needs human follow-up.",
+      alert: "🤖 Clinic bot → front desk: ⚠️ Ana Reyes asked for a past follow-up slot — needs human follow-up.",
     },
+  };
+
+  const SERVICE_LABEL = {
+    general_consultation: "General consultation",
+    follow_up: "Follow-up",
+    annual_physical: "Annual physical",
+    vaccination: "Vaccination",
   };
 
   const VR = {
     ready: "Ready — pick a call, then hit “Run the call” or click any node.",
-    done: "Call handled end-to-end — the caller never waited, the owner never lifted a finger. 🥔",
+    done: "Call handled end-to-end — the caller never waited, the front desk never lifted a finger. 🥔",
     stages: [
       {
         icon: "📵", name: "Missed call → Vapi", short: "Missed call",
@@ -283,9 +290,9 @@
       {
         icon: "🗣️", name: "Conversation", short: "Conversation",
         type: "Vapi assistant", pause: 2100,
-        desc: "Natural chat: answers service and pricing questions from the salon config, and captures name, number, intent and preferred slot as structured data.",
+        desc: "Natural chat: answers questions about services and hours from the clinic config, and captures name, number, intent and preferred slot as structured data.",
         build(v, ctx) {
-          v.appendChild(el("p", "hiw-model", "🎙 vapi assistant · Potaterrr Salon"));
+          v.appendChild(el("p", "hiw-model", "🎙 vapi assistant · Potaterrr Clinic"));
           const wrap = el("div", "hiw-chat");
           ctx.sc.transcript.forEach(([who, text], i) => {
             const b = el("div", "hiw-bubble " + who, (who === "ai" ? "🤖 " : "🙋 ") + text);
@@ -362,12 +369,12 @@
       {
         icon: "📅", name: "Book & log", short: "Book & log",
         type: "Google Calendar + log store", pause: 1400,
-        desc: "Free slot → the event “Salon: {service} — {name}” is created and the call is logged. Taken, past, or no booking? Logged as conflict / no_booking for the record.",
+        desc: "Free slot → the event “Clinic: {service} — {name}” is created and the call is logged. Taken, past, or no booking? Logged as conflict / no_booking for the record.",
         build(v, ctx) {
           const sc = ctx.sc;
           if (sc.intent === "book_appointment" && !sc.bad) {
             v.appendChild(
-              el("div", "hiw-event", "📅 Salon: " + sc.service + " — " + sc.name + " · tomorrow 14:00–14:45 (Asia/Manila)")
+              el("div", "hiw-event", "📅 Clinic: " + (SERVICE_LABEL[sc.service] || sc.service) + " — " + sc.name + " · tomorrow 14:00–14:30 (Asia/Manila)")
             );
           }
           logBlock(v, [sc.logline]);
@@ -376,7 +383,7 @@
       {
         icon: "📣", name: "Owner alert", short: "Owner alert",
         type: "Telegram / Gmail", pause: 1100,
-        desc: "The owner gets a summary the second the call ends — zero missed leads, zero phone tag. The channel is just a config value per branch.",
+        desc: "The front desk gets a summary the second the call ends — zero missed calls, zero phone tag. The channel is just a config value per branch.",
         build(v, ctx) {
           v.appendChild(el("p", "hiw-model", CHANNEL_LABEL[ctx.platform] || "Alert channel"));
           v.appendChild(el("div", "hiw-tg", ctx.sc.alert));

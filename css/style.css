@@ -1493,6 +1493,92 @@ html[data-theme="light"] .badge-hipaa {
   }
 }
 
+/* ---------- Work with me packages ---------- */
+.hero-cta {
+  margin-top: 24px;
+}
+
+.package-grid {
+  margin-bottom: 28px;
+}
+
+.package-card {
+  display: flex;
+}
+
+.package-card .card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.package-tag {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.package-card h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.package-card p {
+  margin-bottom: 4px;
+}
+
+.package-card .feature-list {
+  margin-bottom: 4px;
+}
+
+.package-card .badge-hipaa {
+  margin: 0 0 2px;
+}
+
+.package-timeline {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: auto;
+  padding: 4px 10px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid rgba(240, 180, 41, 0.3);
+  border-radius: 999px;
+}
+
+.package-card.is-hipaa {
+  border-color: rgba(46, 168, 134, 0.5);
+  background:
+    linear-gradient(160deg, rgba(46, 168, 134, 0.08), transparent 55%),
+    var(--surface);
+}
+
+.package-card.is-hipaa:hover {
+  border-color: rgba(46, 168, 134, 0.75);
+}
+
+.package-cta {
+  margin-top: 28px;
+}
+
+.package-note {
+  max-width: 760px;
+  margin-top: 14px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.contact-cta {
+  margin: -8px 0 30px;
+}
+
 .bento-arrow {
   position: absolute;
   top: 14px;

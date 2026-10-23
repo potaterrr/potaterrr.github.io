@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ? { root: spyRoot, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
 
-  const sectionIds = ["top", "projects", "skills", "how-it-works", "timeline", "blog", "contact"];
+  const sectionIds = ["top", "projects", "skills", "how-it-works", "work-with-me", "timeline", "blog", "contact"];
   const railLinks = new Map();
   document.querySelectorAll(".rail-nav a[data-section]").forEach((a) => {
     railLinks.set(a.dataset.section, a);

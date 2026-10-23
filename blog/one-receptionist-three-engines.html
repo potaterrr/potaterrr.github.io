@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>One receptionist, three engines — potaterrr</title>
-  <meta name="description" content="I built the same AI phone receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which automation engine to pick for whom. A HIPAA-compliant build is available." />
+  <meta name="description" content="I built the same AI clinic receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which automation engine to pick for whom. A HIPAA-compliant build is available." />
   <meta property="og:title" content="One receptionist, three engines — potaterrr" />
   <meta property="og:description" content="Same AI receptionist, built three times on Make, n8n and Zapier. Real bugs, real trade-offs, and a scorecard for picking your engine." />
   <meta property="og:type" content="article" />
@@ -49,10 +49,10 @@
           </header>
           <div class="post-body">
             <p>Most "Make vs n8n vs Zapier" content is spec sheets copied from pricing pages. So I did something dumber and more useful: I built the <strong>same AI phone receptionist three times</strong> — once per platform — over one shared voice layer, and wrote down everything that broke.</p>
-            <p>The project: when a small business misses a call (or it's after hours), an AI voice agent answers, handles questions about services and prices, captures the caller's name, number and preferred slot as structured data, books the appointment on Google Calendar, logs everything and alerts the owner. The repo is public: <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">voice-receptionist</a>. A <strong>🔒 HIPAA-compliant build is available</strong> for healthcare practices — BAAs, access controls and audit logging on request. The public demo is not for PHI.</p>
+            <p>The project: when a clinic misses a call (or it's after hours), an AI voice agent answers, handles questions about services and hours, captures the caller's name, number and preferred slot as structured data, books the appointment on Google Calendar, logs everything and alerts the front desk. The repo is public: <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">voice-receptionist</a>. A <strong>🔒 HIPAA-compliant build is available</strong> for healthcare practices — BAAs, access controls and audit logging on request. The public demo is not for PHI.</p>
 
             <h2>The shared spine</h2>
-            <p>All three branches consume the same contract: a Vapi <code>end-of-call-report</code> webhook carrying a transcript plus structured data (<code>caller_name</code>, <code>callback_number</code>, <code>intent</code>, <code>service</code>, <code>preferred_slot</code>). Every branch then does the identical dance — validate, conflict-check Google Calendar, book, log, alert the owner through a configurable channel.</p>
+            <p>All three branches consume the same contract: a Vapi <code>end-of-call-report</code> webhook carrying a transcript plus structured data (<code>caller_name</code>, <code>callback_number</code>, <code>intent</code>, <code>service</code>, <code>preferred_slot</code>). Every branch then does the identical dance — validate, conflict-check Google Calendar, book, log, alert the front desk through a configurable channel.</p>
             <p>Because the voice layer is shared, comparing platforms is apples-to-apples. And because only one branch needs to be live at a time, switching engines mid-pitch is literally changing one URL in Vapi's dashboard.</p>
 
             <h2>Make.com: fast to build, sneaky to debug</h2>
@@ -65,7 +65,7 @@
             <p>The tax: you own the plumbing. Webhook payloads arrive wrapped under <code>body</code>, the Set node wants its assignments double-nested in a way no tutorial mentions, and the Google Calendar node refuses Service Accounts — OAuth2 credential or nothing. That last one cost me a rebuild of my auth plan, but the fix was one browser click, and afterwards the workflow felt indestructible. No op quota. No auto-shutdown. Version-controllable JSON.</p>
 
             <h2>Zapier: the client's engine</h2>
-            <p>Zapier is the one I can't build programmatically — Zaps are click-ops only — yet it's the one clients love most. The killer pattern: keep configuration in a Google Sheet "Config" tab (alert email, business hours) and look it up at runtime. Non-technical owners edit a spreadsheet; the Zap never changes.</p>
+            <p>Zapier is the one I can't build programmatically — Zaps are click-ops only — yet it's the one clients love most. The killer pattern: keep configuration in a Google Sheet "Config" tab (alert email, business hours) and look it up at runtime. Non-technical staff edit a spreadsheet; the Zap never changes.</p>
             <p>The costs are real though: Webhooks by Zapier sits behind plan tiers, tasks burn on every webhook call, Telegram isn't native (Gmail alerts instead), and Paths are clunky next to even Make's router.</p>
 
             <h2>The scorecard</h2>
@@ -85,7 +85,7 @@
 
             <h2>Pick by maintainer, not by feature list</h2>
             <p>That's the whole lesson. The receptionist logic is identical everywhere; what differs is who suffers when it changes. Client-managed? Zapier, because they can read it. Agency-managed? Make, because you'll debug it fast. Self-hosted or privacy-sensitive client? n8n, because they'll own it forever.</p>
-            <p>Full scorecard, war stories and the plug-in checklist live in the <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo</a>. The simulated pipeline runs today; real phone calls are one Vapi signup away. If your business line rings off the hook and answers itself badly, we should talk. 🥔</p>
+            <p>Full scorecard, war stories and the plug-in checklist live in the <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo</a>. The simulated pipeline runs today; real phone calls are one Vapi signup away. If your clinic phone rings off the hook and answers itself badly, we should talk. 🥔</p>
           </div>
         </article>
       </div>
