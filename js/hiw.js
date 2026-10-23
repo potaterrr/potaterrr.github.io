@@ -93,7 +93,7 @@
     v.appendChild(c);
   };
 
-  /* ---------- demo 1 · Dead Lead Follow-up (n8n) ---------- */
+  /* ---------- demo 1 · Dead Lead Retrieval (n8n) ---------- */
 
   const dlfEmail = (lead) =>
     "Hi " + lead.name + ",\n\n" +
