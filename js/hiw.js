@@ -89,7 +89,7 @@
   const callCard = (v, sc) => {
     const c = el("div", "hiw-call");
     c.appendChild(el("div", "hiw-call-line", "📞 incoming call · " + sc.num));
-    c.appendChild(el("div", "hiw-call-sub", "🔇 missed / after hours — Vapi voice agent picks up"));
+    c.appendChild(el("div", "hiw-call-sub", "🔇 missed / after hours — Retell voice agent picks up"));
     v.appendChild(c);
   };
 
@@ -280,19 +280,19 @@
     done: "Call handled end-to-end — the caller never waited, the front desk never lifted a finger. 🥔",
     stages: [
       {
-        icon: "📵", name: "Missed call → Vapi", short: "Missed call",
-        type: "Vapi + Twilio", pause: 1200,
-        desc: "Nobody picks up, or it's after hours. Twilio hands the call to a Vapi voice agent that answers instantly — 24/7.",
+        icon: "📵", name: "Missed call → Retell", short: "Missed call",
+        type: "Retell + phone number", pause: 1200,
+        desc: "Nobody picks up, or it's after hours. Retell answers instantly with a voice agent — 24/7.",
         build(v, ctx) {
           callCard(v, ctx.sc);
         },
       },
       {
         icon: "🗣️", name: "Conversation", short: "Conversation",
-        type: "Vapi assistant", pause: 2100,
+        type: "Retell agent", pause: 2100,
         desc: "Natural chat: answers questions about services and hours from the clinic config, and captures name, number, intent and preferred slot as structured data.",
         build(v, ctx) {
-          v.appendChild(el("p", "hiw-model", "🎙 vapi assistant · Potaterrr Clinic"));
+          v.appendChild(el("p", "hiw-model", "🎙 Retell agent · Potaterrr Clinic"));
           const wrap = el("div", "hiw-chat");
           ctx.sc.transcript.forEach(([who, text], i) => {
             const b = el("div", "hiw-bubble " + who, (who === "ai" ? "🤖 " : "🙋 ") + text);
@@ -306,18 +306,25 @@
         },
       },
       {
-        icon: "🧾", name: "End-of-call report", short: "Call report",
+        icon: "🧾", name: "Call analyzed report", short: "Call report",
         type: "webhook · POST", pause: 1500,
-        desc: "Vapi POSTs one structured JSON report to the branch webhook. Same contract whether the branch runs on Make, n8n or Zapier — swap platforms by changing a single URL.",
+        desc: "Retell POSTs one structured JSON report to the branch webhook after analysis. Same contract whether the branch runs on Make, n8n or Zapier — swap platforms by changing a single URL.",
         build(v, ctx) {
           const sc = ctx.sc;
           const payload = {
-            message: {
-              type: "end-of-call-report",
-              endedReason: "customer-ended-call",
-              call: { id: "sim-web-001", customer: { number: sc.num.replace(/\s/g, "") } },
-              artifact: {
-                structuredData: {
+            event: "call_analyzed",
+            call: {
+              call_id: "sim-web-001",
+              from_number: sc.num.replace(/\s/g, ""),
+              to_number: "+16315550123",
+              direction: "inbound",
+              call_status: "ended",
+              transcript: sc.transcript.map(([who, text]) => (who === "ai" ? "Agent" : "Caller") + ": " + text).join(" "),
+              call_analysis: {
+                call_summary: sc.summary,
+                call_successful: true,
+                user_sentiment: "Positive",
+                custom_analysis_data: {
                   caller_name: sc.name === "—" ? null : sc.name,
                   callback_number: sc.num.replace(/\s/g, ""),
                   intent: sc.intent,
@@ -325,7 +332,6 @@
                   preferred_slot: sc.slot === "TOMORROW_1400" ? tomorrow1400() : sc.slot,
                 },
               },
-              summary: sc.summary,
             },
           };
           v.appendChild(el("p", "hiw-model", (PLATFORM_LABEL[ctx.platform] || "Branch webhook") + " · receives this report"));

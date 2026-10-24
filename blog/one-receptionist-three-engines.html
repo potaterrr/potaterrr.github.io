@@ -52,11 +52,11 @@
             <p>The project: when a clinic misses a call (or it's after hours), an AI voice agent answers, handles questions about services and hours, captures the caller's name, number and preferred slot as structured data, books the appointment on Google Calendar, logs everything and alerts the front desk. The repo is public: <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">voice-receptionist</a>. A <strong>🔒 HIPAA-compliant build is available</strong> for healthcare practices — BAAs, access controls and audit logging on request. The public demo is not for PHI.</p>
 
             <h2>The shared spine</h2>
-            <p>All three branches consume the same contract: a Vapi <code>end-of-call-report</code> webhook carrying a transcript plus structured data (<code>caller_name</code>, <code>callback_number</code>, <code>intent</code>, <code>service</code>, <code>preferred_slot</code>). Every branch then does the identical dance — validate, conflict-check Google Calendar, book, log, alert the front desk through a configurable channel.</p>
-            <p>Because the voice layer is shared, comparing platforms is apples-to-apples. And because only one branch needs to be live at a time, switching engines mid-pitch is literally changing one URL in Vapi's dashboard.</p>
+            <p>All three branches consume the same contract: a Retell <code>call_analyzed</code> webhook carrying a transcript plus structured data (<code>caller_name</code>, <code>callback_number</code>, <code>intent</code>, <code>service</code>, <code>preferred_slot</code>). Every branch then does the identical dance — validate, conflict-check Google Calendar, book, log, alert the front desk through a configurable channel.</p>
+            <p>Because the voice layer is shared, comparing platforms is apples-to-apples. And because only one branch needs to be live at a time, switching engines mid-pitch is literally changing one webhook URL in Retell's dashboard.</p>
 
             <h2>Make.com: fast to build, sneaky to debug</h2>
-            <p>Make got me working fastest. Native modules for Vapi reports, Google Calendar and Telegram meant almost no custom mapping, and the scenario history shows every module's inputs and outputs — genuinely great debugging UX.</p>
+            <p>Make got me working fastest. Native modules for Retell reports, Google Calendar and Telegram meant almost no custom mapping, and the scenario history shows every module's inputs and outputs — genuinely great debugging UX.</p>
             <p>Then the IML expression language fought back. There is <strong>no <code>and()</code>, no <code>or()</code>, no <code>empty()</code></strong>. A simple "bookable AND future slot" becomes nested-<code>if()</code> spaghetti. My favorite trap: a filter condition referencing a bare word like <code>book_appointment</code> treats it as an <em>identifier</em>, silently evaluating to null — so my fallback route matched <em>every</em> call, including bookings, and overwrote their log status seconds after booking. The run still reported success.</p>
             <p>Two more personality traits: any error auto-deactivates the whole scenario (surprise downtime), and Make routers execute <strong>every matching route</strong>, not just the first. Both are documented behaviors that will absolutely ruin your afternoon if you assume otherwise.</p>
 
@@ -85,7 +85,7 @@
 
             <h2>Pick by maintainer, not by feature list</h2>
             <p>That's the whole lesson. The receptionist logic is identical everywhere; what differs is who suffers when it changes. Client-managed? Zapier, because they can read it. Agency-managed? Make, because you'll debug it fast. Self-hosted or privacy-sensitive client? n8n, because they'll own it forever.</p>
-            <p>Full scorecard, war stories and the plug-in checklist live in the <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo</a>. The simulated pipeline runs today; real phone calls are one Vapi signup away. If your clinic phone rings off the hook and answers itself badly, we should talk. 🥔</p>
+            <p>Full scorecard, war stories and the plug-in checklist live in the <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo</a>. The n8n pipeline runs today on synthetic payloads; real phone calls are one Retell agent and number away. If your clinic phone rings off the hook and answers itself badly, we should talk. 🥔</p>
           </div>
         </article>
       </div>
