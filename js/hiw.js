@@ -398,9 +398,241 @@
     ],
   };
 
+  /* ---------- demo 3 · AR Invoice Reminder (n8n) ---------- */
+
+  const TONE = {
+    friendly: { label: "Friendly", cls: "is-friendly" },
+    firm: { label: "Firm & Direct", cls: "is-firm" },
+    urgent: { label: "Urgent & Solution-Oriented", cls: "is-urgent" },
+  };
+
+  const toneFor = (days) => (days <= 14 ? "friendly" : days <= 30 ? "firm" : "urgent");
+
+  const money = (n) =>
+    "$" + n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const plural = (n, word) => n + " " + word + (n === 1 ? "" : "s");
+
+  const arSubject = (inv) =>
+    (inv.days > 30 ? "Action needed" : inv.days > 14 ? "Payment reminder" : "Quick nudge") +
+    " · invoice " + inv.number;
+
+  const arEmail = (inv) => {
+    const amt = money(inv.amount);
+    const late = plural(inv.days, "day");
+    let body;
+    if (inv.days <= 14) {
+      body =
+        "Hi " + inv.client + ",\n\nJust a friendly nudge that invoice " + inv.number +
+        " for " + amt + " was due " + late + " ago. If it's already on its way, please ignore this — and thank you.\n\n";
+    } else if (inv.days <= 30) {
+      body =
+        "Hi " + inv.client + ",\n\nInvoice " + inv.number + " for " + amt + " is now " +
+        late + " past due. Could you confirm a payment date today so we can keep your account current?\n\n";
+    } else {
+      body =
+        "Hi " + inv.client + ",\n\nInvoice " + inv.number + " for " + amt + " is " + late +
+        " past due and needs attention this week. If paying in full isn't possible right now, " +
+        "reply with a date and we'll set up a payment plan that works.\n\n";
+    }
+    return body + "Regards,\n[Billing Team]";
+  };
+
+  /* the tracker as the workflow sees it: two rows that must be skipped */
+  const invoiceSheet = (v, inv, allCool) => {
+    const rows = [
+      { num: "INV-1039", client: "Northwind Cafe", amount: 1450, days: 41, act: "chase" },
+      { num: inv.number, client: inv.client, amount: inv.amount, days: inv.days, act: "chase", target: true },
+      { num: "INV-1041", client: "Kwento.ph", amount: 610, days: 12, act: "paid" },
+      { num: "INV-1042", client: "Alamat Studio", amount: 980, days: 9, act: "cool" },
+    ];
+    const table = el("table", "hiw-sheet");
+    const head = el("tr");
+    ["Invoice", "Client", "Amount", "Days late", "Action"].forEach((h) =>
+      head.appendChild(el("th", null, h))
+    );
+    const thead = el("thead");
+    thead.appendChild(head);
+    table.appendChild(thead);
+    const tbody = el("tbody");
+    rows.forEach((r) => {
+      const tr = el("tr");
+      if (r.target) tr.className = "is-target";
+      if (r.act !== "chase") tr.className += " is-skip";
+      tr.appendChild(el("td", "is-num", r.num));
+      tr.appendChild(el("td", null, r.client));
+      tr.appendChild(el("td", "is-num", money(r.amount)));
+      tr.appendChild(el("td", "is-num", r.days === 0 ? "—" : String(r.days)));
+      const verdict = el("td", "is-act");
+      if (r.act === "paid") verdict.textContent = "skip · paid";
+      else if (r.act === "cool") verdict.textContent = allCool ? "skip · chased today" : "skip · 7-day cooldown";
+      else verdict.textContent = allCool ? "skip · cooldown" : "draft reminder";
+      tr.appendChild(verdict);
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    v.appendChild(table);
+    v.appendChild(
+      el("p", "hiw-board-note", "source: Google Sheets · Invoices tab · tone and cooldown are decided in code before the model runs")
+    );
+  };
+
+  const arMailCard = (v, inv, subject, body) => {
+    const card = el("div", "hiw-mail");
+    const head = el("div", "hiw-mail-head");
+    head.appendChild(el("span", "hiw-mail-tag", "DRAFT — never auto-sent"));
+    card.appendChild(head);
+    card.appendChild(el("div", "hiw-mail-row", "To: " + emailOf(inv.client, inv.client)));
+    card.appendChild(el("div", "hiw-mail-row", "Subject: " + subject));
+    const bodyEl = el("div", "hiw-mail-body");
+    bodyEl.textContent = body;
+    card.appendChild(bodyEl);
+    v.appendChild(card);
+  };
+
+  const AR = {
+    ready: "Ready — edit the invoice, then hit “Run the invoice run” or click any node.",
+    done: "Run complete — reminder drafted, follow-up logged, nothing sent. A human still presses send. 🥔",
+    stages: [
+      {
+        icon: "⏰", name: "Daily AR Check", short: "Daily check",
+        type: "n8n · scheduleTrigger", pause: 950,
+        desc: "The workflow wakes up at 09:00 on weekdays, on its own. Chasing invoices is the work nobody schedules — so it gets scheduled here.",
+        build(v) {
+          logBlock(v, [
+            "› workflow activated · cron 0 9 * * 1-5",
+            "› timezone: Asia/Manila",
+            "› trigger fired — reading the invoice tracker",
+          ]);
+        },
+      },
+      {
+        icon: "📄", name: "Read Invoices", short: "Read invoices",
+        type: "n8n · googleSheets.getAll", pause: 1250,
+        desc: "Every row of the Invoices tab comes back: invoice number, client, amount, due date, status and the last follow-up date. The sheet is the database.",
+        build(v, ctx) {
+          invoiceSheet(v, ctx.invoice, false);
+        },
+      },
+      {
+        icon: "🧮", name: "Days overdue + tone", short: "Days + tone",
+        type: "n8n · code", pause: 1500,
+        desc: "Code drops paid and void rows, parses due dates, computes days past due, picks the tone and enforces the 7-day cooldown. None of that is left to the model.",
+        build(v, ctx) {
+          const inv = ctx.invoice;
+          const cool = ctx.live && ctx.drill === "cooldown";
+          const t = TONE[toneFor(inv.days)];
+          invoiceSheet(v, inv, cool);
+          logBlock(v, [
+            "› parse due date · formatted / Date / serial all handled",
+            "› days past due: " + inv.days,
+            "› tone: " + t.label + " (1–14 friendly · 15–30 firm · 31+ urgent)",
+            "› INV-1041 status = paid → skipped",
+            cool
+              ? "› ✋ " + inv.number + " last chased today → inside the 7-day cooldown"
+              : "› INV-1042 chased 2 days ago → cooldown, skipped",
+            cool ? "› 0 items reach the model — run ends here" : "› 2 items handed to the agent",
+          ]);
+        },
+      },
+      {
+        icon: "✍️", name: "Draft with Gemini", short: "Draft email",
+        type: "langchain · aiAgent + parser", pause: 700,
+        desc: "Gemini writes under four sentences in the tone code chose, then a Structured Output Parser forces flat JSON: email_subject and email_body, nothing else.",
+        build(v, ctx) {
+          const inv = ctx.invoice;
+          v.appendChild(el("p", "hiw-model", "openrouter · google/gemini-3-flash · maxOutputTokens 4096"));
+          if (ctx.live && ctx.drill === "empty") {
+            v.appendChild(el("pre", "hiw-json", '{\n  "email_subject": "",\n  "email_body": ""\n}'));
+            const err = el("p", "hiw-verdict", "✗ The AI model returned an empty response to the Structured Output Parser.");
+            err.style.color = "#e5534b";
+            v.appendChild(err);
+            v.appendChild(el("p", "hiw-board-note", "700 output tokens went to reasoning and never reached the JSON. 4096 leaves room for both."));
+            return null;
+          }
+          const text = JSON.stringify(
+            { email_subject: arSubject(inv), email_body: arEmail(inv) },
+            null,
+            2
+          );
+          const out = el("pre", "hiw-json");
+          v.appendChild(out);
+          if (!ctx.live || still()) {
+            out.textContent = text;
+            return null;
+          }
+          const isLive = ctx.token;
+          return new Promise((done) => {
+            let i = 0;
+            const step = Math.max(4, Math.round(text.length / 80));
+            const tick = () => {
+              if (!isLive()) { done(); return; }
+              i = Math.min(text.length, i + step);
+              out.textContent = text.slice(0, i);
+              if (i < text.length) setTimeout(tick, 22);
+              else done();
+            };
+            tick();
+          });
+        },
+      },
+      {
+        icon: "🧾", name: "Draft + log follow-up", short: "Draft + log",
+        type: "gmail.draft + sheets.update", pause: 1400,
+        desc: "The reply is cleaned, the signature is appended in code, then Gmail files it as a draft — never a send. The follow-up date goes back onto the row so tomorrow's run skips it.",
+        build(v, ctx) {
+          const inv = ctx.invoice;
+          arMailCard(v, inv, arSubject(inv), arEmail(inv));
+          logBlock(v, [
+            "› signature enforced in code (Regards, / [Billing Team])",
+            "› gmail.draft created — never sent",
+            "› sheets.update · Last Follow-Up Date = today",
+            '› notes: "Reminder drafted — awaiting human review"',
+          ]);
+        },
+      },
+      {
+        icon: "🫵", name: "You", short: "You",
+        type: "human in the loop", pause: 1200,
+        desc: "The only step that stays human: read the draft, fix the tone if the client relationship needs it, press send. Automation deleted the drudgery, not the judgment.",
+        build(v, ctx) {
+          const inv = ctx.invoice;
+          arMailCard(v, inv, arSubject(inv), arEmail(inv));
+          const gate = el("div", "hiw-gate");
+          gate.appendChild(el("p", "hiw-gate-text", "📤 1 reminder waiting in Gmail drafts — nothing sends itself."));
+          const btn = el("button", "hiw-gate-btn", "✅ Approve & send (the human part)");
+          btn.type = "button";
+          gate.appendChild(btn);
+          v.appendChild(gate);
+          const finish = () => {
+            gate.textContent = "";
+            gate.appendChild(el("p", "hiw-gate-text", "✉️ Sent by a human — " + inv.number + " marked chased for 7 days."));
+            ctx.status("🧾 Reminder sent by a human — next chase in 7 days. 🥔");
+          };
+          if (!ctx.live) {
+            btn.addEventListener("click", finish, { once: true });
+            return null;
+          }
+          const isLive = ctx.token;
+          return new Promise((done) => {
+            btn.addEventListener(
+              "click",
+              () => {
+                if (!isLive()) { done(); return; }
+                finish();
+                done();
+              },
+              { once: true }
+            );
+          });
+        },
+      },
+    ],
+  };
+
   /* ---------- per-panel state + input readers ---------- */
 
-  const state = { dlf: { runId: 0 }, vr: { runId: 0 } };
+  const state = { dlf: { runId: 0 }, vr: { runId: 0 }, ar: { runId: 0 } };
 
   const readLead = (panel) => {
     const val = (id, fb) => {
@@ -420,7 +652,23 @@
     return SCENARIOS[(chip && chip.getAttribute("data-scenario")) || "bookable"];
   };
 
-  const DEMOS = { dlf: DLF, vr: VR };
+  const readInvoice = (panel) => {
+    const val = (id, fb) => {
+      const n = panel.querySelector("#" + id);
+      const t = n ? String(n.value).trim() : "";
+      return t || fb;
+    };
+    const amount = Number.parseFloat(val("hiw-inv-amount", "820.00").replace(/[^0-9.]/g, ""));
+    const days = Number.parseInt(val("hiw-inv-days", "23"), 10);
+    return {
+      client: val("hiw-inv-client", "Blue Harbor Studio"),
+      number: val("hiw-inv-number", "INV-1043").toUpperCase(),
+      amount: Number.isFinite(amount) && amount > 0 ? amount : 820,
+      days: Number.isFinite(days) ? Math.max(1, Math.min(365, days)) : 23,
+    };
+  };
+
+  const DEMOS = { dlf: DLF, vr: VR, ar: AR };
 
   const NODE_COLORS = ["#22c55e", "#3b82f6", "#a855f7", "#06b6d4", "#f59e0b", "#ec4899"];
   const PER_LINK = 4;
@@ -769,6 +1017,7 @@
 
     const browsingCtx = () => ({
       lead: readLead(panel),
+      invoice: readInvoice(panel),
       sc: activeScenario(panel),
       live: false,
       token: () => true,
@@ -828,6 +1077,7 @@
     runBtn.addEventListener("click", async () => {
       st.runId += 1;
       const id = st.runId;
+      let halted = null;
       runBtn.disabled = true;
       resetBtn.hidden = false;
       flow.resetMarks();
@@ -835,6 +1085,7 @@
 
       const ctx = {
         lead: readLead(panel),
+        invoice: readInvoice(panel),
         sc: activeScenario(panel),
         live: true,
         token: () => id === st.runId,
@@ -865,16 +1116,42 @@
           }
           if (key === "dlf" && ctx.drill === "dup" && i === 4) {
             setStatus("warn");
-            ctx.status("✋ duplicate detected — lead already drafted, run stopped here. No second draft.");
+            halted = "✋ Duplicate detected — this lead was already drafted, so the run stopped here. No second draft.";
+            ctx.status(halted);
             await dwell(id, 1400);
             break;
+          }
+          if (key === "ar" && ctx.drill === "cooldown" && i === 2) {
+            setStatus("warn");
+            if (mStatus) mStatus.textContent = "skipped";
+            halted = "✋ Every row is inside the 7-day cooldown — 0 items reach the model. Nothing drafted today.";
+            ctx.status(halted);
+            await dwell(id, 1800);
+            break;
+          }
+          if (key === "ar" && ctx.drill === "empty" && i === 3) {
+            setStatus("bad");
+            if (mStatus) mStatus.textContent = "empty";
+            ctx.status("⚠️ parser got an empty reply — retrying with a bigger token budget…");
+            await dwell(id, 2200);
+            if (id !== st.runId) return;
+            setStatus("ok");
+            if (mStatus) mStatus.textContent = "healthy";
+            ctx.status("✓ retry returned valid JSON — reminder drafted on the second attempt");
+            await select(3, Object.assign({}, ctx, { drill: "none" }));
+            await dwell(id, 700);
           }
           if (id !== st.runId) return;
           await dwell(id, demo.stages[i].pause || 950);
         }
         if (id === st.runId) {
-          if (mStatus) mStatus.textContent = "healthy";
-          statusEl.textContent = demo.done;
+          if (halted) {
+            if (mStatus) mStatus.textContent = "skipped";
+            statusEl.textContent = halted;
+          } else {
+            if (mStatus) mStatus.textContent = "healthy";
+            statusEl.textContent = demo.done;
+          }
         }
       } finally {
         if (id === st.runId) {
@@ -918,6 +1195,21 @@
       if (s) s.addEventListener("change", reset);
     });
 
+    /* AR: the tone chip is computed live as the invoice is edited */
+    const toneChip = panel.querySelector(".hiw-tone");
+    if (toneChip) {
+      const syncTone = () => {
+        const t = TONE[toneFor(readInvoice(panel).days)];
+        toneChip.textContent = t.label;
+        toneChip.className = "hiw-tone " + t.cls;
+      };
+      ["hiw-inv-client", "hiw-inv-number", "hiw-inv-amount", "hiw-inv-days"].forEach((id) => {
+        const n = panel.querySelector("#" + id);
+        if (n) n.addEventListener("input", syncTone);
+      });
+      syncTone();
+    }
+
     reset();
     return { panel, reset };
   }
@@ -925,7 +1217,7 @@
   /* ---------- global wiring ---------- */
 
   const handles = {};
-  ["dlf", "vr"].forEach((key) => {
+  ["dlf", "vr", "ar"].forEach((key) => {
     const h = buildDemo(key);
     if (h) handles[key] = h;
   });

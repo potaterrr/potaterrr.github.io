@@ -142,7 +142,7 @@
               <span class="bento-label"><span class="bento-icon">📞</span>The main crop</span>
               <span class="bento-title">AI Voice Receptionist</span>
               <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
-              <span class="bento-desc">Answers missed and after-hours clinic calls and books real calendar slots — automation that pays for itself on the first missed call.</span>
+              <span class="bento-desc">Answers missed and after-hours clinic calls and books real calendar slots — the flagship in a crop that also includes the 🧾 AR Invoice Reminder and 📮 Dead Lead Retrieval.</span>
               <span class="bento-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="bento-tile bento-projects" href="#projects">
@@ -229,14 +229,14 @@
                   </article>
                   <article class="card barrel-slide">
                     <div class="card-body">
-                      <h3><a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">AR Invoice Reminder Agent</a></h3>
+                      <h3><a href="#how-it-works" data-hiw-open="ar">AR Invoice Reminder Agent</a></h3>
                       <p>An n8n workflow that chases overdue invoices every morning: it reads a Google Sheets tracker, computes days past due in code, and drafts a payment reminder whose tone escalates with the delay — <strong>friendly</strong>, then <strong>firm</strong>, then <strong>solution-oriented</strong> — filing every one as a Gmail draft for review.</p>
                       <ul class="feature-list">
                         <li><strong>Never auto-sends</strong> — AI drafts, a human presses send</li>
                         <li>Tone is computed, not guessed: 1–14 friendly · 15–30 firm · 31+ offers a payment split plan</li>
                         <li>Strict JSON output, signature enforced in code, no placeholders left behind</li>
                         <li>7-day cooldown per invoice, then the follow-up date is logged back to the sheet</li>
-                        <li><a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">repo ↗</a></li>
+                        <li>▶ <a href="#how-it-works" data-hiw-open="ar">Watch it draft a reminder</a> · <a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">repo ↗</a></li>
                       </ul>
                     </div>
                   </article>
@@ -392,11 +392,12 @@
         <section class="section section-alt" id="how-it-works">
           <div class="container">
             <h2 class="section-title reveal"><span class="hash">#</span> How It Works</h2>
-            <p class="section-lead reveal">Two automations, simulated end to end: a clinic's missed call handled by the voice receptionist, and a dead lead resurrected by the follow-up pipeline. Everything runs in your browser — no APIs, no keys, no real calls, no PHI. 🥔</p>
+            <p class="section-lead reveal">Three automations, simulated end to end: a clinic's missed call handled by the voice receptionist, an overdue invoice chased into a reviewed Gmail draft, and a dead lead resurrected by the follow-up pipeline. Everything runs in your browser — no APIs, no keys, no real calls, no invoices, no PHI. 🥔</p>
 
             <div class="hiw reveal" id="hiw">
               <div class="hiw-switch" role="tablist" aria-label="Choose a featured project">
                 <button type="button" class="hiw-switch-btn is-active" role="tab" id="hiw-tab-vr" aria-controls="hiw-panel-vr" aria-selected="true" data-hiw-switch="vr">📞 AI Voice Receptionist <span class="badge-hipaa">🔒 HIPAA-compliant build available</span></button>
+                <button type="button" class="hiw-switch-btn" role="tab" id="hiw-tab-ar" aria-controls="hiw-panel-ar" aria-selected="false" tabindex="-1" data-hiw-switch="ar">🧾 AR Invoice Reminder</button>
                 <button type="button" class="hiw-switch-btn" role="tab" id="hiw-tab-dlf" aria-controls="hiw-panel-dlf" aria-selected="false" tabindex="-1" data-hiw-switch="dlf">📮 Dead Lead Retrieval</button>
               </div>
 
@@ -452,6 +453,62 @@
                   </div>
                 </div>
                 <p class="hiw-status" aria-live="polite">Ready — hit “Run the pipeline”.</p>
+              </div>
+
+              <div class="hiw-panel" id="hiw-panel-ar" role="tabpanel" aria-labelledby="hiw-tab-ar" hidden>
+                <div class="hiw-setup">
+                  <fieldset class="hiw-lead-card">
+                    <legend>🧾 Thursday's invoices — edit me</legend>
+                    <label>Client <input id="hiw-inv-client" type="text" value="Blue Harbor Studio" maxlength="40" autocomplete="off" /></label>
+                    <label>Invoice # <input id="hiw-inv-number" type="text" value="INV-1043" maxlength="20" autocomplete="off" /></label>
+                    <label>Amount (USD) <input id="hiw-inv-amount" type="text" value="820.00" maxlength="12" inputmode="decimal" autocomplete="off" /></label>
+                    <label>Days overdue <input id="hiw-inv-days" type="number" value="23" min="1" max="365" step="1" /></label>
+                  </fieldset>
+                  <p class="hiw-tone-line">Code picks the tone: <span class="hiw-tone is-firm" id="hiw-ar-tone">Firm &amp; Direct</span></p>
+                  <div class="hiw-actions">
+                    <button type="button" class="hiw-run">▶ Run the invoice run</button>
+                    <button type="button" class="hiw-reset" hidden>↺ Reset</button>
+                  </div>
+                </div>
+                <div class="hiw-wrap">
+                  <canvas class="hiw-flow" id="hiw-flow-ar" width="640" height="300" role="group" aria-label="AR Invoice Reminder pipeline map — click a node for details" tabindex="0"></canvas>
+                  <button type="button" class="hiw-pause" data-pause="ar" aria-label="Pause packet animation" aria-pressed="false">⏸</button>
+                </div>
+                <div class="hiw-metrics">
+                  <div class="hiw-metric"><span class="hiw-metric-label">Current Stage</span><span class="hiw-metric-value" id="hiw-m-stage-ar">Schedule Trigger</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Live Packets</span><span class="hiw-metric-value" id="hiw-m-packets-ar">15</span></div>
+                  <div class="hiw-metric"><span class="hiw-metric-label">Status</span><span class="hiw-metric-value hiw-metric-ok" id="hiw-m-status-ar">healthy</span></div>
+                </div>
+                <div class="hiw-inspect" id="hiw-detail-ar">
+                  <div class="hiw-ins-head">
+                    <span class="hiw-ins-dot"></span>
+                    <span class="hiw-ins-icon">⏰</span>
+                    <span class="hiw-ins-name">Daily AR Check</span>
+                    <span class="hiw-ins-tag">n8n · scheduleTrigger</span>
+                  </div>
+                  <p class="hiw-ins-desc">The workflow wakes up at 09:00 every morning and reads the invoice tracker.</p>
+                  <div class="hiw-visual"></div>
+                </div>
+                <div class="hiw-console">
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Pipeline velocity</span>
+                    <div class="hiw-slider-row">
+                      <input type="range" class="hiw-slider" id="hiw-speed-ar" min="0" max="3" step="0.5" value="1" aria-label="Packet speed" />
+                      <span class="hiw-slider-val" id="hiw-speed-val-ar">1.0x</span>
+                    </div>
+                  </div>
+                  <div class="hiw-cgroup">
+                    <span class="hiw-clabel">Failure drill</span>
+                    <div class="hiw-select-wrap">
+                      <select class="hiw-select hiw-drill" id="hiw-drill-ar" aria-label="Simulate an invoice-run disturbance">
+                        <option value="none">No errors</option>
+                        <option value="empty">Parser gets an empty reply</option>
+                        <option value="cooldown">Every row inside the cooldown</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <p class="hiw-status" aria-live="polite">Ready — hit “Run the invoice run”.</p>
               </div>
 
               <div class="hiw-panel" id="hiw-panel-vr" role="tabpanel" aria-labelledby="hiw-tab-vr">

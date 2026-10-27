@@ -2236,6 +2236,94 @@ body.intro-lock {
   font-size: 0.9rem;
 }
 
+/* AR demo — live tone chip */
+.hiw-tone-line {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hiw-tone {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: var(--green);
+}
+
+.hiw-tone.is-friendly { color: var(--green); }
+.hiw-tone.is-firm { color: var(--accent); }
+.hiw-tone.is-urgent { color: #e5534b; }
+
+/* AR demo — invoice tracker table */
+.hiw-sheet {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  margin-bottom: 10px;
+}
+
+.hiw-sheet th,
+.hiw-sheet td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.hiw-sheet th {
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.64rem;
+  letter-spacing: 0.06em;
+}
+
+.hiw-sheet td.is-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.hiw-sheet td.is-act {
+  color: var(--green);
+}
+
+.hiw-sheet tr.is-target td {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.hiw-sheet tr.is-skip {
+  opacity: 0.55;
+}
+
+.hiw-sheet tr.is-skip td.is-act {
+  color: var(--muted);
+}
+
+.hiw-board-note + .hiw-log,
+.hiw-mail + .hiw-log {
+  margin-top: 10px;
+}
+
+#hiw-inv-client {
+  width: 190px;
+}
+
+@media (max-width: 640px) {
+  .hiw-sheet {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
 .hiw-actions {
   display: flex;
   align-items: center;
