@@ -217,9 +217,17 @@ document.addEventListener("DOMContentLoaded", () => {
       const n = slides.length;
       let index = 0;
 
-      const show = (i) => {
+      const show = (i, animate = true) => {
         index = (i + n) % n;
-        slides.forEach((s, j) => s.classList.toggle("is-front", j === index));
+        slides.forEach((s, j) => {
+          s.classList.toggle("is-front", j === index);
+          s.classList.remove("is-enter");
+        });
+        if (animate) {
+          const front = slides[index];
+          void front.offsetWidth;
+          front.classList.add("is-enter");
+        }
         dotsWrap.querySelectorAll("button").forEach((d, j) => {
           d.classList.toggle("active", j === index);
           d.setAttribute("aria-selected", String(j === index));
@@ -255,7 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
         dragX = null;
       });
 
-      show(0);
+      show(0, false);
     }
   }
 

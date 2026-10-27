@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The invoice chaser: three bugs, one rule — potaterrr</title>
+  <meta name="description" content="Building an n8n accounts-receivable agent that drafts overdue invoice reminders: Gemini returning an empty response to a structured parser, a signature the model kept rewriting, a cooldown that had to exist, and the one rule that shaped all of it." />
+  <meta property="og:title" content="The invoice chaser: three bugs, one rule — potaterrr" />
+  <meta property="og:description" content="An AR agent drafts tone-matched invoice reminders. These are the three failures that shaped it — and the one rule that decided the design." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/ar-invoice-agent-challenges.html" />
+  <link rel="canonical" href="https://potaterrr.github.io/blog/ar-invoice-agent-challenges.html" />
+  <meta property="og:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/assets/favicon-512.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-10-28">Oct 28, 2026</time>
+              <span class="reading-time">7 min read</span>
+            </div>
+            <h1 class="post-title">The invoice chaser: three bugs, one rule</h1>
+          </header>
+          <div class="post-body">
+            <p>Chasing overdue invoices is the work nobody schedules. It's not hard, it's just <em>always later</em> — until a receivable is 90 days old and the polite reminder you meant to send in week two would now read like an apology for your own silence.</p>
+            <p>So I built <a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">ar-invoice-reminder-agent</a>: an n8n workflow that reads an invoice tracker every morning, works out how late each invoice is, and drafts a reminder whose tone matches the delay. Friendly under two weeks, firm to thirty days, solution-oriented after that. Every draft lands in Gmail. None of them send themselves.</p>
+            <p>The build was mostly unremarkable. The failures were not. Three of them changed the design, and one rule decided all three.</p>
+
+            <h2>The shape of it</h2>
+            <p>Ten nodes, one straight line:</p>
+            <ol>
+              <li>A schedule trigger fires at 09:00.</li>
+              <li>Google Sheets returns every row of the <code>Invoices</code> tab.</li>
+              <li>A Code node drops paid and void rows, parses amounts and dates, computes <code>Days Past Due</code>, assigns a tone, and formats the currency.</li>
+              <li>A Gemini 3 Flash agent writes the email from that normalized row.</li>
+              <li>A Structured Output Parser forces <code>{ "email_subject": "...", "email_body": "..." }</code>.</li>
+              <li>A second Code node cleans the result, enforces the signature and falls back to a template if the model produced nothing usable.</li>
+              <li>Gmail files a draft addressed to the client — no send.</li>
+              <li>Google Sheets stamps the follow-up date back onto the matched row.</li>
+              <li>The AI model and parser hang off the agent as sub-nodes.</li>
+              <li>A sticky note explains the whole thing on the canvas.</li>
+            </ol>
+            <p>The model gets one job: turn a row into prose. Every decision that can be made deterministically — how late it is, which tone applies, whether this invoice was already chased — is made in code before the model is ever called.</p>
+
+            <h2>Bug one: the model answered with nothing</h2>
+            <p>First end-to-end run. Sheets read, code ran, and then:</p>
+            <pre><code>The AI model returned an empty response
+to the Structured Output Parser</code></pre>
+            <p>The agent node reported an error after five seconds, the parser errored in three milliseconds, and the run stopped. Nothing in the prompt was broken. Nothing in the row was broken. The model simply returned an empty string to the parser.</p>
+            <p>The cause was a number I'd set by reflex: <code>maxOutputTokens: 700</code>. On a reasoning model that budget is shared between thinking and answering. Gemini 3 spends tokens working out the email before it writes it, and 700 was not enough to reach the JSON. The parser asked for structure, the model had already run out of room, and the empty result read like a schema problem.</p>
+            <p>Raising it to <code>4096</code> fixed it instantly. Same prompt, same rows, valid JSON every time. The lesson isn't "use bigger numbers" — it's that <strong>a token limit is a correctness setting when you use a reasoning model</strong>. The failure surfaces at the parser, which is the last place you'd look.</p>
+
+            <h2>Bug two: the model kept rewriting the sign-off</h2>
+            <p>The prompt asks for exactly this, every time:</p>
+            <pre><code>Regards,
+[Billing Team]</code></pre>
+            <p>Most of the time it complied. Some of the time it produced a signature with a company name attached, an extra blank line, or a sentence thanking the client for their patience <em>after</em> the sign-off. None of that is wrong writing. All of it is wrong output — a template that's identical across hundreds of invoices is exactly the thing you don't want a language model freelancing on.</p>
+            <p>So the workflow stopped trusting it. The validation node finds the last <code>Regards,</code>, deletes everything from there to the end, and appends the two lines itself. It also unescapes any literal <code>\n</code> the model left in the body and strips markdown fences and bold markers.</p>
+            <p>This is the pattern I keep coming back to: <strong>let the model write the paragraph, never the contract</strong>. The signature, the JSON keys, the placeholders-to-avoid list — those get enforced in code, because code doesn't have a bad day.</p>
+
+            <h2>Bug three: the same invoice, chased every morning</h2>
+            <p>The first version had no memory. The schedule fires daily, the sheet has the same overdue rows, so the next morning it drafted the same three reminders again. And again. The drafts folder fills, the notes column fills with duplicates, and eventually someone trusts the automation less than their own memory.</p>
+            <p>The fix is a seven-day gate in the normalize step: if <code>Last Follow-Up Date</code> is within the last week, skip the row. It runs <em>before</em> the model call, which also means a skipped invoice costs nothing.</p>
+            <p>Two details made this less trivial than it sounds. Sheets hands back dates in more than one shape — formatted strings, real dates, and occasionally raw serial numbers — so the parser handles all three before comparing. And the cooldown is deliberately not something the model decides: a language model asked "should I chase this again?" will always find a reason to say yes, because the row in front of it looks overdue. That's not judgment. That's just the data.</p>
+
+            <h2>The small bug that was actually a measurement bug</h2>
+            <p>My validation node counts sentences, because the brief says the email body must stay under four. The first verified run reported <code>Sentence Count: 5</code> on an email that was plainly three sentences.</p>
+            <p>The counter was matching every <code>.</code> — which meant <code>$1,500.00</code> ended a sentence twice, and so did the payment link. The prose was fine; the ruler was broken. Strip URLs and currency amounts first, and the count lands on three.</p>
+            <p>It's a tiny bug with a useful lesson attached: <strong>when a guardrail fires, confirm the guardrail before rewriting the thing it guards.</strong> I nearly "fixed" a prompt that was already doing its job.</p>
+
+            <h2>One more thing the test run taught me</h2>
+            <p>I verified the workflow against the real tracker, which is exactly what a careful person would do — and it created three real Gmail drafts and wrote three real follow-up dates into the sheet. Nothing was sent, so nothing was damaged. But the tracker now honestly says those invoices were chased today, and they'll sit inside the cooldown for a week.</p>
+            <p>The next build gets a copy of the sheet for testing. Draft-only means the blast radius is small, not zero: <em>writes</em> are still writes.</p>
+
+            <h2>The one rule</h2>
+            <p>All three bugs point the same direction. The model is good at the part that needs judgment — phrasing an awkward request so a client still takes your call — and bad at the parts that need to be identical every single time: schema, signature, arithmetic, whether this row has already been handled.</p>
+            <p><strong>Automation should delete drudgery, not judgment.</strong> Computing days overdue is drudgery. Deciding whether an invoice is worth a payment plan conversation is judgment. Drafting the email is the interesting middle — close enough to judgment that a human should still see it before it leaves the building, and repetitive enough that nobody should be typing it at 11pm.</p>
+            <p>So the workflow chases, and a human sends. That split is the whole product. 🥔</p>
+            <hr />
+            <p>Want this running against your own tracker? The sanitized workflow, the exact prompts and the starter sheet live in the <a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">repo</a>. If you'd rather talk it through, I'm on <a href="https://wa.me/potaiterrr" target="_blank" rel="noopener">WhatsApp</a>.</p>
+          </div>
+          <nav class="post-nav">
+            <span></span>
+            <a href="why-my-ai-never-sends-emails.html">Why my AI never sends emails &rarr;</a>
+          </nav>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

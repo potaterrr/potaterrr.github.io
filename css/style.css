@@ -88,6 +88,7 @@ code {
   border-radius: 6px;
   padding: 0.1em 0.4em;
   font-size: 0.85em;
+  overflow-wrap: anywhere;
 }
 
 .nav {
@@ -919,31 +920,11 @@ textarea:focus-visible {
   .potato-fab.fab-spin { animation: none; }
 }
 
-/* The tab bar is centred at the viewport bottom; the FAB is fixed to the
-   bottom-right. They share the same band and collide around 481-700px, so
-   lift the FAB above the bar for every width where the bar is visible. */
+/* The tab bar replaces the FAB on mobile/tablet. Keeping both put the FAB
+   directly over body copy and the hero CTA on small screens. */
 @media (max-width: 1099px) {
   .potato-fab {
-    bottom: 92px;
-  }
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .potato-fab {
-    right: 16px;
-    width: 70px;
-    height: 70px;
-  }
-  
-  .potato-body {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .circular-text svg {
-    width: 80px;
-    height: 80px;
+    display: none;
   }
 }
 
@@ -1097,6 +1078,7 @@ textarea:focus-visible {
 
   #install-cmd {
     white-space: normal;
+    overflow-wrap: anywhere;
     font-size: 0.78rem;
   }
 
@@ -1660,7 +1642,42 @@ html[data-theme="light"] .badge-hipaa {
 
 @media (max-width: 680px) {
   .hero-bento {
-    padding: 64px 0 56px;
+    padding: 48px 0 48px;
+  }
+
+  .hero-inner h1 {
+    font-size: clamp(1.65rem, 7vw, 2rem);
+    line-height: 1.18;
+  }
+
+  .reveal.description {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .reveal.personality {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .hero-cta {
+    margin-top: 18px;
+    gap: 10px;
+  }
+
+  .hero-cta .btn {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 11px 12px;
+    font-size: 0.85rem;
+    line-height: 1.25;
+    text-align: center;
+  }
+
+  .badge-hipaa {
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.35;
   }
 
   .bento {
@@ -1726,7 +1743,8 @@ html.reduce-motion .marquee-track { animation: none; }
 
 /* ---------- Featured projects slider
    The front card sits in normal flow (section height always fits it) and
-   the others fade in on top. No 3D, no measuring, nothing to twitch. ---------- */
+   the others fade in on top. The incoming card flips in via a one-shot
+   animation on .is-enter, so nothing depends on measuring the stage. ---------- */
 .barrel {
   max-width: 780px;
   margin: 0 auto 40px;
@@ -1745,8 +1763,8 @@ html.reduce-motion .marquee-track { animation: none; }
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateX(26px);
-  transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out), visibility 0s linear var(--dur-med);
+  transform: translateY(12px);
+  transition: opacity 160ms ease, transform 160ms ease, visibility 0s linear 160ms;
 }
 
 .barrel-slide.is-front {
@@ -1758,6 +1776,31 @@ html.reduce-motion .marquee-track { animation: none; }
   transform: none;
   z-index: 2;
   transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out);
+}
+
+/* One-shot flip for the card that just became front. */
+.barrel-slide.is-front.is-enter {
+  animation: card-flip-in 460ms var(--ease-out) both;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+}
+
+@keyframes card-flip-in {
+  from {
+    opacity: 0;
+    transform: perspective(1400px) rotateY(-74deg) translateX(26px) scale(0.97);
+  }
+  55% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1400px) rotateY(0deg) translateX(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barrel-slide.is-front.is-enter { animation: none; }
 }
 
 .barrel-controls {
@@ -1814,14 +1857,13 @@ html.reduce-motion .marquee-track { animation: none; }
 }
 
 /* ---------- Mobile tab bar ---------- */
-/* The bar and the FAB are fixed to the viewport, so the page needs bottom
-   clearance or they sit on top of the last content (contact cards + footer).
-   The padding goes on .footer, NOT body: body paints --bg while the footer
-   paints --bg-alt, so padding body leaves a differently-coloured band under
-   the footer. 180px clears the small-phone FAB (92 + 70) plus breathing room. */
+/* The bar is fixed to the viewport, so the page needs bottom clearance or it
+   sits on top of the last content (contact cards + footer). The padding goes
+   on .footer, NOT body: body paints --bg while the footer paints --bg-alt, so
+   padding body leaves a differently-coloured band under the footer. */
 @media (max-width: 1099px) {
   .footer {
-    padding-bottom: 180px;
+    padding-bottom: 110px;
   }
 
   .tabbar {
@@ -1844,6 +1886,7 @@ html.reduce-motion .marquee-track { animation: none; }
   .tabbar.tabbar-hidden {
     transform: translate(-50%, 90px);
     opacity: 0;
+    pointer-events: none;
   }
 
   .tabbar a,
@@ -1984,6 +2027,12 @@ body.intro-lock {
 
 .a11y-row + .a11y-row {
   border-top: 1px solid var(--border);
+}
+
+.a11y-row .theme-toggle {
+  margin-left: 0;
+  width: 34px;
+  height: 34px;
 }
 
 .a11y-switch {

@@ -139,7 +139,7 @@
 
           <nav class="bento reveal" aria-label="Explore the site">
             <a class="bento-tile bento-featured" href="#how-it-works" data-hiw-open="vr">
-              <span class="bento-label"><span class="bento-icon">📞</span>Featured automation</span>
+              <span class="bento-label"><span class="bento-icon">📞</span>The main crop</span>
               <span class="bento-title">AI Voice Receptionist</span>
               <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
               <span class="bento-desc">Answers missed and after-hours clinic calls and books real calendar slots — automation that pays for itself on the first missed call.</span>
@@ -167,7 +167,7 @@
             </a>
             <a class="bento-tile bento-blog" href="#blog">
               <span class="bento-label"><span class="bento-icon">✍️</span>Blog</span>
-              <span class="bento-desc">Why my AI never sends emails — human-in-the-loop guardrails.</span>
+              <span class="bento-desc">The invoice chaser — three bugs, one rule.</span>
               <span class="bento-arrow" aria-hidden="true">↗</span>
             </a>
             <a class="bento-tile bento-contact" href="#contact">
@@ -194,7 +194,8 @@
 
         <section class="section" id="projects">
           <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> Featured automation</h2>
+            <h2 class="section-title reveal"><span class="hash">#</span> The main crop</h2>
+            <p class="section-lead reveal">The three builds doing the heavy lifting — flip through them. Smaller spuds are further down.</p>
 
             <!-- 3D barrel carousel -->
             <div class="barrel reveal" id="project-barrel">
@@ -585,6 +586,15 @@
                 <time class="timeline-date" datetime="2026-10-28">Oct 28, 2026</time>
                 <article class="card timeline-card">
                   <div class="card-body">
+                    <h3><a href="/blog/ar-invoice-agent-challenges.html">New post: the invoice chaser, three bugs, one rule ↗</a></h3>
+                    <p>Write-up of what actually broke while building the AR agent: Gemini returning an empty response to a structured parser because the token budget went to reasoning, a signature the model kept rewriting (now enforced in code), a daily schedule that chased the same invoice every morning (now a 7-day cooldown), and a sentence counter that counted dollar signs.</p>
+                  </div>
+                </article>
+              </li>
+              <li class="timeline-item reveal">
+                <time class="timeline-date" datetime="2026-10-28">Oct 28, 2026</time>
+                <article class="card timeline-card">
+                  <div class="card-body">
                     <h3><a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">AR Invoice Reminder Agent ships ↗</a></h3>
                     <p>A daily n8n workflow that reads an invoice tracker, computes days past due, and drafts a tone-matched payment reminder with Gemini — friendly under 14 days, firm to 30, solution-oriented after. Every email lands in Gmail as a draft, the signature is rebuilt in code, a 7-day cooldown stops duplicate chasing, and the follow-up date is written back to the sheet. Verified end-to-end on a live tracker.</p>
                   </div>
@@ -736,6 +746,13 @@
             <div class="slideshow reveal" id="blog-slideshow">
               <div class="slideshow-track">
                 <article class="card slide active">
+                  <div class="card-body">
+                    <p class="post-meta"><time class="timeline-date" datetime="2026-10-28">Oct 28, 2026</time> <span class="reading-time">7 min</span></p>
+                    <h3><a href="/blog/ar-invoice-agent-challenges.html">The invoice chaser: three bugs, one rule</a></h3>
+                    <p>Gemini answered a structured parser with nothing, the model kept rewriting the signature, and the same invoice got chased every morning. What an AR agent taught me about who writes the contract.</p>
+                  </div>
+                </article>
+                <article class="card slide">
                   <div class="card-body">
                     <p class="post-meta"><time class="timeline-date" datetime="2026-08-26">Aug 26, 2026</time> <span class="reading-time">9 min</span></p>
                     <h3><a href="/blog/one-receptionist-three-engines.html">One receptionist, three engines</a></h3>
