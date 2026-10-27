@@ -1,5 +1,5 @@
 /* potaterrr.github.io — vanilla JS, no dependencies.
-   Sections: year, reveals, blog slideshow, install terminal, theme,
+   Sections: year, reveals, blog slideshow, theme,
    FAB easter egg, contour background, rail scrollspy, project barrel,
    mobile tab bar, intro overlay, accessibility menu. Pipeline demos live in js/hiw.js. */
 
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ? { root: spyRoot, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
 
-  const sectionIds = ["top", "projects", "skills", "how-it-works", "work-with-me", "timeline", "blog", "contact"];
+  const sectionIds = ["top", "projects", "skills", "process", "how-it-works", "work-with-me", "timeline", "blog", "contact"];
   const railLinks = new Map();
   document.querySelectorAll(".rail-nav a[data-section]").forEach((a) => {
     railLinks.set(a.dataset.section, a);
@@ -263,13 +263,31 @@ document.addEventListener("DOMContentLoaded", () => {
   const tabbar = document.querySelector(".tabbar");
   if (tabbar) {
     let lastY = window.scrollY;
+    let goingDown = false;
+    let heroCtaVisible = false;
+    const heroCta = document.querySelector(".hero-cta");
+
+    const applyTabbarState = () => {
+      tabbar.classList.toggle("tabbar-hidden", heroCtaVisible || goingDown);
+    };
+
     const onScroll = () => {
       const y = window.scrollY;
-      const goingDown = y > lastY && y > 120;
-      tabbar.classList.toggle("tabbar-hidden", goingDown);
+      goingDown = y > lastY && y > 120;
       lastY = y;
+      applyTabbarState();
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
+
+    /* The fixed bar would otherwise cover the hero CTA at the top of the
+       page. Keep it out of the way until the CTA has scrolled past. */
+    if (heroCta && "IntersectionObserver" in window) {
+      new IntersectionObserver(([entry]) => {
+        heroCtaVisible = entry.isIntersecting;
+        applyTabbarState();
+      }, { threshold: 0.01 }).observe(heroCta);
+    }
   }
 
   /* ---------- Blog slideshow ---------- */
@@ -346,73 +364,6 @@ document.addEventListener("DOMContentLoaded", () => {
       show(0);
       restart();
     }
-  }
-
-  /* ---------- Typing effect for the install command ---------- */
-  const typeEl = document.getElementById("install-cmd");
-  if (typeEl) {
-    const command = typeEl.dataset.command || "";
-    let typed = false;
-    const typeCommand = () => {
-      if (typed) return;
-      typed = true;
-      if (reduceMotion || !command) {
-        typeEl.textContent = command;
-        return;
-      }
-      let i = 0;
-      const tick = () => {
-        i += 1;
-        typeEl.textContent = command.slice(0, i);
-        if (i < command.length) setTimeout(tick, 26 + Math.random() * 40);
-      };
-      tick();
-    };
-    if ("IntersectionObserver" in window) {
-      const typer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              typeCommand();
-              typer.disconnect();
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
-      typer.observe(typeEl);
-    } else {
-      typeCommand();
-    }
-  }
-
-  /* ---------- One-click copy for the install command ---------- */
-  const copyBtn = document.getElementById("copy-install");
-  const installCmd = document.getElementById("install-cmd");
-  if (copyBtn && installCmd) {
-    copyBtn.addEventListener("click", async () => {
-      const text = (installCmd.dataset.command || installCmd.textContent).trim();
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch (err) {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.style.position = "fixed";
-        ta.style.opacity = "0";
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      }
-      const label = copyBtn.querySelector(".copy-btn-label");
-      const original = label ? label.textContent : "Copy";
-      copyBtn.classList.add("copied");
-      if (label) label.textContent = "Copied!";
-      setTimeout(() => {
-        copyBtn.classList.remove("copied");
-        if (label) label.textContent = original;
-      }, 1600);
-    });
   }
 
   /* ---------- Bento projects reel (cycling project names) ---------- */
