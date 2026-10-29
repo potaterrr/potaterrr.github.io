@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Following Dave - Arcade Challenge</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="game-container">
+    <div class="header">
+      <h1 class="game-title">FOLLOWING DAVE</h1>
+      <div class="score-board">
+        <div class="score-item">
+          <span class="score-label">SCORE</span>
+          <span class="score-value" id="score">0000</span>
+        </div>
+        <div class="score-item">
+          <span class="score-label">ROUND</span>
+          <span class="score-value" id="round">00</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="difficulty-bar">
+      <button class="diff-btn active" data-diff="easy" id="diff-easy">EASY</button>
+      <button class="diff-btn" data-diff="medium" id="diff-medium">MEDIUM</button>
+      <button class="diff-btn" data-diff="hard" id="diff-hard">HARD</button>
+    </div>
+
+    <div class="round-log-area">
+      <div class="round-log-label">ROUND LOG</div>
+      <div class="round-log-content" id="round-log"></div>
+    </div>
+
+    <canvas id="game-canvas" width="640" height="480"></canvas>
+
+    <div class="message-area hidden" id="message-area">
+      <div class="message-text" id="message-text"></div>
+    </div>
+
+    <div class="start-screen" id="start-screen">
+      <div class="start-content">
+        <h2 class="start-title">FOLLOWING DAVE</h2>
+        <p class="start-instruction">FIND THE DAVE!</p>
+        <p class="start-hint">Press SPACE or click START to begin</p>
+        <div class="start-tippy"></div>
+      </div>
+    </div>
+
+    <div class="gameover-screen hidden" id="gameover-screen">
+      <div class="gameover-content">
+        <h2 class="gameover-title" id="gameover-title">GAME OVER</h2>
+        <div class="gameover-tippy" id="gameover-tippy"></div>
+        <div class="final-score">
+          <span class="final-score-label">FINAL SCORE</span>
+          <span class="final-score-value" id="final-score">0000</span>
+        </div>
+        <p class="gameover-instruction">Press SPACE or click to restart</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span>ARCADE MODE v1.0</span>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
