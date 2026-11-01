@@ -24,7 +24,7 @@ GitHub Pages is a static host, so this app uses hash routing. Every route works 
 | Login | `https://potaterrr.github.io/happyfone-webui/#/login-webui` |
 | Dashboard | `https://potaterrr.github.io/happyfone-webui/#/dashboard` |
 
-The bare project URL redirects to sign-in when there is no session, or to the dashboard when a session exists.
+The bare project URL and `#/login-webui` always open the sign-in screen; signing in moves you to the dashboard. `#/dashboard` falls back to sign-in when there is no valid session.
 
 ## Demo login
 

@@ -190,7 +190,7 @@ function getSession() {
 function parseRoute() {
   const raw = (window.location.hash || '').replace(/^#\/?/, '').toLowerCase();
   if (raw === 'login-webui' || raw === 'login') return ROUTES.LOGIN;
-  if (raw === 'dashboard' || raw === '') return ROUTES.DASHBOARD;
+  if (raw === 'dashboard') return ROUTES.DASHBOARD;
   return null;
 }
 
@@ -198,9 +198,11 @@ function resolveRoute() {
   const session = getSession();
   let route = parseRoute();
 
-  if (!route) route = session ? ROUTES.DASHBOARD : ROUTES.LOGIN;
+  /* The sign-in screen always comes first: an empty hash lands on login and
+     an explicit #/login-webui never bounces to the dashboard, even when a
+     stored session still exists. Only #/dashboard requires a session. */
+  if (!route) route = ROUTES.LOGIN;
   if (!session && route === ROUTES.DASHBOARD) route = ROUTES.LOGIN;
-  if (session && route === ROUTES.LOGIN) route = ROUTES.DASHBOARD;
 
   return { route, session };
 }
