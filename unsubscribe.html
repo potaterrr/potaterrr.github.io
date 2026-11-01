@@ -53,6 +53,12 @@
             <button class="btn btn-primary unsub-submit" type="submit">Unsubscribe me</button>
           </form>
 
+          <p id="unsub-error" class="unsub-help unsub-error" role="alert" tabindex="-1" hidden>
+            Unsubscribe is temporarily unavailable. Email
+            <a href="mailto:kristiandyanbusiness@gmail.com">kristiandyanbusiness@gmail.com</a>
+            and I'll remove you by hand.
+          </p>
+
           <p id="unsub-help" class="unsub-help">
             One click. No "manage preferences" maze, no confirmation email.
           </p>
@@ -95,14 +101,15 @@
   (function () {
     "use strict";
 
-    /* PASTE THE SCENARIO #2 WEBHOOK URL HERE.
-       In Make: create a scenario with Webhooks -> Custom webhook ->
-       "Add a row" to a Google Sheet. Use that webhook's URL here.
-       Leaving the placeholder means submissions go nowhere. */
-    var UNSUBSCRIBE_WEBHOOK =
-      "https://hook.us2.make.com/REPLACE_WITH_YOUR_UNSUBSCRIBE_SCENARIO_URL";
+    /* The Make webhook URL is injected at deploy time from the GitHub
+       Actions secret UNSUBSCRIBE_WEBHOOK (see .github/workflows/deploy.yml).
+       If that secret is not configured, the token stays and the form shows
+       an email fallback instead of pretending the request succeeded. */
+    var UNSUBSCRIBE_WEBHOOK = "__UNSUBSCRIBE_WEBHOOK__";
+    var WEBHOOK_READY = /^https:\/\/[^\s]+$/.test(UNSUBSCRIBE_WEBHOOK);
 
     var form = document.getElementById("unsub-form");
+    var errorState = document.getElementById("unsub-error");
     var input = document.getElementById("email");
     var frame = document.querySelector(".unsub-frame");
     var formState = document.getElementById("form-state");
@@ -132,6 +139,13 @@
         input.focus();
         return;
       }
+      if (!WEBHOOK_READY) {
+        e.preventDefault();
+        errorState.hidden = false;
+        errorState.focus();
+        return;
+      }
+      errorState.hidden = true;
       /* Point the form at Make at submit time so the constant above is the
          only place the URL lives. */
       form.action = UNSUBSCRIBE_WEBHOOK;
