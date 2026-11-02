@@ -48,8 +48,8 @@ def nav(active: str = "") -> str:
       </a>
       <ul class="nav-links" id="site-menu">
         <li><a href="/projects/"{current("projects")}>Projects</a></li>
-        <li><a href="/#how-it-works">Demo</a></li>
-        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/timeline/"{current("timeline")}>Timeline</a></li>
         <li><a href="/blog/"{current("blog")}>Blog</a></li>
         <li><a href="/#contact" class="nav-cta">Work with me</a></li>
       </ul>
@@ -326,6 +326,22 @@ def project_page(p: dict) -> str:
 
     canonical = f"{SITE}/projects/{p['slug']}/"
     image = f"{SITE}/assets/og/projects/{p['slug']}.png"
+    demo_html = ""
+    hiw_script = ""
+    if p.get("demo"):
+        panel = (ROOT / "partials" / f"demo-{p['demo']}.html").read_text(encoding="utf-8")
+        demo_html = f"""
+    <section class="section section-alt project-demo" id="demo">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="hash">#</span> See it run</h2>
+        <p class="section-lead reveal">A simulated run of this pipeline — no APIs, no keys, no real calls, invoices or PHI. Edit the inputs, run it, and watch each stage. Everything happens in your browser.</p>
+        <div class="hiw reveal" id="hiw" data-default-demo="{p['demo']}">
+{panel}
+          <p class="hiw-note">Same nodes as production, zero side effects: everything runs in simulation with synthetic data. <a href="/#contact">Want one of your own? →</a></p>
+        </div>
+      </div>
+    </section>"""
+        hiw_script = '\n  <script src="/js/hiw.js" defer></script>'
     jsonld = ld({
         "@context": "https://schema.org",
         "@type": "CreativeWork",
@@ -394,11 +410,12 @@ def project_page(p: dict) -> str:
         </nav>
       </div>
     </section>
+{demo_html}
   </main>
 
 {FOOTER}
 
-  <script src="/js/main.js" defer></script>
+  <script src="/js/main.js" defer></script>{hiw_script}
 </body>
 </html>
 """
@@ -784,6 +801,7 @@ def write_sitemap(posts):
     urls = [
         ("/", TODAY, "1.0"),
         ("/projects/", TODAY, "0.9"),
+        ("/timeline/", TODAY, "0.8"),
         ("/blog/", TODAY, "0.9"),
     ]
     urls += [(f"/projects/{p['slug']}/", TODAY, "0.8") for p in PROJECTS]
@@ -814,6 +832,47 @@ def write_blog_index_json(posts):
     (BLOG / "index.json").write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def timeline_page() -> str:
+    items = (ROOT / "partials" / "timeline.html").read_text(encoding="utf-8")
+    count = items.count('<li class="timeline-item')
+    canonical = f"{SITE}/timeline/"
+    jsonld = ld({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Timeline — potaterrr",
+        "url": canonical,
+        "description": "Launches, releases and field notes, newest first.",
+        "author": {"@type": "Person", "name": "Christian John", "url": SITE + "/"},
+    })
+    return f"""{head("Timeline — builds, launches and notes · potaterrr",
+             "Everything shipped, newest first: voice receptionists, invoice agents, lead retrieval, scrapers, games and the field notes behind them.",
+             canonical, active="timeline", image=f"{SITE}/assets/og/timeline.png", jsonld=jsonld)}
+{nav("timeline")}
+
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <p class="hero-kicker">$ git log --oneline</p>
+        <h1 class="page-title">Timeline</h1>
+        <p class="page-lead">Everything that shipped, newest first. {count} entries — projects, releases and the notes written after them.</p>
+      </div>
+    </section>
+
+    <section class="section timeline-page">
+      <div class="container">
+{items}
+      </div>
+    </section>
+  </main>
+
+{FOOTER}
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
+"""
+
+
 def main():
     posts = load_posts()
 
@@ -833,6 +892,11 @@ def main():
         out.mkdir(parents=True, exist_ok=True)
         (out / "index.html").write_text(project_page(p), encoding="utf-8")
 
+    # timeline
+    tl = ROOT / "timeline"
+    tl.mkdir(exist_ok=True)
+    (tl / "index.html").write_text(timeline_page(), encoding="utf-8")
+
     # og cards
     og = ROOT / "assets" / "og"
     for p in PROJECTS:
@@ -844,6 +908,7 @@ def main():
     for p in posts:
         og_card(og / "blog" / f"{p['slug']}.png", f"$ cat notes/{p['date']}.md", p["title"], f"{p['display']}  ·  {p['reading']}")
     og_card(og / "blog" / "index.png", "$ ls ~/notes", "Automation field notes", f"{len(posts)} posts  ·  what broke and what it taught me")
+    og_card(og / "timeline.png", "$ git log --oneline", "Timeline", "Everything shipped, newest first")
 
     print(f"built {len(PROJECTS)} project pages, {len(posts)} posts, archive, feeds, sitemap")
 

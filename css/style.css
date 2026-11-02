@@ -4311,3 +4311,12 @@ html[data-theme="light"] .btn-primary:hover {
 .archive-group .archive-grid {
   padding-bottom: 18px;
 }
+
+/* Timeline page + in-page demo anchor clearance */
+.timeline-page {
+  padding-top: 12px;
+}
+
+#demo {
+  scroll-margin-top: 84px;
+}

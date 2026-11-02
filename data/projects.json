@@ -51,17 +51,48 @@
       "tagline": "The startup I'm part of — and the internal softphone I build for its callers.",
       "summary": "HappyPhone is a call-center startup, and I build the internal softphone: the web app every caller logs into, loads a list into, and calls from.",
       "status": "In development",
-      "badges": ["Startup I'm part of"],
-      "metrics": [
-        { "label": "My role", "value": "Internal softphone" },
-        { "label": "Caller app", "value": "caller.happyphone.lol" },
-        { "label": "Stage", "value": "Working prototype" }
+      "badges": [
+        "Startup I'm part of"
       ],
-      "tech": ["WebRTC", "Kamailio", "RTPEngine", "VoIP.ms", "WSS", "JWT"],
+      "metrics": [
+        {
+          "label": "My role",
+          "value": "Internal softphone"
+        },
+        {
+          "label": "Caller app",
+          "value": "caller.happyphone.lol"
+        },
+        {
+          "label": "Stage",
+          "value": "Working prototype"
+        }
+      ],
+      "tech": [
+        "WebRTC",
+        "Kamailio",
+        "RTPEngine",
+        "VoIP.ms",
+        "WSS",
+        "JWT"
+      ],
       "links": [
-        { "label": "HappyPhone", "href": "https://happyphone.lol/", "primary": true, "external": true },
-        { "label": "Startup page", "href": "https://happyphone.lol/startup/", "external": true },
-        { "label": "The 101", "href": "https://happyphone.lol/101/", "external": true }
+        {
+          "label": "HappyPhone",
+          "href": "https://happyphone.lol/",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "Startup page",
+          "href": "https://happyphone.lol/startup/",
+          "external": true
+        },
+        {
+          "label": "The 101",
+          "href": "https://happyphone.lol/101/",
+          "external": true
+        }
       ],
       "sections": [
         {
@@ -97,7 +128,9 @@
         "href": "https://happyphone.lol/startup/",
         "note": "Embedded from happyphone.lol. If the frame doesn't load, open the startup page directly."
       },
-      "related_projects": ["happyfone-webui"],
+      "related_projects": [
+        "happyfone-webui"
+      ],
       "related_posts": []
     },
     {
@@ -107,17 +140,46 @@
       "tagline": "The working prototype of the HappyPhone caller softphone.",
       "summary": "A dependency-free agent console for the HappyPhone callers: sign-in, a live agent state machine, T9 dialing, a simulated call lifecycle, and persistent call history.",
       "status": "Prototype",
-      "badges": ["Prototype", "Part of HappyPhone"],
-      "metrics": [
-        { "label": "Type", "value": "Caller console" },
-        { "label": "Built with", "value": "Vanilla JS" },
-        { "label": "Auth", "value": "Mock JWT" }
+      "badges": [
+        "Prototype",
+        "Part of HappyPhone"
       ],
-      "tech": ["Vanilla JS", "ES Modules", "CSS", "localStorage"],
+      "metrics": [
+        {
+          "label": "Type",
+          "value": "Caller console"
+        },
+        {
+          "label": "Built with",
+          "value": "Vanilla JS"
+        },
+        {
+          "label": "Auth",
+          "value": "Mock JWT"
+        }
+      ],
+      "tech": [
+        "Vanilla JS",
+        "ES Modules",
+        "CSS",
+        "localStorage"
+      ],
       "links": [
-        { "label": "Open the demo", "href": "https://potaterrr.github.io/happyfone-webui/", "primary": true, "external": true },
-        { "label": "Repo", "href": "https://github.com/potaterrr/happyfone-webui", "external": true },
-        { "label": "HappyPhone", "href": "/projects/happyphone/" }
+        {
+          "label": "Open the demo",
+          "href": "https://potaterrr.github.io/happyfone-webui/",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/happyfone-webui",
+          "external": true
+        },
+        {
+          "label": "HappyPhone",
+          "href": "/projects/happyphone/"
+        }
       ],
       "sections": [
         {
@@ -147,8 +209,12 @@
           ]
         }
       ],
-      "related_projects": ["happyphone"],
-      "related_posts": ["one-receptionist-three-engines"]
+      "related_projects": [
+        "happyphone"
+      ],
+      "related_posts": [
+        "one-receptionist-three-engines"
+      ]
     },
     {
       "slug": "ai-voice-receptionist",
@@ -157,16 +223,44 @@
       "tagline": "Answer every missed and after-hours clinic call. Book the slot. Alert the front desk.",
       "summary": "An AI receptionist for clinics and appointment-based practices, built three times — Make, n8n and Zapier — over one shared Retell voice layer.",
       "status": "Live on synthetic calls",
-      "badges": ["HIPAA-compliant build available", "3 builds"],
-      "metrics": [
-        { "label": "Voice layer", "value": "Retell" },
-        { "label": "Branches", "value": "Make · n8n · Zapier" },
-        { "label": "Compliance", "value": "HIPAA build available" }
+      "badges": [
+        "HIPAA-compliant build available",
+        "3 builds"
       ],
-      "tech": ["Retell", "Make", "n8n", "Zapier", "Google Calendar", "Google Sheets", "Gmail"],
+      "metrics": [
+        {
+          "label": "Voice layer",
+          "value": "Retell"
+        },
+        {
+          "label": "Branches",
+          "value": "Make · n8n · Zapier"
+        },
+        {
+          "label": "Compliance",
+          "value": "HIPAA build available"
+        }
+      ],
+      "tech": [
+        "Retell",
+        "Make",
+        "n8n",
+        "Zapier",
+        "Google Calendar",
+        "Google Sheets",
+        "Gmail"
+      ],
       "links": [
-        { "label": "Watch the simulation", "href": "/?demo=vr#how-it-works", "primary": true },
-        { "label": "Repo", "href": "https://github.com/potaterrr/voice-receptionist", "external": true }
+        {
+          "label": "Run the live demo",
+          "href": "#demo",
+          "primary": true
+        },
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/voice-receptionist",
+          "external": true
+        }
       ],
       "sections": [
         {
@@ -201,8 +295,14 @@
           ]
         }
       ],
-      "related_projects": ["happyfone-webui", "ar-invoice-reminder"],
-      "related_posts": ["one-receptionist-three-engines"]
+      "related_projects": [
+        "happyfone-webui",
+        "ar-invoice-reminder"
+      ],
+      "related_posts": [
+        "one-receptionist-three-engines"
+      ],
+      "demo": "vr"
     },
     {
       "slug": "ar-invoice-reminder",
@@ -211,17 +311,46 @@
       "tagline": "A daily n8n agent that chases overdue invoices — and never sends anything itself.",
       "summary": "Reads an invoice tracker, computes days past due, drafts a tone-matched reminder with Gemini, and files it as a Gmail draft for a human to approve.",
       "status": "Live on a real tracker",
-      "badges": ["Human-in-the-loop", "Never auto-sends"],
-      "metrics": [
-        { "label": "Runs", "value": "Daily · 09:00" },
-        { "label": "Engine", "value": "n8n" },
-        { "label": "Output", "value": "Gmail draft" }
+      "badges": [
+        "Human-in-the-loop",
+        "Never auto-sends"
       ],
-      "tech": ["n8n", "Gemini", "Google Sheets", "Gmail", "Structured output"],
+      "metrics": [
+        {
+          "label": "Runs",
+          "value": "Daily · 09:00"
+        },
+        {
+          "label": "Engine",
+          "value": "n8n"
+        },
+        {
+          "label": "Output",
+          "value": "Gmail draft"
+        }
+      ],
+      "tech": [
+        "n8n",
+        "Gemini",
+        "Google Sheets",
+        "Gmail",
+        "Structured output"
+      ],
       "links": [
-        { "label": "Watch it draft", "href": "/?demo=ar#how-it-works", "primary": true },
-        { "label": "Repo", "href": "https://github.com/potaterrr/ar-invoice-reminder-agent", "external": true },
-        { "label": "The bugs behind it", "href": "/blog/ar-invoice-agent-challenges.html" }
+        {
+          "label": "Run the live demo",
+          "href": "#demo",
+          "primary": true
+        },
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/ar-invoice-reminder-agent",
+          "external": true
+        },
+        {
+          "label": "The bugs behind it",
+          "href": "/blog/ar-invoice-agent-challenges.html"
+        }
       ],
       "sections": [
         {
@@ -252,8 +381,15 @@
           ]
         }
       ],
-      "related_projects": ["dead-lead-retrieval", "ai-voice-receptionist"],
-      "related_posts": ["ar-invoice-agent-challenges", "why-my-ai-never-sends-emails"]
+      "related_projects": [
+        "dead-lead-retrieval",
+        "ai-voice-receptionist"
+      ],
+      "related_posts": [
+        "ar-invoice-agent-challenges",
+        "why-my-ai-never-sends-emails"
+      ],
+      "demo": "ar"
     },
     {
       "slug": "dead-lead-retrieval",
@@ -262,17 +398,46 @@
       "tagline": "Dormant leads rarely die because someone said no. They die because nobody followed up.",
       "summary": "An n8n automation that drafts personalized check-ins with an LLM, files them as Gmail drafts, and tracks every lead through ClickUp — with a human always in the loop.",
       "status": "Released",
-      "badges": ["Human-in-the-loop", "Gmail drafts"],
-      "metrics": [
-        { "label": "Engine", "value": "n8n" },
-        { "label": "LLM", "value": "OpenRouter" },
-        { "label": "Tracking", "value": "ClickUp" }
+      "badges": [
+        "Human-in-the-loop",
+        "Gmail drafts"
       ],
-      "tech": ["n8n", "OpenRouter", "Gmail", "ClickUp", "Google Sheets"],
+      "metrics": [
+        {
+          "label": "Engine",
+          "value": "n8n"
+        },
+        {
+          "label": "LLM",
+          "value": "OpenRouter"
+        },
+        {
+          "label": "Tracking",
+          "value": "ClickUp"
+        }
+      ],
+      "tech": [
+        "n8n",
+        "OpenRouter",
+        "Gmail",
+        "ClickUp",
+        "Google Sheets"
+      ],
       "links": [
-        { "label": "Watch it run", "href": "/?demo=dlf#how-it-works", "primary": true },
-        { "label": "Repo", "href": "https://github.com/potaterrr/dead-lead-retrieval", "external": true },
-        { "label": "Why it never sends", "href": "/blog/why-my-ai-never-sends-emails.html" }
+        {
+          "label": "Run the live demo",
+          "href": "#demo",
+          "primary": true
+        },
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/dead-lead-retrieval",
+          "external": true
+        },
+        {
+          "label": "Why it never sends",
+          "href": "/blog/why-my-ai-never-sends-emails.html"
+        }
       ],
       "sections": [
         {
@@ -302,8 +467,15 @@
           ]
         }
       ],
-      "related_projects": ["ar-invoice-reminder", "ai-voice-receptionist"],
-      "related_posts": ["why-my-ai-never-sends-emails", "ar-invoice-agent-challenges"]
+      "related_projects": [
+        "ar-invoice-reminder",
+        "ai-voice-receptionist"
+      ],
+      "related_posts": [
+        "why-my-ai-never-sends-emails",
+        "ar-invoice-agent-challenges"
+      ],
+      "demo": "dlf"
     },
     {
       "slug": "job-scrapper",
@@ -312,16 +484,43 @@
       "tagline": "A Python scraper that watches OnlineJobs.ph and posts one Discord embed per job.",
       "summary": "Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.",
       "status": "Live · every 4 hours",
-      "badges": ["GitHub Actions", "Gemini", "Discord"],
-      "metrics": [
-        { "label": "Cadence", "value": "Every 4 hours" },
-        { "label": "Output", "value": "Discord embeds" },
-        { "label": "Runtime", "value": "GitHub Actions" }
+      "badges": [
+        "GitHub Actions",
+        "Gemini",
+        "Discord"
       ],
-      "tech": ["Python", "GitHub Actions", "Gemini", "Discord", "BeautifulSoup"],
+      "metrics": [
+        {
+          "label": "Cadence",
+          "value": "Every 4 hours"
+        },
+        {
+          "label": "Output",
+          "value": "Discord embeds"
+        },
+        {
+          "label": "Runtime",
+          "value": "GitHub Actions"
+        }
+      ],
+      "tech": [
+        "Python",
+        "GitHub Actions",
+        "Gemini",
+        "Discord",
+        "BeautifulSoup"
+      ],
       "links": [
-        { "label": "Repo", "href": "https://github.com/potaterrr/job-scrapper", "primary": true, "external": true },
-        { "label": "The Discord rewrite", "href": "/blog/job-scrapper-discord-gemini.html" }
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/job-scrapper",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "The Discord rewrite",
+          "href": "/blog/job-scrapper-discord-gemini.html"
+        }
       ],
       "sections": [
         {
@@ -349,8 +548,14 @@
           ]
         }
       ],
-      "related_projects": ["signal-checker", "rss-news"],
-      "related_posts": ["job-scrapper-discord-gemini", "feeding-make-com-from-python"]
+      "related_projects": [
+        "signal-checker",
+        "rss-news"
+      ],
+      "related_posts": [
+        "job-scrapper-discord-gemini",
+        "feeding-make-com-from-python"
+      ]
     },
     {
       "slug": "signal-checker",
@@ -359,15 +564,37 @@
       "tagline": "An SMA crossover pipeline that evaluates daily prices and dispatches signals as JSON.",
       "summary": "Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.",
       "status": "Live · weekdays 21:00 UTC",
-      "badges": ["GitHub Actions", "yfinance"],
-      "metrics": [
-        { "label": "Signal", "value": "SMA crossover" },
-        { "label": "Schedule", "value": "Weekdays 21:00 UTC" },
-        { "label": "Output", "value": "Webhook JSON" }
+      "badges": [
+        "GitHub Actions",
+        "yfinance"
       ],
-      "tech": ["Python", "yfinance", "GitHub Actions", "Make"],
+      "metrics": [
+        {
+          "label": "Signal",
+          "value": "SMA crossover"
+        },
+        {
+          "label": "Schedule",
+          "value": "Weekdays 21:00 UTC"
+        },
+        {
+          "label": "Output",
+          "value": "Webhook JSON"
+        }
+      ],
+      "tech": [
+        "Python",
+        "yfinance",
+        "GitHub Actions",
+        "Make"
+      ],
       "links": [
-        { "label": "Repo", "href": "https://github.com/potaterrr/signal-checker", "primary": true, "external": true }
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/signal-checker",
+          "primary": true,
+          "external": true
+        }
       ],
       "sections": [
         {
@@ -388,7 +615,10 @@
           ]
         }
       ],
-      "related_projects": ["job-scrapper", "make-commits"],
+      "related_projects": [
+        "job-scrapper",
+        "make-commits"
+      ],
       "related_posts": []
     },
     {
@@ -398,16 +628,44 @@
       "tagline": "A weekly AI and tech digest that drafts, illustrates and publishes itself.",
       "summary": "Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.",
       "status": "Live · Sundays 06:00 PHT",
-      "badges": ["GitHub Actions", "Make.com", "Gemini"],
-      "metrics": [
-        { "label": "Cadence", "value": "Weekly" },
-        { "label": "Feeds", "value": "HN · Phoronix · Verge" },
-        { "label": "Output", "value": "Facebook post" }
+      "badges": [
+        "GitHub Actions",
+        "Make.com",
+        "Gemini"
       ],
-      "tech": ["Python", "RSS", "Make", "Gemini", "Imagen", "Facebook Pages"],
+      "metrics": [
+        {
+          "label": "Cadence",
+          "value": "Weekly"
+        },
+        {
+          "label": "Feeds",
+          "value": "HN · Phoronix · Verge"
+        },
+        {
+          "label": "Output",
+          "value": "Facebook post"
+        }
+      ],
+      "tech": [
+        "Python",
+        "RSS",
+        "Make",
+        "Gemini",
+        "Imagen",
+        "Facebook Pages"
+      ],
       "links": [
-        { "label": "Repo", "href": "https://github.com/potaterrr/rss-news", "primary": true, "external": true },
-        { "label": "The ops math", "href": "/blog/make-com-free-plan-ops-math.html" }
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/rss-news",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "The ops math",
+          "href": "/blog/make-com-free-plan-ops-math.html"
+        }
       ],
       "sections": [
         {
@@ -427,8 +685,13 @@
           ]
         }
       ],
-      "related_projects": ["make-commits", "job-scrapper"],
-      "related_posts": ["make-com-free-plan-ops-math"]
+      "related_projects": [
+        "make-commits",
+        "job-scrapper"
+      ],
+      "related_posts": [
+        "make-com-free-plan-ops-math"
+      ]
     },
     {
       "slug": "make-commits",
@@ -437,16 +700,40 @@
       "tagline": "Every GitHub push becomes a Facebook post, seconds later.",
       "summary": "A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.",
       "status": "Live",
-      "badges": ["Webhooks", "Make free tier"],
-      "metrics": [
-        { "label": "Trigger", "value": "GitHub push" },
-        { "label": "Ops per push", "value": "~2" },
-        { "label": "Delay", "value": "Seconds" }
+      "badges": [
+        "Webhooks",
+        "Make free tier"
       ],
-      "tech": ["Make", "GitHub webhooks", "Facebook Pages"],
+      "metrics": [
+        {
+          "label": "Trigger",
+          "value": "GitHub push"
+        },
+        {
+          "label": "Ops per push",
+          "value": "~2"
+        },
+        {
+          "label": "Delay",
+          "value": "Seconds"
+        }
+      ],
+      "tech": [
+        "Make",
+        "GitHub webhooks",
+        "Facebook Pages"
+      ],
       "links": [
-        { "label": "Repo", "href": "https://github.com/potaterrr/make-commits", "primary": true, "external": true },
-        { "label": "The ops math", "href": "/blog/make-com-free-plan-ops-math.html" }
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/make-commits",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "The ops math",
+          "href": "/blog/make-com-free-plan-ops-math.html"
+        }
       ],
       "sections": [
         {
@@ -466,8 +753,13 @@
           ]
         }
       ],
-      "related_projects": ["rss-news", "signal-checker"],
-      "related_posts": ["make-com-free-plan-ops-math"]
+      "related_projects": [
+        "rss-news",
+        "signal-checker"
+      ],
+      "related_posts": [
+        "make-com-free-plan-ops-math"
+      ]
     },
     {
       "slug": "tippy-card-monte",
@@ -476,16 +768,41 @@
       "tagline": "Follow the shuffle. Find Tippy. Stay out of debt.",
       "summary": "A pixel-art card monte built as a single self-contained page: watch the shuffle, pick the right card, and bank Tippy Coins while the deck grows from 3 to 15 cards.",
       "status": "Playable",
-      "badges": ["Game", "Single file"],
-      "metrics": [
-        { "label": "Deck", "value": "3 → 15 cards" },
-        { "label": "Rounds", "value": "15" },
-        { "label": "Runs", "value": "In the browser" }
+      "badges": [
+        "Game",
+        "Single file"
       ],
-      "tech": ["Canvas", "Vanilla JS", "Web Audio", "localStorage"],
+      "metrics": [
+        {
+          "label": "Deck",
+          "value": "3 → 15 cards"
+        },
+        {
+          "label": "Rounds",
+          "value": "15"
+        },
+        {
+          "label": "Runs",
+          "value": "In the browser"
+        }
+      ],
+      "tech": [
+        "Canvas",
+        "Vanilla JS",
+        "Web Audio",
+        "localStorage"
+      ],
       "links": [
-        { "label": "Play it", "href": "/tippy-card-monte/", "primary": true },
-        { "label": "Source", "href": "https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte", "external": true }
+        {
+          "label": "Play it",
+          "href": "/tippy-card-monte/",
+          "primary": true
+        },
+        {
+          "label": "Source",
+          "href": "https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte",
+          "external": true
+        }
       ],
       "sections": [
         {
@@ -505,7 +822,9 @@
           ]
         }
       ],
-      "related_projects": ["adblock-island"],
+      "related_projects": [
+        "adblock-island"
+      ],
       "related_posts": []
     },
     {
@@ -517,18 +836,52 @@
       "status": "Beta",
       "version": "0.6.7",
       "channel": "beta",
-      "badges": ["Game", "Beta", "Single file"],
-      "metrics": [
-        { "label": "Version", "value": "v0.6.7 beta" },
-        { "label": "Classes", "value": "7" },
-        { "label": "Co-op", "value": "Same keyboard" }
+      "badges": [
+        "Game",
+        "Beta",
+        "Single file"
       ],
-      "tech": ["Canvas 2D", "Web Audio", "Vanilla JS", "Single HTML file"],
+      "metrics": [
+        {
+          "label": "Version",
+          "value": "v0.6.7 beta"
+        },
+        {
+          "label": "Classes",
+          "value": "7"
+        },
+        {
+          "label": "Co-op",
+          "value": "Same keyboard"
+        }
+      ],
+      "tech": [
+        "Canvas 2D",
+        "Web Audio",
+        "Vanilla JS",
+        "Single HTML file"
+      ],
       "links": [
-        { "label": "Play v0.6.7 beta", "href": "https://potaterrr.github.io/adblock-island/", "primary": true, "external": true },
-        { "label": "Download v0.6.7", "href": "/projects/adblock-island/adblock-island-beta-v0.6.7.zip" },
-        { "label": "Patch notes", "href": "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md", "external": true },
-        { "label": "Repo", "href": "https://github.com/potaterrr/adblock-island", "external": true }
+        {
+          "label": "Play v0.6.7 beta",
+          "href": "https://potaterrr.github.io/adblock-island/",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "Download v0.6.7",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.6.7.zip"
+        },
+        {
+          "label": "Patch notes",
+          "href": "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md",
+          "external": true
+        },
+        {
+          "label": "Repo",
+          "href": "https://github.com/potaterrr/adblock-island",
+          "external": true
+        }
       ],
       "sections": [
         {
@@ -557,11 +910,22 @@
         }
       ],
       "gallery": [
-        { "src": "/assets/projects/adblock-island/title.png", "alt": "AdBlock Island title screen with the beta badge" },
-        { "src": "/assets/projects/adblock-island/wave-card.png", "alt": "Wave cleared card with an achievement and next wave preview" },
-        { "src": "/assets/projects/adblock-island/phone.png", "alt": "AdBlock Island title screen on a phone" }
+        {
+          "src": "/assets/projects/adblock-island/title.png",
+          "alt": "AdBlock Island title screen with the beta badge"
+        },
+        {
+          "src": "/assets/projects/adblock-island/wave-card.png",
+          "alt": "Wave cleared card with an achievement and next wave preview"
+        },
+        {
+          "src": "/assets/projects/adblock-island/phone.png",
+          "alt": "AdBlock Island title screen on a phone"
+        }
       ],
-      "related_projects": ["tippy-card-monte"],
+      "related_projects": [
+        "tippy-card-monte"
+      ],
       "related_posts": []
     }
   ]

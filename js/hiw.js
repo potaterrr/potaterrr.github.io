@@ -1259,12 +1259,12 @@
     a.addEventListener("click", () => openDemo(a.getAttribute("data-hiw-open")));
   });
 
-  /* Project pages deep-link into a specific demo with ?demo=vr|ar|dlf. */
+  /* Project pages host a single demo; the homepage used to host all three.
+     Prefer ?demo=, then data-default-demo, then whatever panels exist. */
   const demoParam = new URLSearchParams(window.location.search).get("demo");
-  const initialDemo =
-    demoParam && switchBtns.some((b) => b.getAttribute("data-hiw-switch") === demoParam)
-      ? demoParam
-      : "vr";
-  openDemo(initialDemo);
+  const preferred = demoParam || hiwRoot.getAttribute("data-default-demo");
+  const available = Object.keys(handles);
+  const initialDemo = preferred && handles[preferred] ? preferred : available[0];
+  if (initialDemo) openDemo(initialDemo);
 
 })();

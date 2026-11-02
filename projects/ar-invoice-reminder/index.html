@@ -97,8 +97,8 @@
       </a>
       <ul class="nav-links" id="site-menu">
         <li><a href="/projects/" aria-current="page">Projects</a></li>
-        <li><a href="/#how-it-works">Demo</a></li>
-        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/timeline/">Timeline</a></li>
         <li><a href="/blog/">Blog</a></li>
         <li><a href="/#contact" class="nav-cta">Work with me</a></li>
       </ul>
@@ -116,7 +116,7 @@
         <p class="project-tagline">A daily n8n agent that chases overdue invoices — and never sends anything itself.</p>
         <div class="project-badges"><span class="project-badge">Human-in-the-loop</span><span class="project-badge">Never auto-sends</span><span class="project-badge project-badge-status">Live on a real tracker</span></div>
         <div class="project-metrics"><div class="project-metric"><span>Runs</span><strong>Daily · 09:00</strong></div><div class="project-metric"><span>Engine</span><strong>n8n</strong></div><div class="project-metric"><span>Output</span><strong>Gmail draft</strong></div></div>
-        <div class="cta-row project-actions"><a class="btn btn-primary" href="/?demo=ar#how-it-works">Watch it draft</a><a class="btn btn-ghost" href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="/blog/ar-invoice-agent-challenges.html">The bugs behind it</a></div>
+        <div class="cta-row project-actions"><a class="btn btn-primary" href="#demo">Run the live demo</a><a class="btn btn-ghost" href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="/blog/ar-invoice-agent-challenges.html">The bugs behind it</a></div>
       </div>
     </section>
 
@@ -154,7 +154,7 @@
             <div class="project-side-card">
               <h2>Links</h2>
               <ul class="project-link-list">
-                <li><a href="/?demo=ar#how-it-works">Watch it draft ↗</a></li><li><a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="/blog/ar-invoice-agent-challenges.html">The bugs behind it ↗</a></li>
+                <li><a href="#demo">Run the live demo ↗</a></li><li><a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="/blog/ar-invoice-agent-challenges.html">The bugs behind it ↗</a></li>
               </ul>
             </div>
             <div class="project-side-card">
@@ -169,6 +169,72 @@
         </nav>
       </div>
     </section>
+
+    <section class="section section-alt project-demo" id="demo">
+      <div class="container">
+        <h2 class="section-title reveal"><span class="hash">#</span> See it run</h2>
+        <p class="section-lead reveal">A simulated run of this pipeline — no APIs, no keys, no real calls, invoices or PHI. Edit the inputs, run it, and watch each stage. Everything happens in your browser.</p>
+        <div class="hiw reveal" id="hiw" data-default-demo="ar">
+<div class="hiw-panel" id="hiw-panel-ar" aria-label="Pipeline demo" hidden>
+      <div class="hiw-setup">
+        <fieldset class="hiw-lead-card">
+          <legend>🧾 Thursday's invoices — edit me</legend>
+          <label>Client <input id="hiw-inv-client" type="text" value="Blue Harbor Studio" maxlength="40" autocomplete="off" /></label>
+          <label>Invoice # <input id="hiw-inv-number" type="text" value="INV-1043" maxlength="20" autocomplete="off" /></label>
+          <label>Amount (USD) <input id="hiw-inv-amount" type="text" value="820.00" maxlength="12" inputmode="decimal" autocomplete="off" /></label>
+          <label>Days overdue <input id="hiw-inv-days" type="number" value="23" min="1" max="365" step="1" /></label>
+        </fieldset>
+        <p class="hiw-tone-line">Code picks the tone: <span class="hiw-tone is-firm" id="hiw-ar-tone">Firm &amp; Direct</span></p>
+        <div class="hiw-actions">
+          <button type="button" class="hiw-run">▶ Run the invoice run</button>
+          <button type="button" class="hiw-reset" hidden>↺ Reset</button>
+        </div>
+      </div>
+      <div class="hiw-wrap">
+        <canvas class="hiw-flow" id="hiw-flow-ar" width="640" height="300" role="group" aria-label="AR Invoice Reminder pipeline map — click a node for details" tabindex="0"></canvas>
+        <button type="button" class="hiw-pause" data-pause="ar" aria-label="Pause packet animation" aria-pressed="false">⏸</button>
+      </div>
+      <div class="hiw-metrics">
+        <div class="hiw-metric"><span class="hiw-metric-label">Current Stage</span><span class="hiw-metric-value" id="hiw-m-stage-ar">Schedule Trigger</span></div>
+        <div class="hiw-metric"><span class="hiw-metric-label">Live Packets</span><span class="hiw-metric-value" id="hiw-m-packets-ar">15</span></div>
+        <div class="hiw-metric"><span class="hiw-metric-label">Status</span><span class="hiw-metric-value hiw-metric-ok" id="hiw-m-status-ar">healthy</span></div>
+      </div>
+      <div class="hiw-inspect" id="hiw-detail-ar">
+        <div class="hiw-ins-head">
+          <span class="hiw-ins-dot"></span>
+          <span class="hiw-ins-icon">⏰</span>
+          <span class="hiw-ins-name">Daily AR Check</span>
+          <span class="hiw-ins-tag">n8n · scheduleTrigger</span>
+        </div>
+        <p class="hiw-ins-desc">The workflow wakes up at 09:00 every morning and reads the invoice tracker.</p>
+        <div class="hiw-visual"></div>
+      </div>
+      <div class="hiw-console">
+        <div class="hiw-cgroup">
+          <span class="hiw-clabel">Pipeline velocity</span>
+          <div class="hiw-slider-row">
+            <input type="range" class="hiw-slider" id="hiw-speed-ar" min="0" max="3" step="0.5" value="1" aria-label="Packet speed" />
+            <span class="hiw-slider-val" id="hiw-speed-val-ar">1.0x</span>
+          </div>
+        </div>
+        <div class="hiw-cgroup">
+          <span class="hiw-clabel">Failure drill</span>
+          <div class="hiw-select-wrap">
+            <select class="hiw-select hiw-drill" id="hiw-drill-ar" aria-label="Simulate an invoice-run disturbance">
+              <option value="none">No errors</option>
+              <option value="empty">Parser gets an empty reply</option>
+              <option value="cooldown">Every row inside the cooldown</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <p class="hiw-status" aria-live="polite">Ready — hit “Run the invoice run”.</p>
+    </div>
+
+          <p class="hiw-note">Same nodes as production, zero side effects: everything runs in simulation with synthetic data. <a href="/#contact">Want one of your own? →</a></p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer class="footer">
@@ -179,5 +245,6 @@
   </footer>
 
   <script src="/js/main.js" defer></script>
+  <script src="/js/hiw.js" defer></script>
 </body>
 </html>
