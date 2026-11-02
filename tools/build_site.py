@@ -35,30 +35,6 @@ PROJECT_BY_SLUG = {p["slug"]: p for p in PROJECTS}
 
 # ---------------------------------------------------------------- shared markup
 
-def nav(active: str = "") -> str:
-    def current(key):
-        return ' aria-current="page"' if active == key else ""
-
-    return f"""  <nav class="nav" aria-label="Site">
-    <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="nav-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="30" height="30" decoding="async" /></picture></span>
-        <span class="brand-name">potaterrr</span>
-        <span class="brand-tag">automation</span>
-      </a>
-      <ul class="nav-links" id="site-menu">
-        <li><a href="/projects/"{current("projects")}>Projects</a></li>
-        <li><a href="/#skills">Skills</a></li>
-        <li><a href="/timeline/"{current("timeline")}>Timeline</a></li>
-        <li><a href="/blog/"{current("blog")}>Blog</a></li>
-        <li><a href="/#contact" class="nav-cta">Work with me</a></li>
-      </ul>
-      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
-      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-menu">☰</button>
-    </div>
-  </nav>"""
-
-
 FOOTER = """  <footer class="footer">
     <div class="container footer-inner">
       <p><em>"Mashing the boring stuff so you don't have to."</em></p>
@@ -69,14 +45,6 @@ FOOTER = """  <footer class="footer">
 NOSCRIPT = """  <noscript><style>
     .reveal{opacity:1;transform:none}
     .intro,.post-toc,.a11y-trigger,.theme-toggle{display:none!important}
-    .barrel-slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}
-    .barrel-slide+.barrel-slide{display:none}
-    .barrel-controls,.barrel-hint{display:none}
-    @media (max-width:900px){
-      .nav-inner{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}
-      .nav-links{display:flex!important;position:static!important;width:100%;margin-left:0;gap:14px;flex-wrap:wrap}
-      .nav-toggle,.theme-toggle{display:none!important}
-    }
   </style></noscript>"""
 
 ICONS = """  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
@@ -404,6 +372,22 @@ def project_page(p: dict) -> str:
           </div>
         </section>"""
 
+    embed_html = ""
+    if p.get("demo_url"):
+        embed_html = f"""        <section class="project-block" id="demo">
+          <h2>Interactive workflow</h2>
+          <p>Run the simulated pipeline end to end — edit the inputs, start it, and watch each stage. No APIs, keys or real data; everything happens in the browser.</p>
+          <div class="project-embed">
+            <div class="project-embed-bar">
+              <span class="project-embed-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="project-embed-url">{esc(p["demo_url"].replace("https://", ""))}</span>
+              <a href="{p["demo_url"]}" target="_blank" rel="noopener">Open full screen ↗</a>
+            </div>
+            <iframe src="{p["demo_url"]}" title="{esc(p["title"])} — interactive workflow" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+            <p class="project-embed-note">Runs in your browser. If the frame doesn't load, open the demo directly.</p>
+          </div>
+        </section>"""
+
     related_projects = [PROJECT_BY_SLUG[s] for s in p.get("related_projects", []) if s in PROJECT_BY_SLUG]
     related_projects_html = ""
     if related_projects:
@@ -479,7 +463,7 @@ def project_page(p: dict) -> str:
         <div class="project-layout">
           <div class="project-main">
 {render_sections(p.get("sections", []))}
-{embed}
+{embed_html}
 {gallery}
 {related_posts_html}
           </div>

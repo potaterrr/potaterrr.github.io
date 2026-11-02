@@ -81,9 +81,7 @@
     .barrel-slide+.barrel-slide{display:none}
     .barrel-controls,.barrel-hint{display:none}
     @media (max-width:900px){
-      .nav-inner{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}
-      .nav-links{display:flex!important;position:static!important;width:100%;margin-left:0;gap:14px;flex-wrap:wrap}
-      .nav-toggle,.theme-toggle{display:none!important}
+      .theme-toggle{display:none!important}
     }
   </style></noscript>
 </head>
@@ -118,7 +116,7 @@
       <nav class="rail-nav" aria-label="Sections">
         <ul>
           <li><a href="#top" data-section="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li>
-          <li><a href="/projects/" data-section="projects"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li>
+          <li><a href="/projects/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li>
           <li><a href="#skills" data-section="skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li>
           <li><a href="#work-with-me" data-section="work-with-me"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" /></svg>Work with me</a></li>
           <li><a href="/timeline/"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>Timeline</a></li>
@@ -153,7 +151,7 @@
 
           <nav class="bento reveal" aria-label="Explore the site">
             <a class="bento-tile bento-featured" href="/projects/ai-voice-receptionist/">
-              <span class="bento-label"><span class="bento-icon">📞</span>The main crop</span>
+              <span class="bento-label"><span class="bento-icon">📞</span>Featured</span>
               <span class="bento-title">AI Voice Receptionist</span>
               <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
               <span class="bento-desc">Answers missed and after-hours clinic calls and books real calendar slots — the flagship in a crop that also includes the 🧾 AR Invoice Reminder and 📮 Dead Lead Retrieval.</span>
@@ -206,114 +204,7 @@
           </div>
         </div>
 
-        <section class="section" id="projects">
-          <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> The main crop</h2>
-            <p class="section-lead reveal">The three builds doing the heavy lifting — flip through them. Smaller spuds are further down.</p>
-            <p class="archive-cta reveal"><a class="archive-link" href="/projects/">Browse all 11 projects →</a></p>
 
-            <!-- 3D barrel carousel -->
-            <div class="barrel reveal" id="project-barrel" role="region" aria-roledescription="carousel" aria-label="Featured projects">
-              <div class="barrel-stage">
-                <div class="barrel-ring" id="barrel-ring">
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="/projects/ai-voice-receptionist/">AI Voice Receptionist</a></h3>
-                      <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
-                      <p>An AI receptionist for clinics and appointment-based practices — built <strong>three times</strong> (Make / n8n / Zapier) on a shared Retell voice layer, so platforms can be compared apples-to-apples before choosing one.</p>
-                      <ul class="feature-list">
-                        <li><strong>🔒 HIPAA-compliant build available</strong> — BAAs, access controls and audit logging on request</li>
-                        <li>Answers missed and after-hours calls, capturing patient intake as structured data</li>
-                        <li>Conflict-checks Google Calendar, books real slots, alerts the front desk with a summary</li>
-                        <li>Configurable for your services, hours and intake fields</li>
-                        <li>▶ <a href="/projects/ai-voice-receptionist/">Watch a call flow run</a> · <a href="https://github.com/potaterrr/voice-receptionist" target="_blank" rel="noopener">repo ↗</a></li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="/projects/dead-lead-retrieval/">Dead Lead Retrieval</a></h3>
-                      <p>An AI-powered, human-in-the-loop automation that resurrects dormant leads: an LLM writes personalized check-in emails, files them as <strong>Gmail drafts</strong> (never auto-sent!), drops a booking button into every one, and tracks each lead through the review lifecycle on ClickUp.</p>
-                      <ul class="feature-list">
-                        <li><strong>Human-in-the-loop by design</strong> — AI drafts, human approves, nothing sends itself</li>
-                        <li>Anti-hallucination guardrails: the only link in any email is mine</li>
-                        <li>Full setup guide, config reference and production-tested lessons in the README</li>
-                        <li>▶ <a href="/projects/dead-lead-retrieval/">Watch it run</a> · <a href="https://github.com/potaterrr/dead-lead-retrieval" target="_blank" rel="noopener">repo ↗</a></li>
-                      </ul>
-                    </div>
-                  </article>
-                  <article class="card barrel-slide">
-                    <div class="card-body">
-                      <h3><a href="/projects/ar-invoice-reminder/">AR Invoice Reminder Agent</a></h3>
-                      <p>An n8n workflow that chases overdue invoices every morning: it reads a Google Sheets tracker, computes days past due in code, and drafts a payment reminder whose tone escalates with the delay — <strong>friendly</strong>, then <strong>firm</strong>, then <strong>solution-oriented</strong> — filing every one as a Gmail draft for review.</p>
-                      <ul class="feature-list">
-                        <li><strong>Never auto-sends</strong> — AI drafts, a human presses send</li>
-                        <li>Tone is computed, not guessed: 1–14 friendly · 15–30 firm · 31+ offers a payment split plan</li>
-                        <li>Strict JSON output, signature enforced in code, no placeholders left behind</li>
-                        <li>7-day cooldown per invoice, then the follow-up date is logged back to the sheet</li>
-                        <li>▶ <a href="/projects/ar-invoice-reminder/">Watch it draft a reminder</a> · <a href="https://github.com/potaterrr/ar-invoice-reminder-agent" target="_blank" rel="noopener">repo ↗</a></li>
-                      </ul>
-                    </div>
-                  </article>
-                </div>
-              </div>
-              <div class="barrel-controls">
-                <button type="button" class="barrel-btn" id="barrel-prev" aria-label="Previous project">&#8249;</button>
-                <div class="barrel-dots" id="barrel-dots" role="group" aria-label="Choose a featured project"></div>
-                <button type="button" class="barrel-btn" id="barrel-next" aria-label="Next project">&#8250;</button>
-              </div>
-              <p class="barrel-hint" aria-hidden="true">drag · swipe · arrow keys</p>
-            </div>
-
-            <h2 class="section-title reveal"><span class="hash">#</span> More automation projects</h2>
-            <div class="grid grid-3">
-              <article class="card reveal">
-                <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">job-scrapper ↗</a></h3>
-                  <p>A Python scraper that searches OnlineJobs.ph for remote jobs matching automation keywords (<code>n8n</code>, <code>make.com</code>, <code>zapier</code>) and pushes each listing as JSON to a Make.com webhook for downstream automation.</p>
-                  <ul class="feature-list">
-                    <li>Extracts title, salary, employment type, and <strong>full job description</strong> per listing</li>
-                    <li>Keyword dedupe + polite, human-like request delays</li>
-                    <li>Fallback notifications so downstream automations never stall</li>
-                  </ul>
-                </div>
-              </article>
-              <article class="card reveal">
-                <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/signal-checker" target="_blank" rel="noopener">signal-checker ↗</a></h3>
-                  <p>An automated trading-signal pipeline that evaluates an <strong>SMA crossover strategy</strong> on daily stock prices and dispatches <code>BUY</code> / <code>SELL</code> / <code>HOLD</code> signals as JSON to a Make.com webhook.</p>
-                  <ul class="feature-list">
-                    <li>~400 days of historical closes via <strong>yfinance</strong> (50/200-day defaults)</li>
-                    <li>Fully configurable through environment variables (symbol, SMA windows, webhook URL)</li>
-                    <li>Runs automatically on GitHub Actions every weekday at 21:00 UTC</li>
-                  </ul>
-                </div>
-              </article>
-              <article class="card reveal">
-                <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/rss-news" target="_blank" rel="noopener">rss-news ↗</a> (personal automation)</h3>
-                  <p>An automated news curation pipeline for the <strong>AI Tech &amp; Automation Hub</strong> Facebook page: a Python script fetches tech &amp; AI RSS feeds (Hacker News, Phoronix, The Verge…), filters by keyword, and POSTs a digest to a Make.com webhook that drafts the post with Gemini, generates a graphic with Imagen, and publishes to Facebook Pages.</p>
-                  <ul class="feature-list">
-                    <li><strong>GitHub Actions</strong> cron runs it every Sunday at 6:00 AM PHT</li>
-                    <li>Keyword filtering + <code>seen_articles.json</code> dedupe so nothing posts twice</li>
-                    <li>A random banner image from the repo rides along with every digest</li>
-                  </ul>
-                </div>
-              </article>
-              <article class="card reveal">
-                <div class="card-body">
-                  <h3><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">make-commits ↗</a></h3>
-                  <p>A Make.com automation that posts every GitHub push to a Facebook Page as a digest — instantly, via webhooks. Built and running entirely on the Make.com free tier.</p>
-                  <ul class="feature-list">
-                    <li>Instant pipeline: <code>git push</code> → Facebook post lands seconds later (webhooks, no polling)</li>
-                    <li>One post per push listing every commit message as a bullet (~2 ops per push)</li>
-                    <li>Ships with a sanitized scenario blueprint + step-by-step setup guide</li>
-                  </ul>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
 
 
 

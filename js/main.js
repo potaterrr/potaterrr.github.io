@@ -1,7 +1,7 @@
 /* potaterrr.github.io — vanilla JS, no dependencies.
-   Sections: year, reveals, blog slideshow, theme,
-   FAB easter egg, contour background, rail scrollspy, project barrel,
-   mobile tab bar, intro overlay, accessibility menu. Pipeline demos live in js/hiw.js. */
+   Sections: year, reveals, theme, FAB easter egg, contour background,
+   rail scrollspy, mobile tab bar, intro overlay, accessibility menu,
+   post progress/TOC and the blog archive filters (see js/blog.js). */
 
 /* `.panel` only becomes a scroll container at >=1100px (see style.css); below
    that the window scrolls. Scrolling the panel element on mobile is a silent
@@ -44,21 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     reveals.forEach((el) => observer.observe(el));
   } else {
     reveals.forEach((el) => el.classList.add("visible"));
-  }
-
-  const navToggle = document.querySelector(".nav-toggle");
-  const navLinks = document.querySelector(".nav-links");
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
-      const open = navLinks.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", String(open));
-    });
-    navLinks.querySelectorAll("a").forEach((link) =>
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
-      })
-    );
   }
 
   /* ---------- Contour background (hero canvas) ---------- */
@@ -166,7 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ? { root: spyRoot, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
     : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
 
-  const sectionIds = ["top", "projects", "skills", "work-with-me", "contact"];
+  const sectionIds = ["top", "skills", "work-with-me", "contact"];
   const railLinks = new Map();
   document.querySelectorAll(".rail-nav a[data-section]").forEach((a) => {
     railLinks.set(a.dataset.section, a);
@@ -219,75 +204,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  /* ---------- Project barrel carousel ---------- */
-  const barrel = document.getElementById("project-barrel");
-  if (barrel) {
-    const ring = barrel.querySelector(".barrel-ring");
-    const slides = Array.from(ring ? ring.children : []);
-    const dotsWrap = document.getElementById("barrel-dots");
-    const prevBtn = document.getElementById("barrel-prev");
-    const nextBtn = document.getElementById("barrel-next");
-
-    if (ring && slides.length && dotsWrap) {
-      const n = slides.length;
-      let index = 0;
-
-      const show = (i, animate = true) => {
-        index = (i + n) % n;
-        slides.forEach((s, j) => {
-          s.classList.toggle("is-front", j === index);
-          s.classList.remove("is-enter");
-        });
-        if (animate) {
-          const front = slides[index];
-          void front.offsetWidth;
-          front.classList.add("is-enter");
-        }
-        dotsWrap.querySelectorAll("button").forEach((d, j) => {
-          d.classList.toggle("active", j === index);
-          if (j === index) d.setAttribute("aria-current", "true");
-          else d.removeAttribute("aria-current");
-        });
-      };
-
-      const dots = slides.map((_, i) => {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.setAttribute("aria-label", `Go to project ${i + 1}`);
-        dot.addEventListener("click", () => show(i));
-        dotsWrap.appendChild(dot);
-        return dot;
-      });
-
-      slides.forEach((slide, i) => {
-        slide.setAttribute("role", "group");
-        slide.setAttribute("aria-roledescription", "slide");
-        slide.setAttribute("aria-label", `${i + 1} of ${slides.length}`);
-      });
-
-      prevBtn?.addEventListener("click", () => show(index - 1));
-      nextBtn?.addEventListener("click", () => show(index + 1));
-
-      barrel.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowLeft") show(index - 1);
-        if (e.key === "ArrowRight") show(index + 1);
-      });
-
-      let dragX = null;
-      barrel.addEventListener("pointerdown", (e) => {
-        dragX = e.clientX;
-      });
-      window.addEventListener("pointerup", (e) => {
-        if (dragX === null) return;
-        const dx = e.clientX - dragX;
-        if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
-        dragX = null;
-      });
-
-      show(0, false);
-    }
-  }
-
   /* ---------- Mobile tab bar: hide on scroll down, show on scroll up ---------- */
   const tabbar = document.querySelector(".tabbar");
   if (tabbar) {
@@ -319,89 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ---------- Blog slideshow ---------- */
-  const slideshow = document.getElementById("blog-slideshow");
-  if (slideshow) {
-    const slides = Array.from(slideshow.querySelectorAll(".slide"));
-    const dotsWrap = slideshow.querySelector(".ss-dots");
-    const prevBtn = slideshow.querySelector(".ss-prev");
-    const nextBtn = slideshow.querySelector(".ss-next");
-    if (slides.length && dotsWrap) {
-      let index = 0;
-      let timer = null;
-      const AUTO_MS = 6000;
-
-      const dots = slides.map((_, i) => {
-        const dot = document.createElement("button");
-        dot.type = "button";
-        dot.setAttribute("aria-label", `Go to post ${i + 1}`);
-        dot.addEventListener("click", () => {
-          show(i);
-          restart();
-        });
-        dotsWrap.appendChild(dot);
-        return dot;
-      });
-
-      slides.forEach((slide, i) => {
-        slide.setAttribute("role", "group");
-        slide.setAttribute("aria-roledescription", "slide");
-        slide.setAttribute("aria-label", `${i + 1} of ${slides.length}`);
-      });
-
-      function show(next) {
-        index = (next + slides.length) % slides.length;
-        slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
-        dots.forEach((dot, i) => {
-          dot.classList.toggle("active", i === index);
-          if (i === index) dot.setAttribute("aria-current", "true");
-          else dot.removeAttribute("aria-current");
-        });
-      }
-
-      function restart() {
-        clearInterval(timer);
-        if (stillMotion) return;
-        timer = setInterval(() => show(index + 1), AUTO_MS);
-      }
-
-      prevBtn?.addEventListener("click", () => {
-        show(index - 1);
-        restart();
-      });
-      nextBtn?.addEventListener("click", () => {
-        show(index + 1);
-        restart();
-      });
-
-      slideshow.addEventListener("mouseenter", () => clearInterval(timer));
-      slideshow.addEventListener("mouseleave", restart);
-      slideshow.addEventListener("focusin", () => clearInterval(timer));
-      slideshow.addEventListener("focusout", restart);
-
-      slideshow.addEventListener("keydown", (event) => {
-        if (event.key === "ArrowLeft") { show(index - 1); restart(); }
-        if (event.key === "ArrowRight") { show(index + 1); restart(); }
-      });
-
-      let touchX = null;
-      slideshow.addEventListener("touchstart", (e) => {
-        touchX = e.touches[0].clientX;
-        clearInterval(timer);
-      }, { passive: true });
-      slideshow.addEventListener("touchend", (e) => {
-        if (touchX === null) return;
-        const dx = e.changedTouches[0].clientX - touchX;
-        if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
-        touchX = null;
-        restart();
-      }, { passive: true });
-
-      show(0);
-      restart();
-    }
-  }
-
   /* ---------- Bento projects reel (cycling project names) ---------- */
   const reelEl = document.querySelector("[data-reel]");
   if (reelEl && !stillMotion) {
@@ -422,25 +255,21 @@ document.addEventListener("DOMContentLoaded", () => {
 (function () {
   const intro = document.getElementById("intro");
   if (!intro) return;
-  const INTRO_KEY = "intro-seen-at";
-  const WEEK = 7 * 24 * 60 * 60 * 1000;
+  const INTRO_KEY = "intro-seen";
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let motionSaved = false;
   try { motionSaved = localStorage.getItem("reduce-motion") === "1"; } catch (e) { /* noop */ }
-  let recentlySeen = false;
-  try {
-    const at = Number(localStorage.getItem(INTRO_KEY)) || 0;
-    recentlySeen = Date.now() - at < WEEK;
-  } catch (e) { /* private mode — just play it */ }
+  let seen = false;
+  try { seen = sessionStorage.getItem(INTRO_KEY) === "1"; } catch (e) { /* private mode — just play it */ }
 
   const finish = () => {
     intro.classList.add("intro-done");
     document.body.classList.remove("intro-lock");
-    try { localStorage.setItem(INTRO_KEY, String(Date.now())); } catch (e) { /* noop */ }
+    try { sessionStorage.setItem(INTRO_KEY, "1"); } catch (e) { /* noop */ }
     setTimeout(() => intro.remove(), 600);
   };
 
-  if (reduce || motionSaved || recentlySeen) {
+  if (reduce || motionSaved || seen) {
     intro.remove();
     return;
   }
@@ -558,17 +387,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".theme-toggle").forEach((btn) => {
       btn.addEventListener("click", flipTheme);
     });
-
-    // Keep legacy nav behavior if a .nav-links exists (blog pages).
-    const navLinks = document.querySelector(".nav-links");
-    if (navLinks && !document.querySelector(".nav .theme-toggle")) {
-      const btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "theme-toggle";
-      btn.addEventListener("click", flipTheme);
-      navLinks.insertAdjacentElement("afterend", btn);
-      applyTheme(currentTheme());
-    }
 
     // Easter egg: double-tap/double-click the potato FAB to flip the theme.
     // A confirmed single tap scrolls to the contact section after a short

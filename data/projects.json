@@ -252,8 +252,8 @@
       ],
       "links": [
         {
-          "label": "Demo (in repo)",
-          "href": "https://github.com/potaterrr/voice-receptionist/tree/main/demo",
+          "label": "Run the workflow",
+          "href": "https://potaterrr.github.io/voice-receptionist/",
           "primary": true,
           "external": true
         },
@@ -302,7 +302,8 @@
       ],
       "related_posts": [
         "one-receptionist-three-engines"
-      ]
+      ],
+      "demo_url": "https://potaterrr.github.io/voice-receptionist/"
     },
     {
       "slug": "ar-invoice-reminder",
@@ -338,8 +339,8 @@
       ],
       "links": [
         {
-          "label": "Demo (in repo)",
-          "href": "https://github.com/potaterrr/ar-invoice-reminder-agent/tree/main/demo",
+          "label": "Run the workflow",
+          "href": "https://potaterrr.github.io/ar-invoice-reminder-agent/",
           "primary": true,
           "external": true
         },
@@ -389,7 +390,8 @@
       "related_posts": [
         "ar-invoice-agent-challenges",
         "why-my-ai-never-sends-emails"
-      ]
+      ],
+      "demo_url": "https://potaterrr.github.io/ar-invoice-reminder-agent/"
     },
     {
       "slug": "dead-lead-retrieval",
@@ -425,8 +427,8 @@
       ],
       "links": [
         {
-          "label": "Demo (in repo)",
-          "href": "https://github.com/potaterrr/dead-lead-retrieval/tree/main/demo",
+          "label": "Run the workflow",
+          "href": "https://potaterrr.github.io/dead-lead-retrieval/",
           "primary": true,
           "external": true
         },
@@ -475,7 +477,8 @@
       "related_posts": [
         "why-my-ai-never-sends-emails",
         "ar-invoice-agent-challenges"
-      ]
+      ],
+      "demo_url": "https://potaterrr.github.io/dead-lead-retrieval/"
     },
     {
       "slug": "job-scrapper",
