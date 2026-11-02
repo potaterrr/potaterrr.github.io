@@ -140,29 +140,46 @@ A11Y_MENU = """  <div class="a11y-menu" id="a11y-menu" hidden>
   </div>"""
 
 
-SQUARE_ITEMS = [
-    ("home", "/", "Home", "🏠"),
-    ("skills", "/skills/", "Skills", "🧰"),
-    ("work", "/work-with-me/", "Work with me", "💼"),
-    ("contact", "/contact/", "Contact", "📮"),
+NAV_PAGES = [
+    ("home", "/", "Home", "Want to read more about me?"),
+    ("projects", "/projects/", "Projects", "Wanna see what I'm up to?"),
+    ("skills", "/skills/", "Skills", "See the tools I build with"),
+    ("work", "/work-with-me/", "Work with me", "Let's work together"),
+    ("timeline", "/timeline/", "Timeline", "See what I've shipped"),
+    ("blog", "/blog/", "Blog", "Read the field notes"),
+    ("contact", "/contact/", "Contact", "Let's talk"),
 ]
 
 
-def square_nav(active: str = "") -> str:
+def page_nav(active: str = "") -> str:
+    keys = [p[0] for p in NAV_PAGES]
+    if active not in keys:
+        return ""
+    i = keys.index(active)
+
+    def button(item, direction):
+        key, href, label, line = item
+        cls = "is-prev" if direction == "previous" else "is-next"
+        arrow = "←" if direction == "previous" else "→"
+        dir_label = "Previous" if direction == "previous" else "Next"
+        return (
+            f'<a class="page-nav-btn {cls}" href="{href}">'
+            f'<span class="page-nav-dir">{arrow} {dir_label}</span>'
+            f'<span class="page-nav-title">{line}</span>'
+            f'<span class="page-nav-page">{label}</span>'
+            "</a>"
+        )
+
     tiles = []
-    for key, href, label, icon in SQUARE_ITEMS:
-        if key == active:
-            tiles.append(
-                f'<span class="square-btn is-current" aria-current="page"><span class="sq-icon">{icon}</span><span class="sq-label">{label}</span></span>'
-            )
-        else:
-            tiles.append(
-                f'<a class="square-btn" href="{href}"><span class="sq-icon">{icon}</span><span class="sq-label">{label}</span><span class="sq-arrow" aria-hidden="true">↗</span></a>'
-            )
-    return f"""    <section class="square-nav-wrap">
+    if i > 0:
+        tiles.append(button(NAV_PAGES[i - 1], "previous"))
+    if i + 1 < len(NAV_PAGES):
+        tiles.append(button(NAV_PAGES[i + 1], "next"))
+
+    return f"""    <section class="page-nav-wrap">
       <div class="container">
-        <p class="square-nav-kicker">$ cd ../next</p>
-        <nav class="square-nav" aria-label="Continue exploring">
+        <p class="page-nav-kicker">$ cd ../{keys[i + 1] if i + 1 < len(keys) else "~"}</p>
+        <nav class="page-nav" aria-label="Previous and next page">
           {"".join(tiles)}
         </nav>
       </div>
@@ -200,7 +217,7 @@ def simple_page(key: str, title: str, kicker: str, lead: str, partial: str,
       </div>
     </section>
 
-{square_nav(key)}
+{page_nav(key)}
   </main>
 
 {FOOTER}
@@ -392,6 +409,8 @@ def project_index() -> str:
     <div class="container">
 {chr(10).join(sections)}
     </div>
+
+{page_nav("projects")}
   </main>
 
 {FOOTER}
@@ -860,6 +879,8 @@ def archive_page(posts) -> str:
 {chr(10).join(groups)}
       <p class="archive-empty" id="archive-empty" hidden>No posts match that filter. <button type="button" class="link-button" id="archive-clear">Clear filters</button></p>
     </div>
+
+{page_nav("blog")}
   </main>
 
 {FOOTER}
@@ -1050,6 +1071,8 @@ def timeline_page() -> str:
 {items}
       </div>
     </section>
+
+{page_nav("timeline")}
   </main>
 
 {FOOTER}
