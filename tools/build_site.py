@@ -164,9 +164,8 @@ def page_nav(active: str = "") -> str:
         dir_label = "Previous" if direction == "previous" else "Next"
         return (
             f'<a class="page-nav-btn {cls}" href="{href}">'
-            f'<span class="page-nav-dir">{arrow} {dir_label}</span>'
+            f'<span class="page-nav-dir">{dir_label} {arrow}</span>'
             f'<span class="page-nav-title">{line}</span>'
-            f'<span class="page-nav-page">{label}</span>'
             "</a>"
         )
 
