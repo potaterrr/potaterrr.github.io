@@ -568,6 +568,8 @@ def render_patch_notes() -> str:
 
         if not ver.lower().startswith("v"):
             ver = "v" + ver
+        if not channel:
+            channel = "beta"
         display = ""
         if date:
             try:
