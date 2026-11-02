@@ -73,8 +73,8 @@ def rail(active: str = "") -> str:
         items.append(f'<li><a href="{href}"{cls}{current}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg>{label}</a></li>')
     return f"""  <aside class="rail" id="rail" aria-label="Profile and site navigation">
       <a href="/" class="rail-id" aria-label="potaterrr — home">
-        <span class="rail-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="84" height="84" decoding="async" /></picture></span>
-        <span class="rail-name">Christian John</span>
+        <span class="rail-avatar"><picture><source srcset="/assets/avatar-192.webp" type="image/webp" /><img src="/assets/avatar-192.jpg" alt="" width="84" height="84" decoding="async" /></picture></span>
+        <span class="rail-name">Christian John Vallejos</span>
         <span class="rail-handle">🥔 potaterrr</span>
       </a>
 
@@ -258,6 +258,26 @@ def contact_page() -> str:
     )
 
 
+FAB = """  <a href="/contact/" class="potato-fab" aria-label="Got questions? Let’s get farming — open the contact page">
+
+    <div class="circular-text">
+      <svg viewBox="0 0 100 100" width="100" height="100">
+        <path id="textPath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+        <text fill="#d97706" font-size="9" font-weight="700" letter-spacing="1">
+          <textPath href="#textPath" startOffset="0%">
+            GOT QUESTIONS? LET'S GET FARMING 🥔
+          </textPath>
+        </text>
+      </svg>
+    </div>
+
+    <div class="potato-body">
+      <picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="48" height="48" decoding="async" /></picture>
+    </div>
+
+  </a>"""
+
+
 def shell_open(active: str = "") -> str:
     _ACTIVE["key"] = active
     return f"""  <div class="shell">
@@ -274,6 +294,8 @@ def shell_close(active: str = "") -> str:
     active = active or _ACTIVE["key"]
     return f"""    </div>
   </div>
+
+{FAB}
 
 {tabbar(active)}
 

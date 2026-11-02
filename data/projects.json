@@ -7,6 +7,12 @@
       "blurb": "Voice, LLM agents, scrapers and ops pipelines — the builds that remove manual work."
     },
     {
+      "id": "other-automations",
+      "title": "Other Automations",
+      "kicker": "// other automations",
+      "blurb": "Scrapers, signal engines, digests and webhook pipelines — the supporting automations."
+    },
+    {
       "id": "startup",
       "title": "StartUP",
       "kicker": "// startup",
@@ -464,7 +470,7 @@
     },
     {
       "slug": "job-scrapper",
-      "category": "automations",
+      "category": "other-automations",
       "title": "job-scrapper",
       "tagline": "A Python scraper that watches OnlineJobs.ph and posts one Discord embed per job.",
       "summary": "Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.",
@@ -544,7 +550,7 @@
     },
     {
       "slug": "signal-checker",
-      "category": "automations",
+      "category": "other-automations",
       "title": "signal-checker",
       "tagline": "An SMA crossover pipeline that evaluates daily prices and dispatches signals as JSON.",
       "summary": "Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.",
@@ -608,7 +614,7 @@
     },
     {
       "slug": "rss-news",
-      "category": "automations",
+      "category": "other-automations",
       "title": "rss-news",
       "tagline": "A weekly AI and tech digest that drafts, illustrates and publishes itself.",
       "summary": "Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.",
@@ -680,7 +686,7 @@
     },
     {
       "slug": "make-commits",
-      "category": "automations",
+      "category": "other-automations",
       "title": "make-commits",
       "tagline": "Every GitHub push becomes a Facebook post, seconds later.",
       "summary": "A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.",
