@@ -109,26 +109,39 @@
 
   <div class="post-progress" aria-hidden="true"><span class="post-progress-fill"></span></div>
 
-  <nav class="nav" aria-label="Site">
-    <div class="container nav-inner">
-      <a href="/" class="brand">
-        <span class="nav-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="30" height="30" decoding="async" /></picture></span>
-        <span class="brand-name">potaterrr</span>
-        <span class="brand-tag">automation</span>
+  <div class="shell">
+  <aside class="rail" id="rail" aria-label="Profile and site navigation">
+      <a href="/" class="rail-id" aria-label="potaterrr — home">
+        <span class="rail-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="84" height="84" decoding="async" /></picture></span>
+        <span class="rail-name">Christian John</span>
+        <span class="rail-handle">🥔 potaterrr</span>
       </a>
-      <ul class="nav-links" id="site-menu">
-        <li><a href="/projects/">Projects</a></li>
-        <li><a href="/#skills">Skills</a></li>
-        <li><a href="/timeline/">Timeline</a></li>
-        <li><a href="/blog/" aria-current="page">Blog</a></li>
-        <li><a href="/#contact" class="nav-cta">Work with me</a></li>
-      </ul>
-      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
-      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-menu">☰</button>
-    </div>
-  </nav>
 
-  <main id="main-content">
+      <ul class="rail-socials" aria-label="Contact profiles">
+        <li><a href="https://wa.me/potaiterrr" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp — preferred">💬</a></li>
+        <li><a href="https://t.me/portaterrrr" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">✈️</a></li>
+        <li><a href="https://github.com/potaterrr" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">🐙</a></li>
+        <li><a href="mailto:kristiandyanbusiness@gmail.com" aria-label="Email" title="Email">📧</a></li>
+      </ul>
+
+      <nav class="rail-nav" aria-label="Sections">
+        <ul>
+          <li><a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li><li><a href="/projects/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li><li><a href="/#skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li><li><a href="/#work-with-me"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" /></svg>Work with me</a></li><li><a href="/timeline/"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>Timeline</a></li><li><a href="/blog/" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg>Blog</a></li><li><a href="/#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg>Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="rail-foot">
+        <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+        <button type="button" class="a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="panel" id="main-content">
+
+
+  <main>
     <section class="post-shell">
       <div class="container">
         <article class="post">
@@ -226,9 +239,38 @@
   <footer class="footer">
     <div class="container footer-inner">
       <p><em>"Mashing the boring stuff so you don't have to."</em></p>
-      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/timeline/">timeline</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
     </div>
   </footer>
+    </div>
+  </div>
+
+  <nav class="tabbar" aria-label="Quick navigation">
+    <a href="/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg><span>Home</span></a><a href="/projects/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg><span>Projects</span></a><a href="/blog/" class="active"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg><span>Blog</span></a><a href="/#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg><span>Contact</span></a>
+    <button type="button" class="tabbar-a11y a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg><span>A11y</span>
+    </button>
+  </nav>
+
+  <div class="a11y-menu" id="a11y-menu" hidden>
+    <h3>Accessibility</h3>
+    <div class="a11y-row">
+      <span id="a11y-theme-label">Theme</span>
+      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+    </div>
+    <div class="a11y-row">
+      <span id="a11y-motion-label">Reduce motion</span>
+      <button type="button" class="a11y-switch" id="a11y-motion" role="switch" aria-checked="false" aria-labelledby="a11y-motion-label"><span class="a11y-knob"></span></button>
+    </div>
+    <div class="a11y-row">
+      <span id="a11y-font-label">Text size</span>
+      <div class="a11y-stepper" role="group" aria-labelledby="a11y-font-label">
+        <button type="button" id="a11y-font-minus" aria-label="Decrease text size">−</button>
+        <span id="a11y-font-value">100%</span>
+        <button type="button" id="a11y-font-plus" aria-label="Increase text size">+</button>
+      </div>
+    </div>
+  </div>
 
   <script src="/js/main.js" defer></script>
 </body>

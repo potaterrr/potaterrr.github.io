@@ -3473,3 +3473,22 @@ html[data-theme="light"] .btn-primary:hover {
 .timeline-page {
   padding-top: 12px;
 }
+
+/* The reading-progress hairline starts after the desktop rail. */
+@media (min-width: 1100px) {
+  .post-progress {
+    left: 300px;
+  }
+}
+
+/* Keep the footer at the bottom of short interior pages. */
+@media (min-width: 1100px) {
+  .panel {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .panel > main {
+    flex: 1 0 auto;
+  }
+}

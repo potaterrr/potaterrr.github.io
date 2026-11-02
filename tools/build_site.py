@@ -62,7 +62,7 @@ def nav(active: str = "") -> str:
 FOOTER = """  <footer class="footer">
     <div class="container footer-inner">
       <p><em>"Mashing the boring stuff so you don't have to."</em></p>
-      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/timeline/">timeline</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
     </div>
   </footer>"""
 
@@ -82,6 +82,117 @@ NOSCRIPT = """  <noscript><style>
 ICONS = """  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="apple-touch-icon" href="/assets/favicon-180.png" />"""
+
+A11Y_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg>'
+
+RAIL_ITEMS = [
+    ("home", "/", "Home", '<path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" />'),
+    ("projects", "/projects/", "Projects", '<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />'),
+    ("skills", "/#skills", "Skills", '<path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" />'),
+    ("work", "/#work-with-me", "Work with me", '<path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" />'),
+    ("timeline", "/timeline/", "Timeline", '<circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" />'),
+    ("blog", "/blog/", "Blog", '<path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" />'),
+    ("contact", "/#contact", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
+]
+
+
+def rail(active: str = "") -> str:
+    items = []
+    for key, href, label, icon in RAIL_ITEMS:
+        on = key == active
+        cls = ' class="active"' if on else ""
+        current = ' aria-current="page"' if on else ""
+        items.append(f'<li><a href="{href}"{cls}{current}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg>{label}</a></li>')
+    return f"""  <aside class="rail" id="rail" aria-label="Profile and site navigation">
+      <a href="/" class="rail-id" aria-label="potaterrr — home">
+        <span class="rail-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="84" height="84" decoding="async" /></picture></span>
+        <span class="rail-name">Christian John</span>
+        <span class="rail-handle">🥔 potaterrr</span>
+      </a>
+
+      <ul class="rail-socials" aria-label="Contact profiles">
+        <li><a href="https://wa.me/potaiterrr" target="_blank" rel="noopener" aria-label="WhatsApp" title="WhatsApp — preferred">💬</a></li>
+        <li><a href="https://t.me/portaterrrr" target="_blank" rel="noopener" aria-label="Telegram" title="Telegram">✈️</a></li>
+        <li><a href="https://github.com/potaterrr" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">🐙</a></li>
+        <li><a href="mailto:kristiandyanbusiness@gmail.com" aria-label="Email" title="Email">📧</a></li>
+      </ul>
+
+      <nav class="rail-nav" aria-label="Sections">
+        <ul>
+          {"".join(items)}
+        </ul>
+      </nav>
+
+      <div class="rail-foot">
+        <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+        <button type="button" class="a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+          {A11Y_SVG}
+        </button>
+      </div>
+    </aside>"""
+
+
+def tabbar(active: str = "") -> str:
+    entries = [
+        ("home", "/", "Home", '<path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" />'),
+        ("projects", "/projects/", "Projects", '<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />'),
+        ("blog", "/blog/", "Blog", '<path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" />'),
+        ("contact", "/#contact", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
+    ]
+    links = []
+    for key, href, label, icon in entries:
+        cls = ' class="active"' if key == active else ""
+        links.append(f'<a href="{href}"{cls}><svg viewBox="0 0 24 24" aria-hidden="true">{icon}</svg><span>{label}</span></a>')
+    return f"""  <nav class="tabbar" aria-label="Quick navigation">
+    {"".join(links)}
+    <button type="button" class="tabbar-a11y a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
+      {A11Y_SVG}<span>A11y</span>
+    </button>
+  </nav>"""
+
+
+A11Y_MENU = """  <div class="a11y-menu" id="a11y-menu" hidden>
+    <h3>Accessibility</h3>
+    <div class="a11y-row">
+      <span id="a11y-theme-label">Theme</span>
+      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+    </div>
+    <div class="a11y-row">
+      <span id="a11y-motion-label">Reduce motion</span>
+      <button type="button" class="a11y-switch" id="a11y-motion" role="switch" aria-checked="false" aria-labelledby="a11y-motion-label"><span class="a11y-knob"></span></button>
+    </div>
+    <div class="a11y-row">
+      <span id="a11y-font-label">Text size</span>
+      <div class="a11y-stepper" role="group" aria-labelledby="a11y-font-label">
+        <button type="button" id="a11y-font-minus" aria-label="Decrease text size">−</button>
+        <span id="a11y-font-value">100%</span>
+        <button type="button" id="a11y-font-plus" aria-label="Increase text size">+</button>
+      </div>
+    </div>
+  </div>"""
+
+
+def shell_open(active: str = "") -> str:
+    _ACTIVE["key"] = active
+    return f"""  <div class="shell">
+{rail(active)}
+
+    <div class="panel" id="main-content">
+"""
+
+
+_ACTIVE = {"key": ""}
+
+
+def shell_close(active: str = "") -> str:
+    active = active or _ACTIVE["key"]
+    return f"""    </div>
+  </div>
+
+{tabbar(active)}
+
+{A11Y_MENU}"""
+
 
 
 def head(title: str, desc: str, canonical: str, *, kind="website", image=OG_DEFAULT,
@@ -194,9 +305,9 @@ def project_index() -> str:
              "The builds: the HappyPhone internal softphone, AI voice receptionists, LLM agents, scrapers, ops pipelines and small games.",
              f"{SITE}/projects/", active="projects",
              image=f"{SITE}/assets/og/projects/index.png", jsonld=jsonld)}
-{nav("projects")}
+{shell_open("projects")}
 
-  <main id="main-content">
+  <main>
     <section class="page-head">
       <div class="container">
         <p class="hero-kicker">$ ls ~/projects</p>
@@ -214,6 +325,7 @@ def project_index() -> str:
   </main>
 
 {FOOTER}
+{shell_close()}
 
   <script src="/js/main.js" defer></script>
 </body>
@@ -347,9 +459,9 @@ def project_page(p: dict) -> str:
 
     return f"""{head(f"{p['title']} — {cat['title']} · potaterrr", p["tagline"], canonical,
              image=image, jsonld=jsonld, active="projects")}
-{nav("projects")}
+{shell_open("projects")}
 
-  <main id="main-content">
+  <main>
     <section class="project-hero">
       <div class="container">
         <a class="back-link" href="/projects/">&larr; All projects</a>
@@ -397,6 +509,7 @@ def project_page(p: dict) -> str:
   </main>
 
 {FOOTER}
+{shell_close()}
 
   <script src="/js/main.js" defer></script>
 </body>
@@ -532,9 +645,9 @@ def post_page(post, posts) -> str:
              image=image, extra=extra, jsonld=ld(body_ld) + ld(crumb))}
   <div class="post-progress" aria-hidden="true"><span class="post-progress-fill"></span></div>
 
-{nav("blog")}
+{shell_open("blog")}
 
-  <main id="main-content">
+  <main>
     <section class="post-shell">
       <div class="container">
         <article class="post">
@@ -584,6 +697,7 @@ def post_page(post, posts) -> str:
   </main>
 
 {FOOTER}
+{shell_close()}
 
   <script src="/js/main.js" defer></script>
 </body>
@@ -636,9 +750,9 @@ def archive_page(posts) -> str:
     return f"""{head("Blog — automation field notes · potaterrr",
              "Field notes from building automation: AI voice receptionists, AR invoice agents, lead retrieval pipelines, scrapers — what broke and what it taught me.",
              f"{SITE}/blog/", active="blog", image=f"{SITE}/assets/og/blog/index.png", jsonld=jsonld)}
-{nav("blog")}
+{shell_open("blog")}
 
-  <main id="main-content">
+  <main>
     <section class="page-head">
       <div class="container">
         <p class="hero-kicker">$ ls ~/notes</p>
@@ -663,6 +777,7 @@ def archive_page(posts) -> str:
   </main>
 
 {FOOTER}
+{shell_close()}
 
   <script src="/js/main.js" defer></script>
   <script src="/js/blog.js" defer></script>
@@ -830,9 +945,9 @@ def timeline_page() -> str:
     return f"""{head("Timeline — builds, launches and notes · potaterrr",
              "Everything shipped, newest first: voice receptionists, invoice agents, lead retrieval, scrapers, games and the field notes behind them.",
              canonical, active="timeline", image=f"{SITE}/assets/og/timeline.png", jsonld=jsonld)}
-{nav("timeline")}
+{shell_open("timeline")}
 
-  <main id="main-content">
+  <main>
     <section class="page-head">
       <div class="container">
         <p class="hero-kicker">$ git log --oneline</p>
@@ -849,6 +964,7 @@ def timeline_page() -> str:
   </main>
 
 {FOOTER}
+{shell_close()}
 
   <script src="/js/main.js" defer></script>
 </body>

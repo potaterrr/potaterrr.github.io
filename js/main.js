@@ -11,8 +11,13 @@ const scrollRoot = () => (desktopShell.matches ? document.getElementById("main-c
 const scrollToTarget = (target, behavior) => {
   if (!target) return;
   const root = scrollRoot();
-  if (root) root.scrollTo({ top: target.offsetTop, behavior });
-  else target.scrollIntoView({ behavior });
+  if (root) {
+    const top =
+      target.getBoundingClientRect().top + root.scrollTop - root.getBoundingClientRect().top;
+    root.scrollTo({ top, behavior });
+  } else {
+    target.scrollIntoView({ behavior });
+  }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -464,7 +469,9 @@ document.addEventListener("DOMContentLoaded", () => {
       ticking = true;
       requestAnimationFrame(update);
     };
+    const panel = document.getElementById("main-content");
     window.addEventListener("scroll", onScroll, { passive: true });
+    if (panel) panel.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     update();
   }
