@@ -3217,9 +3217,3 @@ html[data-theme="light"] .btn-primary:hover {
   color: var(--accent);
   margin: -2px 0 8px;
 }
-
-.career-edu {
-  margin-top: 18px;
-  font-size: 0.82rem;
-  color: var(--muted);
-}

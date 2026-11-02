@@ -1212,7 +1212,6 @@ def write_blog_index_json(posts):
 
 def timeline_page() -> str:
     items = (ROOT / "partials" / "timeline.html").read_text(encoding="utf-8")
-    career = (ROOT / "partials" / "career-full.html").read_text(encoding="utf-8")
     count = items.count('<li class="timeline-item')
     canonical = f"{SITE}/timeline/"
     jsonld = ld({
@@ -1220,11 +1219,11 @@ def timeline_page() -> str:
         "@type": "CollectionPage",
         "name": "Timeline — potaterrr",
         "url": canonical,
-        "description": "Career and builds, newest first: high-volume BPO operations, automation projects and the notes behind them.",
+        "description": "Everything shipped, newest first: automation projects, releases and the notes behind them.",
         "author": {"@type": "Person", "name": "Christian John", "url": SITE + "/"},
     })
-    return f"""{head("Timeline — career and builds · potaterrr",
-             "Career and builds, newest first: six years in high-volume BPO operations, automation projects and the notes behind them.",
+    return f"""{head("Timeline — builds and releases · potaterrr",
+             "Everything shipped, newest first: voice receptionists, invoice agents, lead retrieval, scrapers, games and the notes behind them.",
              canonical, active="timeline", image=f"{SITE}/assets/og/timeline.png", jsonld=jsonld)}
 {shell_open("timeline")}
 
@@ -1233,25 +1232,12 @@ def timeline_page() -> str:
       <div class="container">
         <p class="hero-kicker">$ git log --oneline</p>
         <h1 class="page-title">Timeline</h1>
-        <p class="page-lead">Career and builds, newest first — where I came from, and what I've shipped since.</p>
+        <p class="page-lead">Everything that shipped, newest first. {count} entries — projects, releases and the notes written after them.</p>
       </div>
     </section>
 
     <section class="section timeline-page">
       <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Career</h2>
-        <p class="section-lead reveal">Six years in high-volume BPO operations — the queues, SLAs and manual loops that taught me what to automate.</p>
-        <ol class="timeline">
-{career}
-        </ol>
-        <p class="career-edu">Education: San Jose National High School (2014) — High School Diploma.</p>
-      </div>
-    </section>
-
-    <section class="section section-alt">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> Builds</h2>
-        <p class="section-lead reveal">{count} entries — projects, releases and the notes written after them.</p>
 {items}
       </div>
     </section>
