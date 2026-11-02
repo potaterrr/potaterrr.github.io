@@ -376,9 +376,9 @@ code {
   }
 }
 
-.telegram:hover,
-.telegram:focus-visible {
-  border-color: #26a69a;
+.cal:hover,
+.cal:focus-visible {
+  border-color: var(--accent);
 }
 
 .whatsapp:hover,
