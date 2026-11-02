@@ -1,40 +1,22 @@
 {
   "categories": [
     {
+      "id": "automations",
+      "title": "Automations",
+      "kicker": "// automations",
+      "blurb": "Voice, LLM agents, scrapers and ops pipelines — the builds that remove manual work."
+    },
+    {
       "id": "startup",
-      "title": "Startup",
+      "title": "StartUP",
       "kicker": "// startup",
       "blurb": "The company I'm part of, and the softphone I build for it."
     },
     {
-      "id": "webui",
-      "title": "Web UI",
-      "kicker": "// web ui",
-      "blurb": "Interface work: the caller console prototype."
-    },
-    {
-      "id": "voice",
-      "title": "Voice & Calls",
-      "kicker": "// voice",
-      "blurb": "AI receptionists and phone automation."
-    },
-    {
-      "id": "llm",
-      "title": "LLM & Human-in-the-loop",
-      "kicker": "// llm",
-      "blurb": "Agents that draft, a human who approves."
-    },
-    {
-      "id": "scraping",
-      "title": "Scraping & Data",
-      "kicker": "// data",
-      "blurb": "Pipelines that pull, clean and deliver."
-    },
-    {
-      "id": "ops",
-      "title": "Ops & Publishing",
-      "kicker": "// ops",
-      "blurb": "Webhooks and schedules that keep things moving."
+      "id": "other",
+      "title": "Other Projects",
+      "kicker": "// other",
+      "blurb": "Prototypes, experiments and side builds."
     },
     {
       "id": "games",
@@ -135,7 +117,7 @@
     },
     {
       "slug": "happyfone-webui",
-      "category": "webui",
+      "category": "other",
       "title": "HappyFone WebUI",
       "tagline": "The working prototype of the HappyPhone caller softphone.",
       "summary": "A dependency-free agent console for the HappyPhone callers: sign-in, a live agent state machine, T9 dialing, a simulated call lifecycle, and persistent call history.",
@@ -218,7 +200,7 @@
     },
     {
       "slug": "ai-voice-receptionist",
-      "category": "voice",
+      "category": "automations",
       "title": "AI Voice Receptionist",
       "tagline": "Answer every missed and after-hours clinic call. Book the slot. Alert the front desk.",
       "summary": "An AI receptionist for clinics and appointment-based practices, built three times — Make, n8n and Zapier — over one shared Retell voice layer.",
@@ -307,7 +289,7 @@
     },
     {
       "slug": "ar-invoice-reminder",
-      "category": "llm",
+      "category": "automations",
       "title": "AR Invoice Reminder",
       "tagline": "A daily n8n agent that chases overdue invoices — and never sends anything itself.",
       "summary": "Reads an invoice tracker, computes days past due, drafts a tone-matched reminder with Gemini, and files it as a Gmail draft for a human to approve.",
@@ -395,7 +377,7 @@
     },
     {
       "slug": "dead-lead-retrieval",
-      "category": "llm",
+      "category": "automations",
       "title": "Dead Lead Retrieval",
       "tagline": "Dormant leads rarely die because someone said no. They die because nobody followed up.",
       "summary": "An n8n automation that drafts personalized check-ins with an LLM, files them as Gmail drafts, and tracks every lead through ClickUp — with a human always in the loop.",
@@ -482,7 +464,7 @@
     },
     {
       "slug": "job-scrapper",
-      "category": "scraping",
+      "category": "automations",
       "title": "job-scrapper",
       "tagline": "A Python scraper that watches OnlineJobs.ph and posts one Discord embed per job.",
       "summary": "Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.",
@@ -562,7 +544,7 @@
     },
     {
       "slug": "signal-checker",
-      "category": "scraping",
+      "category": "automations",
       "title": "signal-checker",
       "tagline": "An SMA crossover pipeline that evaluates daily prices and dispatches signals as JSON.",
       "summary": "Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.",
@@ -626,7 +608,7 @@
     },
     {
       "slug": "rss-news",
-      "category": "ops",
+      "category": "automations",
       "title": "rss-news",
       "tagline": "A weekly AI and tech digest that drafts, illustrates and publishes itself.",
       "summary": "Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.",
@@ -698,7 +680,7 @@
     },
     {
       "slug": "make-commits",
-      "category": "ops",
+      "category": "automations",
       "title": "make-commits",
       "tagline": "Every GitHub push becomes a Facebook post, seconds later.",
       "summary": "A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.",

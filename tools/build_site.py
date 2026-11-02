@@ -353,18 +353,16 @@ def project_card(p: dict) -> str:
 
 def project_index() -> str:
     sections = []
-    jumps = []
     for cat in PROJECT_DATA["categories"]:
         items = [p for p in PROJECTS if p["category"] == cat["id"]]
         if not items:
             continue
-        jumps.append(f'<a class="tag-chip" href="#{cat["id"]}">{esc(cat["title"])}<span class="tag-count">{len(items)}</span></a>')
         cards = "\n".join(project_card(p) for p in items)
         single = " is-single" if len(items) == 1 else ""
         sections.append(f"""      <section class="proj-section" id="{cat["id"]}" aria-labelledby="{cat["id"]}-title">
         <div class="proj-section-head">
           <p class="proj-kicker">{esc(cat["kicker"])}</p>
-          <h2 id="{cat["id"]}-title">{esc(cat["title"])}</h2>
+          <h2 id="{cat["id"]}-title"><span class="hash">#</span> {esc(cat["title"])}</h2>
           <p>{esc(cat["blurb"])}</p>
         </div>
         <div class="proj-grid{single}">
@@ -399,9 +397,6 @@ def project_index() -> str:
         <p class="hero-kicker">$ ls ~/projects</p>
         <h1 class="page-title">Projects</h1>
         <p class="page-lead">The startup I'm part of, the prototypes behind it, and the automation builds that pay the bills. {count} projects, grouped by what they do — no pricing, no fluff.</p>
-        <div class="proj-jumps" aria-label="Jump to a category">
-          {"".join(jumps)}
-        </div>
       </div>
     </section>
 

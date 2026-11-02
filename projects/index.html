@@ -157,17 +157,107 @@
         <p class="hero-kicker">$ ls ~/projects</p>
         <h1 class="page-title">Projects</h1>
         <p class="page-lead">The startup I'm part of, the prototypes behind it, and the automation builds that pay the bills. 11 projects, grouped by what they do — no pricing, no fluff.</p>
-        <div class="proj-jumps" aria-label="Jump to a category">
-          <a class="tag-chip" href="#startup">Startup<span class="tag-count">1</span></a><a class="tag-chip" href="#webui">Web UI<span class="tag-count">1</span></a><a class="tag-chip" href="#voice">Voice &amp; Calls<span class="tag-count">1</span></a><a class="tag-chip" href="#llm">LLM &amp; Human-in-the-loop<span class="tag-count">2</span></a><a class="tag-chip" href="#scraping">Scraping &amp; Data<span class="tag-count">2</span></a><a class="tag-chip" href="#ops">Ops &amp; Publishing<span class="tag-count">2</span></a><a class="tag-chip" href="#games">Games<span class="tag-count">2</span></a>
-        </div>
       </div>
     </section>
 
     <div class="container">
+      <section class="proj-section" id="automations" aria-labelledby="automations-title">
+        <div class="proj-section-head">
+          <p class="proj-kicker">// automations</p>
+          <h2 id="automations-title"><span class="hash">#</span> Automations</h2>
+          <p>Voice, LLM agents, scrapers and ops pipelines — the builds that remove manual work.</p>
+        </div>
+        <div class="proj-grid">
+        <a class="proj-card" href="/projects/ai-voice-receptionist/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>AI Voice Receptionist</h3>
+          <p>An AI receptionist for clinics and appointment-based practices, built three times — Make, n8n and Zapier — over one shared Retell voice layer.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">Retell</span><span class="proj-tech">Make</span><span class="proj-tech">n8n</span><span class="proj-tech">Zapier</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/ar-invoice-reminder/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>AR Invoice Reminder</h3>
+          <p>Reads an invoice tracker, computes days past due, drafts a tone-matched reminder with Gemini, and files it as a Gmail draft for a human to approve.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">n8n</span><span class="proj-tech">Gemini</span><span class="proj-tech">Google Sheets</span><span class="proj-tech">Gmail</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/dead-lead-retrieval/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>Dead Lead Retrieval</h3>
+          <p>An n8n automation that drafts personalized check-ins with an LLM, files them as Gmail drafts, and tracks every lead through ClickUp — with a human always in the loop.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">n8n</span><span class="proj-tech">OpenRouter</span><span class="proj-tech">Gmail</span><span class="proj-tech">ClickUp</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/job-scrapper/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>job-scrapper</h3>
+          <p>Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">GitHub Actions</span><span class="proj-tech">Gemini</span><span class="proj-tech">Discord</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/signal-checker/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>signal-checker</h3>
+          <p>Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">yfinance</span><span class="proj-tech">GitHub Actions</span><span class="proj-tech">Make</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/rss-news/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>rss-news</h3>
+          <p>Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">RSS</span><span class="proj-tech">Make</span><span class="proj-tech">Gemini</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        <a class="proj-card" href="/projects/make-commits/">
+          <div class="proj-card-top">
+            <span class="proj-cat">// automations</span>
+            
+          </div>
+          <h3>make-commits</h3>
+          <p>A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.</p>
+          <div class="proj-card-foot">
+            <span class="proj-tech-row"><span class="proj-tech">Make</span><span class="proj-tech">GitHub webhooks</span><span class="proj-tech">Facebook Pages</span></span>
+            <span class="proj-arrow" aria-hidden="true">↗</span>
+          </div>
+        </a>
+        </div>
+      </section>
       <section class="proj-section" id="startup" aria-labelledby="startup-title">
         <div class="proj-section-head">
           <p class="proj-kicker">// startup</p>
-          <h2 id="startup-title">Startup</h2>
+          <h2 id="startup-title"><span class="hash">#</span> StartUP</h2>
           <p>The company I&#x27;m part of, and the softphone I build for it.</p>
         </div>
         <div class="proj-grid is-single">
@@ -185,16 +275,16 @@
         </a>
         </div>
       </section>
-      <section class="proj-section" id="webui" aria-labelledby="webui-title">
+      <section class="proj-section" id="other" aria-labelledby="other-title">
         <div class="proj-section-head">
-          <p class="proj-kicker">// web ui</p>
-          <h2 id="webui-title">Web UI</h2>
-          <p>Interface work: the caller console prototype.</p>
+          <p class="proj-kicker">// other</p>
+          <h2 id="other-title"><span class="hash">#</span> Other Projects</h2>
+          <p>Prototypes, experiments and side builds.</p>
         </div>
         <div class="proj-grid is-single">
         <a class="proj-card" href="/projects/happyfone-webui/">
           <div class="proj-card-top">
-            <span class="proj-cat">// web ui</span>
+            <span class="proj-cat">// other</span>
             
           </div>
           <h3>HappyFone WebUI</h3>
@@ -206,130 +296,10 @@
         </a>
         </div>
       </section>
-      <section class="proj-section" id="voice" aria-labelledby="voice-title">
-        <div class="proj-section-head">
-          <p class="proj-kicker">// voice</p>
-          <h2 id="voice-title">Voice &amp; Calls</h2>
-          <p>AI receptionists and phone automation.</p>
-        </div>
-        <div class="proj-grid is-single">
-        <a class="proj-card" href="/projects/ai-voice-receptionist/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// voice</span>
-            
-          </div>
-          <h3>AI Voice Receptionist</h3>
-          <p>An AI receptionist for clinics and appointment-based practices, built three times — Make, n8n and Zapier — over one shared Retell voice layer.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">Retell</span><span class="proj-tech">Make</span><span class="proj-tech">n8n</span><span class="proj-tech">Zapier</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        </div>
-      </section>
-      <section class="proj-section" id="llm" aria-labelledby="llm-title">
-        <div class="proj-section-head">
-          <p class="proj-kicker">// llm</p>
-          <h2 id="llm-title">LLM &amp; Human-in-the-loop</h2>
-          <p>Agents that draft, a human who approves.</p>
-        </div>
-        <div class="proj-grid">
-        <a class="proj-card" href="/projects/ar-invoice-reminder/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// llm</span>
-            
-          </div>
-          <h3>AR Invoice Reminder</h3>
-          <p>Reads an invoice tracker, computes days past due, drafts a tone-matched reminder with Gemini, and files it as a Gmail draft for a human to approve.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">n8n</span><span class="proj-tech">Gemini</span><span class="proj-tech">Google Sheets</span><span class="proj-tech">Gmail</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        <a class="proj-card" href="/projects/dead-lead-retrieval/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// llm</span>
-            
-          </div>
-          <h3>Dead Lead Retrieval</h3>
-          <p>An n8n automation that drafts personalized check-ins with an LLM, files them as Gmail drafts, and tracks every lead through ClickUp — with a human always in the loop.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">n8n</span><span class="proj-tech">OpenRouter</span><span class="proj-tech">Gmail</span><span class="proj-tech">ClickUp</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        </div>
-      </section>
-      <section class="proj-section" id="scraping" aria-labelledby="scraping-title">
-        <div class="proj-section-head">
-          <p class="proj-kicker">// data</p>
-          <h2 id="scraping-title">Scraping &amp; Data</h2>
-          <p>Pipelines that pull, clean and deliver.</p>
-        </div>
-        <div class="proj-grid">
-        <a class="proj-card" href="/projects/job-scrapper/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// data</span>
-            
-          </div>
-          <h3>job-scrapper</h3>
-          <p>Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">GitHub Actions</span><span class="proj-tech">Gemini</span><span class="proj-tech">Discord</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        <a class="proj-card" href="/projects/signal-checker/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// data</span>
-            
-          </div>
-          <h3>signal-checker</h3>
-          <p>Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">yfinance</span><span class="proj-tech">GitHub Actions</span><span class="proj-tech">Make</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        </div>
-      </section>
-      <section class="proj-section" id="ops" aria-labelledby="ops-title">
-        <div class="proj-section-head">
-          <p class="proj-kicker">// ops</p>
-          <h2 id="ops-title">Ops &amp; Publishing</h2>
-          <p>Webhooks and schedules that keep things moving.</p>
-        </div>
-        <div class="proj-grid">
-        <a class="proj-card" href="/projects/rss-news/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// ops</span>
-            
-          </div>
-          <h3>rss-news</h3>
-          <p>Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">Python</span><span class="proj-tech">RSS</span><span class="proj-tech">Make</span><span class="proj-tech">Gemini</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        <a class="proj-card" href="/projects/make-commits/">
-          <div class="proj-card-top">
-            <span class="proj-cat">// ops</span>
-            
-          </div>
-          <h3>make-commits</h3>
-          <p>A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.</p>
-          <div class="proj-card-foot">
-            <span class="proj-tech-row"><span class="proj-tech">Make</span><span class="proj-tech">GitHub webhooks</span><span class="proj-tech">Facebook Pages</span></span>
-            <span class="proj-arrow" aria-hidden="true">↗</span>
-          </div>
-        </a>
-        </div>
-      </section>
       <section class="proj-section" id="games" aria-labelledby="games-title">
         <div class="proj-section-head">
           <p class="proj-kicker">// games</p>
-          <h2 id="games-title">Games</h2>
+          <h2 id="games-title"><span class="hash">#</span> Games</h2>
           <p>Small playable things, built for fun.</p>
         </div>
         <div class="proj-grid">
