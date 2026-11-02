@@ -326,22 +326,6 @@ def project_page(p: dict) -> str:
 
     canonical = f"{SITE}/projects/{p['slug']}/"
     image = f"{SITE}/assets/og/projects/{p['slug']}.png"
-    demo_html = ""
-    hiw_script = ""
-    if p.get("demo"):
-        panel = (ROOT / "partials" / f"demo-{p['demo']}.html").read_text(encoding="utf-8")
-        demo_html = f"""
-    <section class="section section-alt project-demo" id="demo">
-      <div class="container">
-        <h2 class="section-title reveal"><span class="hash">#</span> See it run</h2>
-        <p class="section-lead reveal">A simulated run of this pipeline — no APIs, no keys, no real calls, invoices or PHI. Edit the inputs, run it, and watch each stage. Everything happens in your browser.</p>
-        <div class="hiw reveal" id="hiw" data-default-demo="{p['demo']}">
-{panel}
-          <p class="hiw-note">Same nodes as production, zero side effects: everything runs in simulation with synthetic data. <a href="/#contact">Want one of your own? →</a></p>
-        </div>
-      </div>
-    </section>"""
-        hiw_script = '\n  <script src="/js/hiw.js" defer></script>'
     jsonld = ld({
         "@context": "https://schema.org",
         "@type": "CreativeWork",
@@ -410,12 +394,11 @@ def project_page(p: dict) -> str:
         </nav>
       </div>
     </section>
-{demo_html}
   </main>
 
 {FOOTER}
 
-  <script src="/js/main.js" defer></script>{hiw_script}
+  <script src="/js/main.js" defer></script>
 </body>
 </html>
 """
