@@ -757,7 +757,7 @@
       "category": "games",
       "title": "Tippy Card Monte",
       "tagline": "Follow the shuffle. Find Tippy. Stay out of debt.",
-      "summary": "A pixel-art card monte built as a single self-contained page: watch the shuffle, pick the right card, and bank Tippy Coins while the deck grows from 3 to 15 cards.",
+      "summary": "A pixel-art card monte built as a single self-contained page: watch the shuffle, pick the right card, and bank Tippy Coins while the deck grows from 3 to 16 cards.",
       "status": "Playable",
       "badges": [
         "Game",
@@ -766,7 +766,7 @@
       "metrics": [
         {
           "label": "Deck",
-          "value": "3 → 15 cards"
+          "value": "3 → 16 cards"
         },
         {
           "label": "Rounds",
@@ -807,7 +807,7 @@
           "bullets": [
             "Watch Tippy shuffle, then pick the card they're under",
             "Correct picks bank Tippy Coins, wrong picks take them away",
-            "The deck grows from 3 to 15 cards across 16 rounds",
+            "The deck grows from 3 to 16 cards across 16 rounds",
             "Stay in the green — going into debt ends the run",
             "Everything runs locally: no accounts, no backend, no network calls"
           ]

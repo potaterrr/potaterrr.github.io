@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Tippy Card Monte</title>
-<meta name="description" content="Tippy Card Monte is a pixel card monte game. Watch Tippy, follow the shuffle, and bank Tippy Coins. The deck grows through odd counts from 3 to 15 cards. Stay out of debt.">
+<meta name="description" content="Tippy Card Monte is a pixel card monte game. Watch Tippy, follow the shuffle, and bank Tippy Coins. The deck grows from 3 to 16 cards. Stay out of debt.">
 <meta name="theme-color" content="#0b0f1d">
 <meta property="og:title" content="Tippy Card Monte">
-<meta property="og:description" content="Find Tippy. Follow the shuffle. Stay in the green. A pixel card monte with 16 rounds and a deck that grows through odd counts to 15 cards.">
+<meta property="og:description" content="Find Tippy. Follow the shuffle. Stay in the green. A pixel card monte with 16 rounds and a deck that grows to 16 cards.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="cover.png">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACIUlEQVR4nO3dPU4VUQCA0feMWNkYTXQB2LgAChp7VkFj4YosbFiFPQ2FC7CRBUCisbGCAlfgG+MwmZ/vnJYMXG7el5vcOzNvtwMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgI793AMY6/jl0cOcf//65/2i59D8HPZk7gHAnARAmgBIEwBpAiBNAKQJgLSncw9gat9/3I26/u2rZ480kmWqz48VgDQBkCYA0gRAmgBIEwBpAiBt8+cAa9+nnlp9fqwApAmANAGQJgDSBECaAEgTAGmbPwcYa+h++f1+0a+9mdza58cKQJoASBMAaQIgTQCkCYA0AZDmHGBA/X75IWufHysAaQIgTQCkCYA0AZAmANIEAAAAAAAAAAAAAAAAwKqMfnn778/vHx5jIH/z/MPlsl8wz0FL/3x4Iow0AZAmANIEQJoASBMAaQIgLf/9AGfvjibdp166L9/u0+csVgDSBECaAEgTAGkCIE0ApAmAtM3vAQ/t8w/tg9+cn096TvD69HTU9bdXVwd//ubi4uD/N3Z+1s4KQJoASBMAaQIgTQCkCYA0AZCWfx5gbkP7+EzLCkCaAEgTAGkCIE0ApAmANAGQtul7vf/F1O8F+vjiZMpfv/v06+uo67d+v/8QKwBpAiBNAKQJgDQBkCYA0gQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAf/kD7RY5oi8OX8cAAAAASUVORK5CYII=">
@@ -1130,7 +1130,7 @@ img { display: block; }
         <div class="title-meta">
           <span class="best" id="best-label">BEST: 0p</span>
           <span>16 ROUNDS</span>
-          <span>3 TO 15 CARDS</span>
+          <span>3 TO 16 CARDS</span>
           <span>DEBT ALLOWED</span>
         </div>
         <div class="title-bottom">
@@ -1232,12 +1232,12 @@ img { display: block; }
     maxReward: 25,
     stages: [
       { start: 1,  end: 2,  name: 'ROOKIE', cards: 3,  peek: 1500, shuffles: 4,  swap: 300 },
-      { start: 3,  end: 4,  name: 'EASY',   cards: 5,  peek: 1300, shuffles: 5,  swap: 290 },
-      { start: 5,  end: 6,  name: 'NORMAL', cards: 7,  peek: 1100, shuffles: 6,  swap: 270 },
-      { start: 7,  end: 8,  name: 'HARD',   cards: 9,  peek: 950,  shuffles: 8,  swap: 250 },
-      { start: 9,  end: 10, name: 'EXPERT', cards: 11, peek: 850,  shuffles: 9,  swap: 240 },
-      { start: 11, end: 12, name: 'INSANE', cards: 13, peek: 780,  shuffles: 10, swap: 230 },
-      { start: 13, end: 16, name: 'MASTER', cards: 15, peek: 720,  shuffles: 12, swap: 220 }
+      { start: 3,  end: 4,  name: 'EASY',   cards: 6,  peek: 1300, shuffles: 5,  swap: 290 },
+      { start: 5,  end: 6,  name: 'NORMAL', cards: 8,  peek: 1100, shuffles: 6,  swap: 270 },
+      { start: 7,  end: 8,  name: 'HARD',   cards: 10, peek: 950,  shuffles: 8,  swap: 250 },
+      { start: 9,  end: 10, name: 'EXPERT', cards: 12, peek: 850,  shuffles: 9,  swap: 240 },
+      { start: 11, end: 12, name: 'INSANE', cards: 14, peek: 780,  shuffles: 10, swap: 230 },
+      { start: 13, end: 16, name: 'MASTER', cards: 16, peek: 720,  shuffles: 12, swap: 220 }
     ]
   };
 
