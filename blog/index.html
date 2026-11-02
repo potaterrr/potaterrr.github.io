@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — automation field notes · potaterrr</title>
+  <meta name="description" content="Field notes from building automation: AI voice receptionists, AR invoice agents, lead retrieval pipelines, scrapers — what broke and what it taught me." />
+  <meta name="author" content="Christian John" />
+  <link rel="canonical" href="https://potaterrr.github.io/blog/" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="potaterrr" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Blog — automation field notes · potaterrr" />
+  <meta property="og:description" content="What broke while building AI voice receptionists, invoice agents and scrapers — and the rules that came out of it." />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/" />
+  <meta property="og:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="potaterrr — automation developer" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Blog — automation field notes · potaterrr" />
+  <meta name="twitter:description" content="What broke while building AI voice receptionists, invoice agents and scrapers — and the rules that came out of it." />
+  <meta name="twitter:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "potaterrr \u2014 automation notes",
+  "url": "https://potaterrr.github.io/blog/",
+  "description": "Field notes from building automation: AI voice receptionists, AR invoice agents, lead retrieval pipelines, scrapers and the failures behind them.",
+  "author": {
+    "@type": "Person",
+    "name": "Christian John",
+    "url": "https://potaterrr.github.io/"
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "job-scrapper now posts to Discord with Gemini summaries",
+      "url": "https://potaterrr.github.io/blog/job-scrapper-discord-gemini.html",
+      "datePublished": "2026-11-02"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "The invoice chaser: three bugs, one rule",
+      "url": "https://potaterrr.github.io/blog/ar-invoice-agent-challenges.html",
+      "datePublished": "2026-10-28"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "My dotfiles, one line",
+      "url": "https://potaterrr.github.io/blog/my-dotfiles-one-line-install.html",
+      "datePublished": "2026-09-15"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "When \"free tier\" means zero: folklore video and the Gemini quota wall",
+      "url": "https://potaterrr.github.io/blog/folklore-video-free-tier-quota.html",
+      "datePublished": "2026-08-27"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Feeding Make.com from Python",
+      "url": "https://potaterrr.github.io/blog/feeding-make-com-from-python.html",
+      "datePublished": "2026-08-26"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "The free-plan ops math",
+      "url": "https://potaterrr.github.io/blog/make-com-free-plan-ops-math.html",
+      "datePublished": "2026-08-26"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "One receptionist, three engines",
+      "url": "https://potaterrr.github.io/blog/one-receptionist-three-engines.html",
+      "datePublished": "2026-08-26"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Why my AI never sends emails",
+      "url": "https://potaterrr.github.io/blog/why-my-ai-never-sends-emails.html",
+      "datePublished": "2026-08-26"
+    }
+  ]
+}
+  </script>
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" />
+  <link rel="alternate" type="application/rss+xml" title="potaterrr — posts" href="https://potaterrr.github.io/feed.xml" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
+  <noscript><style>
+    .reveal{opacity:1;transform:none}
+    .intro,.post-toc,.a11y-trigger,.theme-toggle{display:none!important}
+    .barrel-slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}
+    .barrel-slide+.barrel-slide{display:none}
+    .barrel-controls,.barrel-hint{display:none}
+    @media (max-width:900px){
+      .nav-inner{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}
+      .nav-links{display:flex!important;position:static!important;width:100%;margin-left:0;gap:14px;flex-wrap:wrap}
+      .nav-toggle,.theme-toggle{display:none!important}
+    }
+  </style></noscript>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <nav class="nav" aria-label="Site">
+    <div class="container nav-inner">
+      <a href="/" class="brand">
+        <span class="nav-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="30" height="30" decoding="async" /></picture></span>
+        <span class="brand-name">potaterrr</span>
+        <span class="brand-tag">automation</span>
+      </a>
+      <ul class="nav-links" id="site-menu">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#how-it-works">Demo</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/blog/" aria-current="page">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Work with me</a></li>
+      </ul>
+      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-menu">☰</button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="page-head">
+      <div class="container">
+        <p class="hero-kicker">$ ls ~/notes</p>
+        <h1 class="page-title">Automation field notes</h1>
+        <p class="page-lead">What actually broke while building the pipelines — the quota walls, the parsers that returned nothing, the loop that chased the same invoice twice. Written down so the next build is cheaper.</p>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="archive-grid">
+        <a class="archive-card" href="/blog/job-scrapper-discord-gemini.html">
+          <div class="archive-meta"><time datetime="2026-11-02">Nov 2, 2026</time><span aria-hidden="true">·</span><span>6 min read</span></div>
+          <h2>job-scrapper now posts to Discord with Gemini summaries</h2>
+          <p>How job-scrapper moved from Make.com to a self-contained GitHub Actions pipeline: Gemini summaries, Discord embeds, dedupe, and a 4-hour cadence.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/ar-invoice-agent-challenges.html">
+          <div class="archive-meta"><time datetime="2026-10-28">Oct 28, 2026</time><span aria-hidden="true">·</span><span>7 min read</span></div>
+          <h2>The invoice chaser: three bugs, one rule</h2>
+          <p>Building an n8n accounts-receivable agent that drafts overdue invoice reminders: Gemini returning an empty response to a structured parser, a signature the model kept rewriting, a cooldown that had to exist, and the one rule that shaped all of it.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/my-dotfiles-one-line-install.html">
+          <div class="archive-meta"><time datetime="2026-09-15">Sep 15, 2026</time><span aria-hidden="true">·</span><span>5 min read</span></div>
+          <h2>My dotfiles, one line</h2>
+          <p>How a single curl | sh installs Bash, Neovim, Starship, Fastfetch, Hyprland, Waybar, Wofi and GTK on six distro families — a bootstrap script plus GNU Stow.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/folklore-video-free-tier-quota.html">
+          <div class="archive-meta"><time datetime="2026-08-27">Aug 27, 2026</time><span aria-hidden="true">·</span><span>6 min read</span></div>
+          <h2>When "free tier" means zero: folklore video and the Gemini quota wall</h2>
+          <p>The folklore topic queue works and the scripts draft themselves, then video generation hits a hard 429. Building a free AI folklore-video pipeline on Make.com.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/feeding-make-com-from-python.html">
+          <div class="archive-meta"><time datetime="2026-08-26">Aug 26, 2026</time><span aria-hidden="true">·</span><span>7 min read</span></div>
+          <h2>Feeding Make.com from Python</h2>
+          <p>How job-scrapper turns OnlineJobs.ph listings into clean webhook payloads for Make.com: flat JSON design, polite scraping, retries, and queue discipline.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/make-com-free-plan-ops-math.html">
+          <div class="archive-meta"><time datetime="2026-08-26">Aug 26, 2026</time><span aria-hidden="true">·</span><span>6 min read</span></div>
+          <h2>The free-plan ops math</h2>
+          <p>Make.com's free plan gives you 1,000 operations a month. Here's the arithmetic that decides whether your polling interval is an automation or an ops bonfire.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/one-receptionist-three-engines.html">
+          <div class="archive-meta"><time datetime="2026-08-26">Aug 26, 2026</time><span aria-hidden="true">·</span><span>9 min read</span></div>
+          <h2>One receptionist, three engines</h2>
+          <p>I built the same AI clinic receptionist on Make, n8n and Zapier. Here's what broke, what shone, and which automation engine to pick for whom. A HIPAA-compliant build is available.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+        <a class="archive-card" href="/blog/why-my-ai-never-sends-emails.html">
+          <div class="archive-meta"><time datetime="2026-08-26">Aug 26, 2026</time><span aria-hidden="true">·</span><span>8 min read</span></div>
+          <h2>Why my AI never sends emails</h2>
+          <p>The human-in-the-loop pattern behind Dead Lead Retrieval: LLM drafts, Gmail holds, human approves. Guardrails, war stories and the case for keeping judgment out of the loop's hands.</p>
+          <span class="archive-more">Read the post &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

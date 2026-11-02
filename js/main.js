@@ -172,8 +172,18 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const setActive = (id) => {
-    railLinks.forEach((link, key) => link.classList.toggle("active", key === id));
-    tabLinks.forEach((link, key) => link.classList.toggle("active", key === id));
+    railLinks.forEach((link, key) => {
+      const on = key === id;
+      link.classList.toggle("active", on);
+      if (on) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+    tabLinks.forEach((link, key) => {
+      const on = key === id;
+      link.classList.toggle("active", on);
+      if (on) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
   };
   setActive("top");
 
@@ -230,18 +240,24 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         dotsWrap.querySelectorAll("button").forEach((d, j) => {
           d.classList.toggle("active", j === index);
-          d.setAttribute("aria-selected", String(j === index));
+          if (j === index) d.setAttribute("aria-current", "true");
+          else d.removeAttribute("aria-current");
         });
       };
 
       const dots = slides.map((_, i) => {
         const dot = document.createElement("button");
         dot.type = "button";
-        dot.setAttribute("role", "tab");
         dot.setAttribute("aria-label", `Go to project ${i + 1}`);
         dot.addEventListener("click", () => show(i));
         dotsWrap.appendChild(dot);
         return dot;
+      });
+
+      slides.forEach((slide, i) => {
+        slide.setAttribute("role", "group");
+        slide.setAttribute("aria-roledescription", "slide");
+        slide.setAttribute("aria-label", `${i + 1} of ${slides.length}`);
       });
 
       prevBtn?.addEventListener("click", () => show(index - 1));
@@ -313,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const dots = slides.map((_, i) => {
         const dot = document.createElement("button");
         dot.type = "button";
-        dot.setAttribute("role", "tab");
         dot.setAttribute("aria-label", `Go to post ${i + 1}`);
         dot.addEventListener("click", () => {
           show(i);
@@ -323,17 +338,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return dot;
       });
 
+      slides.forEach((slide, i) => {
+        slide.setAttribute("role", "group");
+        slide.setAttribute("aria-roledescription", "slide");
+        slide.setAttribute("aria-label", `${i + 1} of ${slides.length}`);
+      });
+
       function show(next) {
         index = (next + slides.length) % slides.length;
         slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
         dots.forEach((dot, i) => {
           dot.classList.toggle("active", i === index);
-          dot.setAttribute("aria-selected", String(i === index));
+          if (i === index) dot.setAttribute("aria-current", "true");
+          else dot.removeAttribute("aria-current");
         });
       }
 
       function restart() {
         clearInterval(timer);
+        if (stillMotion) return;
         timer = setInterval(() => show(index + 1), AUTO_MS);
       }
 
@@ -390,32 +413,88 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-/* ---------- Intro boot overlay (once per session) ---------- */
+/* ---------- Intro boot overlay (once per session, skipped for a week) ---------- */
 (function () {
   const intro = document.getElementById("intro");
   if (!intro) return;
+  const INTRO_KEY = "intro-seen-at";
+  const WEEK = 7 * 24 * 60 * 60 * 1000;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let motionSaved = false;
   try { motionSaved = localStorage.getItem("reduce-motion") === "1"; } catch (e) { /* noop */ }
-  let seen = false;
+  let recentlySeen = false;
   try {
-    seen = sessionStorage.getItem("intro-seen") === "1";
+    const at = Number(localStorage.getItem(INTRO_KEY)) || 0;
+    recentlySeen = Date.now() - at < WEEK;
   } catch (e) { /* private mode — just play it */ }
 
   const finish = () => {
     intro.classList.add("intro-done");
     document.body.classList.remove("intro-lock");
-    try { sessionStorage.setItem("intro-seen", "1"); } catch (e) { /* noop */ }
+    try { localStorage.setItem(INTRO_KEY, String(Date.now())); } catch (e) { /* noop */ }
     setTimeout(() => intro.remove(), 600);
   };
 
-  if (reduce || motionSaved || seen) {
+  if (reduce || motionSaved || recentlySeen) {
     intro.remove();
     return;
   }
   document.body.classList.add("intro-lock");
-  setTimeout(finish, 1500);
+  setTimeout(finish, 900);
   intro.addEventListener("click", finish);
+})();
+
+/* ---------- Reading progress + "on this page" (long-form pages) ---------- */
+(function () {
+  const postBody = document.querySelector(".post-body");
+  if (!postBody) return;
+
+  const bar = document.querySelector(".post-progress-fill");
+  if (bar) {
+    let ticking = false;
+    const update = () => {
+      const rect = postBody.getBoundingClientRect();
+      const scrollable = rect.height - window.innerHeight;
+      const progress = scrollable > 0 ? Math.min(1, Math.max(0, -rect.top / scrollable)) : 0;
+      bar.style.width = (progress * 100).toFixed(2) + "%";
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+  }
+
+  const toc = document.querySelector(".post-toc");
+  const tocList = toc ? toc.querySelector("ol") : null;
+  if (!toc || !tocList) return;
+
+  const narrow = window.matchMedia("(max-width: 720px)");
+  if (toc.tagName === "DETAILS" && narrow.matches) toc.removeAttribute("open");
+
+  const headings = Array.from(postBody.querySelectorAll("h2"));
+  if (headings.length < 2) {
+    toc.hidden = true;
+    return;
+  }
+  headings.forEach((heading, i) => {
+    if (!heading.id) heading.id = "section-" + (i + 1);
+    const item = document.createElement("li");
+    const link = document.createElement("a");
+    link.href = "#" + heading.id;
+    link.textContent = heading.textContent.trim();
+    if (toc.tagName === "DETAILS") {
+      link.addEventListener("click", () => {
+        if (narrow.matches) toc.removeAttribute("open");
+      });
+    }
+    item.appendChild(link);
+    tocList.appendChild(item);
+  });
 })();
 
 /* ---------- Theme: apply persisted/system theme + wire up toggles ---------- */
