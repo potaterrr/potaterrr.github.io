@@ -877,8 +877,7 @@
         },
         {
           "label": "Patch notes",
-          "href": "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md",
-          "external": true
+          "href": "#patch-notes"
         },
         {
           "label": "Repo",
@@ -929,7 +928,8 @@
       "related_projects": [
         "tippy-card-monte"
       ],
-      "related_posts": []
+      "related_posts": [],
+      "patch_notes": true
     }
   ]
 }

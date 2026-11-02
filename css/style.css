@@ -2994,3 +2994,218 @@ html[data-theme="light"] .btn-primary:hover {
     margin-left: 0;
   }
 }
+
+/* Patch notes (AdBlock Island changelog) */
+.patch-notes .patch-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.patch-notes .patch-head h2 {
+  margin: 0;
+}
+
+.patch-full {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.patch-full:hover {
+  text-decoration: underline;
+}
+
+.patch-intro {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+}
+
+.patch-intro p {
+  margin-bottom: 8px;
+}
+
+.patch-list {
+  display: grid;
+  gap: 10px;
+}
+
+.patch-release {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.patch-release[open] {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
+}
+
+.patch-release summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.patch-release summary::-webkit-details-marker {
+  display: none;
+}
+
+.patch-release summary:hover {
+  background: var(--bg-alt);
+}
+
+.patch-version {
+  font-family: var(--mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.patch-channel {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green);
+  border: 1px solid color-mix(in srgb, var(--green) 45%, var(--border));
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.patch-date {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+.patch-plus {
+  font-family: var(--mono);
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.patch-release[open] .patch-plus {
+  font-size: 0;
+}
+
+.patch-release[open] .patch-plus::after {
+  content: "−";
+  font-size: 1rem;
+}
+
+.patch-body {
+  padding: 2px 16px 16px;
+  border-top: 1px solid var(--border);
+}
+
+.patch-body h3,
+.patch-pending h3 {
+  font-size: 0.95rem;
+  margin: 18px 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.patch-body p,
+.patch-pending p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin-bottom: 10px;
+}
+
+.patch-body ul,
+.patch-body ol,
+.patch-pending ul,
+.patch-pending ol {
+  display: grid;
+  gap: 6px;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.patch-body li::marker,
+.patch-pending li::marker {
+  color: var(--green);
+}
+
+.patch-body a,
+.patch-pending a {
+  color: var(--accent);
+}
+
+.patch-body code,
+.patch-pending code {
+  font-size: 0.82em;
+}
+
+.patch-table-wrap {
+  overflow-x: auto;
+  margin: 12px 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.patch-body table,
+.patch-pending table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.patch-body th,
+.patch-body td,
+.patch-pending th,
+.patch-pending td {
+  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.patch-body th,
+.patch-pending th {
+  background: var(--bg-alt);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--text);
+}
+
+.patch-body tr:last-child td,
+.patch-pending tr:last-child td {
+  border-bottom: 0;
+}
+
+.patch-body td:last-child,
+.patch-body th:last-child,
+.patch-pending td:last-child,
+.patch-pending th:last-child {
+  border-right: 0;
+}
+
+.patch-pending {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid color-mix(in srgb, var(--green) 40%, var(--border));
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--green) 6%, var(--surface));
+}
+
+.patch-pending h2 {
+  font-size: 1.05rem;
+  margin-bottom: 10px;
+  color: var(--green);
+}

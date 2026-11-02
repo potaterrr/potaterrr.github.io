@@ -423,12 +423,13 @@ def project_index() -> str:
 
 def link_item(link: dict) -> str:
     ext = ' target="_blank" rel="noopener"' if link.get("external") else ""
-    return f'<li><a href="{link["href"]}"{ext}>{esc(link["label"])} ↗</a></li>'
+    arrow = " ↗" if link.get("external") else ""
+    return f'<li><a href="{link["href"]}"{ext}>{esc(link["label"])}{arrow}</a></li>'
 
 
-def render_sections(sections) -> str:
+def render_sections(sections, extra_after_first="") -> str:
     out = []
-    for s in sections:
+    for idx, s in enumerate(sections):
         body = "".join(f"<p>{esc_or_html(x)}</p>" for x in s.get("body", []))
         bullets = ""
         if s.get("bullets"):
@@ -439,6 +440,8 @@ def render_sections(sections) -> str:
           {body}
           {bullets}
         </section>""")
+        if idx == 0 and extra_after_first:
+            out.append(extra_after_first)
     return "\n".join(out)
 
 
@@ -448,6 +451,157 @@ def esc_or_html(text: str) -> str:
     for tag in ("code", "strong", "em", "a"):
         out = out.replace(f"&lt;{tag}&gt;", f"<{tag}>").replace(f"&lt;/{tag}&gt;", f"</{tag}>")
     return out
+
+
+def md_inline(text: str) -> str:
+    t = esc(text)
+    t = re.sub(r"`([^`]+)`", r"<code>\1</code>", t)
+    t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    t = re.sub(r"(?<!\*)\*([^*]+)\*(?!\*)", r"<em>\1</em>", t)
+    t = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r'<a href="\2" target="_blank" rel="noopener">\1</a>', t)
+    return t
+
+
+def md_blocks(lines) -> str:
+    out = []
+    i = 0
+    n = len(lines)
+    while i < n:
+        line = lines[i]
+        if not line.strip():
+            i += 1
+            continue
+        if line.startswith("|"):
+            rows = []
+            while i < n and lines[i].startswith("|"):
+                rows.append(lines[i])
+                i += 1
+            cells = [r.strip().strip("|").split("|") for r in rows]
+            header, body = cells[0], cells[2:]
+            th = "".join(f"<th>{md_inline(c.strip())}</th>" for c in header)
+            trs = "".join(
+                "<tr>" + "".join(f"<td>{md_inline(c.strip())}</td>" for c in row) + "</tr>"
+                for row in body
+            )
+            out.append(f'<div class="patch-table-wrap"><table><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table></div>')
+            continue
+        if line.startswith("### "):
+            out.append(f"<h3>{md_inline(line[4:])}</h3>")
+            i += 1
+            continue
+        if line.startswith("#### "):
+            out.append(f"<h4>{md_inline(line[5:])}</h4>")
+            i += 1
+            continue
+        if line.startswith(">"):
+            quote = []
+            while i < n and lines[i].startswith(">"):
+                quote.append(lines[i].lstrip("> ").strip())
+                i += 1
+            out.append(f"<blockquote>{md_inline(' '.join(quote))}</blockquote>")
+            continue
+        if re.match(r"^\s*[-*]\s+", line):
+            items = []
+            while i < n and re.match(r"^\s*[-*]\s+", lines[i]):
+                items.append(md_inline(re.sub(r"^\s*[-*]\s+", "", lines[i])))
+                i += 1
+            out.append("<ul>" + "".join(f"<li>{x}</li>" for x in items) + "</ul>")
+            continue
+        if re.match(r"^\s*\d+\.\s+", line):
+            items = []
+            while i < n and re.match(r"^\s*\d+\.\s+", lines[i]):
+                items.append(md_inline(re.sub(r"^\s*\d+\.\s+", "", lines[i])))
+                i += 1
+            out.append("<ol>" + "".join(f"<li>{x}</li>" for x in items) + "</ol>")
+            continue
+        if line.strip() == "---":
+            out.append("<hr />")
+            i += 1
+            continue
+        para = [line.strip()]
+        i += 1
+        while i < n and lines[i].strip() and not re.match(r"^(#|\||- |\* |\d+\. |>|---)", lines[i].strip()):
+            para.append(lines[i].strip())
+            i += 1
+        out.append(f"<p>{md_inline(' '.join(para))}</p>")
+    return "\n".join(out)
+
+
+def render_patch_notes() -> str:
+    md = (ROOT / "data" / "adblock-changelog.md").read_text(encoding="utf-8")
+    lines = md.splitlines()
+    if lines and lines[0].startswith("# "):
+        lines = lines[1:]
+
+    intro = []
+    i = 0
+    while i < len(lines) and not lines[i].startswith("## "):
+        intro.append(lines[i])
+        i += 1
+
+    parts = []
+    first_release = True
+    while i < len(lines):
+        heading = lines[i][3:].strip()
+        i += 1
+        body = []
+        while i < len(lines) and not lines[i].startswith("## "):
+            body.append(lines[i])
+            i += 1
+
+        if heading.lower().startswith("still pending"):
+            parts.append(f'<section class="patch-pending"><h2>{esc(heading)}</h2>{md_blocks(body)}</section>')
+            continue
+
+        ver, channel, date = heading, "", ""
+        m = re.match(r"^(\[?[vV]?[\d.]+\]?)\s*—\s*(.+)$", heading)
+        if m:
+            ver = m.group(1).strip("[]")
+            rest = m.group(2).strip()
+            dm = re.search(r"\((\d{4}-\d{2}-\d{2})\)$", rest)
+            if dm:
+                date = dm.group(1)
+                channel = rest[: dm.start()].strip()
+            else:
+                date = rest
+
+        if not ver.lower().startswith("v"):
+            ver = "v" + ver
+        display = ""
+        if date:
+            try:
+                display = datetime.strptime(date, "%Y-%m-%d").strftime("%b %-d, %Y")
+            except ValueError:
+                display = date
+
+        channel_html = f'<span class="patch-channel">{esc(channel)}</span>' if channel else ""
+        date_html = f'<time class="patch-date" datetime="{date}">{display}</time>' if date else ""
+        open_attr = " open" if first_release else ""
+        parts.append(f"""<details class="patch-release"{open_attr}>
+  <summary>
+    <span class="patch-version">{esc(ver)}</span>
+    {channel_html}
+    {date_html}
+    <span class="patch-plus" aria-hidden="true">+</span>
+  </summary>
+  <div class="patch-body">
+{md_blocks(body)}
+  </div>
+</details>""")
+        first_release = False
+
+    return f"""        <section class="project-block patch-notes" id="patch-notes">
+          <div class="patch-head">
+            <h2>Patch notes</h2>
+            <a class="patch-full" href="https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Full changelog ↗</a>
+          </div>
+          <div class="patch-intro">
+{md_blocks(intro)}
+          </div>
+          <div class="patch-list">
+{chr(10).join(parts)}
+          </div>
+        </section>"""
 
 
 def project_page(p: dict) -> str:
@@ -582,7 +736,7 @@ def project_page(p: dict) -> str:
       <div class="container">
         <div class="project-layout">
           <div class="project-main">
-{render_sections(p.get("sections", []))}
+{render_sections(p.get("sections", []), render_patch_notes() if p.get("patch_notes") else "")}
 {embed_html}
 {gallery}
 {related_posts_html}
