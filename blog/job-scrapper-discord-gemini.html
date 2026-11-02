@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>job-scrapper now posts to Discord with Gemini summaries — potaterrr</title>
+  <meta name="description" content="How job-scrapper moved from Make.com to a self-contained GitHub Actions pipeline: Gemini summaries, Discord embeds, dedupe, and a 4-hour cadence." />
+  <meta property="og:title" content="job-scrapper now posts to Discord with Gemini summaries — potaterrr" />
+  <meta property="og:description" content="A Python scraper that now summarizes OnlineJobs.ph listings with Gemini and posts Discord embeds on a 4-hour cadence, with dedupe to prevent spam." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://potaterrr.github.io/blog/job-scrapper-discord-gemini.html" />
+  <link rel="canonical" href="https://potaterrr.github.io/blog/job-scrapper-discord-gemini.html" />
+  <meta property="og:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="/assets/favicon-512.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">🥔 potaterrr</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <ul class="nav-links">
+        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/#skills">Skills</a></li>
+        <li><a href="/#how-it-works">How It Works</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/#blog">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <article class="post">
+          <a class="back-link" href="/#blog">&larr; Back to all posts</a>
+          <header class="post-header">
+            <div class="post-meta">
+              <time class="timeline-date" datetime="2026-11-02">Nov 2, 2026</time>
+              <span class="reading-time">6 min read</span>
+            </div>
+            <h1 class="post-title">job-scrapper now posts to Discord with Gemini summaries</h1>
+          </header>
+          <div class="post-body">
+            <p>The scraper used to push raw job payloads to a Make.com webhook and let the scenario do the rest. That worked, but it meant a second platform in the loop and a secret I had to keep in sync. Now the whole thing runs inside GitHub Actions: scrape OnlineJobs.ph, summarize each listing with Gemini, post one Discord embed per job.</p>
+
+            <h2>What changed</h2>
+            <ul>
+              <li><strong>Discord instead of Make.com:</strong> each job becomes a rich embed (title, category, rate, type, posted date, how-to-apply, link).</li>
+              <li><strong>Gemini summaries:</strong> a short 2–4 sentence blurb per listing, with a fallback to raw fields if the API fails.</li>
+              <li><strong>Dedupe:</strong> <code>seen_jobs.json</code> remembers sent URLs so repeat runs don't spam the channel.</li>
+              <li><strong>Cadence:</strong> every 4 hours, with randomized delays to stay polite.</li>
+            </ul>
+
+            <h2>Why 4 hours and not 10 minutes</h2>
+            <p>OnlineJobs.ph has anti-bot interstitials. Hitting it every 10 minutes is a great way to get blocked. Four hours keeps listings fresh without tripping rate limits, and dedupe keeps the channel clean.</p>
+
+            <h2>Secrets needed</h2>
+            <ul>
+              <li><code>DISCORD_WEBHOOK_URL</code></li>
+              <li><code>GEMINI_API_KEY</code></li>
+              <li>Optional: <code>GEMINI_MODEL</code> (default <code>gemini-1.5-flash</code>), <code>CATEGORIES</code>, <code>MAX_PER_CATEGORY</code></li>
+            </ul>
+
+            <p><a href="https://github.com/potaterrr/job-scrapper" target="_blank" rel="noopener">View the repo on GitHub &rarr;</a></p>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>&copy; 2026 potaterrr. Built with plain HTML, CSS, and a stubborn refusal to over-engineer.</p>
+    </div>
+  </footer>
+  <script src="/js/main.js"></script>
+</body>
+</html>
+EOF
+echo "blog post created"
