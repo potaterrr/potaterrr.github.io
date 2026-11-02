@@ -3223,18 +3223,3 @@ html[data-theme="light"] .btn-primary:hover {
   font-size: 0.82rem;
   color: var(--muted);
 }
-
-.timeline-more {
-  margin-top: 18px;
-}
-
-.timeline-more a {
-  font-family: var(--mono);
-  font-size: 0.85rem;
-  color: var(--accent);
-  text-decoration: none;
-}
-
-.timeline-more a:hover {
-  text-decoration: underline;
-}
