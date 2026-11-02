@@ -145,50 +145,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ---------- Rail scrollspy + tab-bar active state ---------- */
-  const spyRoot = scrollRoot();
-  const spyOptions = spyRoot
-    ? { root: spyRoot, rootMargin: "-35% 0px -55% 0px", threshold: 0 }
-    : { rootMargin: "-35% 0px -55% 0px", threshold: 0 };
-
-  const sectionIds = ["top", "skills", "work-with-me", "contact"];
-  const railLinks = new Map();
-  document.querySelectorAll(".rail-nav a[data-section]").forEach((a) => {
-    railLinks.set(a.dataset.section, a);
-  });
-  const tabLinks = new Map();
-  document.querySelectorAll(".tabbar a[href^='#']").forEach((a) => {
-    tabLinks.set(a.getAttribute("href").slice(1), a);
-  });
-
-  const setActive = (id) => {
-    railLinks.forEach((link, key) => {
-      const on = key === id;
-      link.classList.toggle("active", on);
-      if (on) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
-    });
-    tabLinks.forEach((link, key) => {
-      const on = key === id;
-      link.classList.toggle("active", on);
-      if (on) link.setAttribute("aria-current", "location");
-      else link.removeAttribute("aria-current");
-    });
-  };
-  setActive("top");
-
-  if ("IntersectionObserver" in window) {
-    const spy = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    }, spyOptions);
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) spy.observe(el);
-    });
-  }
-
   /* ---------- Smooth in-panel anchor scrolling ---------- */
   const scrollToId = (id) => {
     scrollToTarget(document.getElementById(id), reduceMotion ? "auto" : "smooth");
@@ -395,7 +351,12 @@ document.addEventListener("DOMContentLoaded", () => {
           lastTap = now;
           clearTimeout(singleTimer);
           singleTimer = setTimeout(() => {
-            const id = (fab.getAttribute("href") || "#contact").slice(1);
+            const href = fab.getAttribute("href") || "/contact/";
+            if (!href.startsWith("#")) {
+              window.location.href = href;
+              return;
+            }
+            const id = href.slice(1);
             const target = document.getElementById(id);
             if (target) scrollToTarget(target, reduce ? "auto" : "smooth");
             else window.location.hash = `#${id}`;

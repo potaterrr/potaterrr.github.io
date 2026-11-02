@@ -115,13 +115,13 @@
 
       <nav class="rail-nav" aria-label="Sections">
         <ul>
-          <li><a href="#top" data-section="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li>
+          <li><a href="/" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg>Home</a></li>
           <li><a href="/projects/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg>Projects</a></li>
-          <li><a href="#skills" data-section="skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li>
-          <li><a href="#work-with-me" data-section="work-with-me"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" /></svg>Work with me</a></li>
+          <li><a href="/skills/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" /></svg>Skills</a></li>
+          <li><a href="/work-with-me/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" /></svg>Work with me</a></li>
           <li><a href="/timeline/"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></svg>Timeline</a></li>
           <li><a href="/blog/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg>Blog</a></li>
-          <li><a href="#contact" data-section="contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg>Contact</a></li>
+          <li><a href="/contact/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg>Contact</a></li>
         </ul>
       </nav>
 
@@ -169,150 +169,26 @@
 
 
 
-        <section class="section" id="skills">
-          <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> Skills</h2>
-            <p class="section-lead reveal">The toolkit behind the builds — chosen to fit your stack, not to sell you a new one.</p>
-            <div class="grid grid-3">
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/python.svg" alt="" width="28" height="28" />
-                <h3>Python automation</h3>
-                <p>Scrapers, schedulers and pipelines that run unattended and fail loudly instead of silently.</p>
-              </article>
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/n8n.svg" alt="" width="28" height="28" />
-                <h3>n8n workflows</h3>
-                <p>Self-hosted orchestration with clean logic, error branches and modular design.</p>
-              </article>
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/make.svg" alt="" width="28" height="28" />
-                <h3>Make.com scenarios</h3>
-                <p>Connecting apps and data with minimized API calls and zero redundant steps.</p>
-              </article>
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/postman.svg" alt="" width="28" height="28" />
-                <h3>Webhooks &amp; APIs</h3>
-                <p>Event-driven glue between systems — Postman and dev consoles are my stethoscope.</p>
-              </article>
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/claude.svg" alt="" width="28" height="28" />
-                <h3>LLM pipelines</h3>
-                <p>OpenRouter-powered agents with guardrails, structured output and human checkpoints.</p>
-              </article>
-              <article class="card skill reveal">
-                <img class="skill-icon-img" src="assets/icons/githubactions.svg" alt="" width="28" height="28" />
-                <h3>CI/CD &amp; ops</h3>
-                <p>GitHub Actions cron jobs, env-driven config, monitoring and fallback alerts.</p>
-              </article>
-            </div>
-          </div>
-        </section>
-
-
-
-        <section class="section" id="work-with-me">
-          <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> Work with me</h2>
-            <p class="section-lead reveal">Automation for clinics and busy teams. Start with the voice receptionist or bring any repetitive process — fixed-scope starting points, final scope confirmed on a fit call.</p>
-
-            <div class="grid grid-3 package-grid reveal">
-              <article class="card package-card">
-                <div class="card-body">
-                  <span class="package-tag">01 · Automation Sprint</span>
-                  <h3>Automate one process</h3>
-                  <p>A single workflow that keeps eating your week — scraping, enrichment, reporting or routing.</p>
-                  <ul class="feature-list">
-                    <li>One platform — Make, n8n or Python</li>
-                    <li>Scraper, webhook or API integration</li>
-                    <li>Error handling, retries and dedupe</li>
-                    <li>Setup notes and handover</li>
-                  </ul>
-                  <span class="package-timeline">⏱ 1–2 weeks</span>
-                </div>
-              </article>
-
-              <article class="card package-card">
-                <div class="card-body">
-                  <span class="package-tag">02 · Voice Receptionist</span>
-                  <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
-                  <h3>Answer every call</h3>
-                  <p>The clinic flagship: missed and after-hours calls answered, qualified and turned into booked slots.</p>
-                  <ul class="feature-list">
-                    <li>Retell voice layer with custom intake</li>
-                    <li>Google Calendar booking + front-desk alerts</li>
-                    <li>Call logging and three test scenarios</li>
-                    <li>Configurable services, hours and escalation</li>
-                  </ul>
-                  <span class="package-timeline">⏱ 2–4 weeks</span>
-                </div>
-              </article>
-
-              <article class="card package-card is-hipaa">
-                <div class="card-body">
-                  <span class="package-tag">03 · HIPAA Build</span>
-                  <span class="badge-hipaa">🔒 HIPAA-compliant build available</span>
-                  <h3>Designed for PHI</h3>
-                  <p>For practices that will handle real patient information.</p>
-                  <ul class="feature-list">
-                    <li>Everything in Voice Receptionist</li>
-                    <li>Scoped HIPAA-compliant architecture</li>
-                    <li>BAAs, access controls and audit logging</li>
-                    <li>PHI-safe infrastructure and vendor review</li>
-                    <li>Compliance review before go-live</li>
-                  </ul>
-                  <span class="package-timeline">⏱ 4–6 weeks + review</span>
-                </div>
-              </article>
-            </div>
-
-            <div class="cta-row package-cta reveal">
-              <a class="btn btn-primary" href="https://cal.com/christian-john-vallejos-adws8d/60min" target="_blank" rel="noopener">Book a fit call</a>
-              <a class="btn btn-ghost" href="mailto:kristiandyanbusiness@gmail.com">Email me</a>
-            </div>
-            <p class="package-note reveal">No prices on the site — scope and quote follow discovery. Timelines assume one decision-maker, timely access to the tools involved, and one revision round. Compliance is established per deployment, not claimed by the public demo.</p>
-          </div>
-        </section>
 
 
 
 
 
-        <section class="section" id="contact">
-          <div class="container">
-            <h2 class="section-title reveal"><span class="hash">#</span> Contact</h2>
-            <p class="section-lead reveal">Book a fit call about your clinic's phones or any workflow you want off your plate — or message me on WhatsApp.</p>
-            <div class="cta-row contact-cta reveal">
-              <a class="btn btn-primary" href="https://cal.com/christian-john-vallejos-adws8d/60min" target="_blank" rel="noopener">Book a fit call</a>
-            </div>
-            <div class="contact-grid reveal">
-              <a class="contact-card whatsapp" href="https://wa.me/potaiterrr" target="_blank" rel="noopener">
-                <span class="contact-icon">💬</span>
-                <span class="contact-name">WhatsApp</span>
-                <span class="contact-handle">@potaiterrr</span>
-                <span class="contact-note">preferred</span>
-              </a>
-              <a class="contact-card telegram" href="https://t.me/portaterrrr" target="_blank" rel="noopener">
-                <span class="contact-icon">✈️</span>
-                <span class="contact-name">Telegram</span>
-                <span class="contact-handle">@portaterrrr</span>
-                <span class="contact-note">chat anytime</span>
-              </a>
-              <a class="contact-card facebook" href="https://www.facebook.com/profile.php?id=61593886946042" target="_blank" rel="noopener">
-                <span class="contact-icon">📘</span>
-                <span class="contact-name">Facebook</span>
-                <span class="contact-handle">Potaterrr</span>
-                <span class="contact-note">message the page</span>
-              </a>
-              <a class="contact-card email" href="mailto:kristiandyanbusiness@gmail.com">
-                <span class="contact-icon">📧</span>
-                <span class="contact-name">Email</span>
-                <span class="contact-handle">kristiandyanbusiness@gmail.com</span>
-                <span class="contact-note">say hi</span>
-              </a>
-            </div>
-            <p class="contact-outro reveal">Open to automation work: clinic voice receptionists, lead follow-up, scrapers and reporting pipelines. Recently shipped an AI voice receptionist — with a HIPAA-compliant build available for healthcare practices — plus human-in-the-loop lead retrieval. If a task is repetitive, I know a workflow for it. 🥔</p>
-          </div>
-        </section>
+
+
+
+
+
+
+    <section class="square-nav-wrap">
+      <div class="container">
+        <p class="square-nav-kicker">$ cd ../next</p>
+        <nav class="square-nav" aria-label="Continue exploring">
+          <span class="square-btn is-current" aria-current="page"><span class="sq-icon">🏠</span><span class="sq-label">Home</span></span><a class="square-btn" href="/skills/"><span class="sq-icon">🧰</span><span class="sq-label">Skills</span><span class="sq-arrow" aria-hidden="true">↗</span></a><a class="square-btn" href="/work-with-me/"><span class="sq-icon">💼</span><span class="sq-label">Work with me</span><span class="sq-arrow" aria-hidden="true">↗</span></a><a class="square-btn" href="/contact/"><span class="sq-icon">📮</span><span class="sq-label">Contact</span><span class="sq-arrow" aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </section>
+
       </main>
 
       <footer class="footer">
@@ -325,7 +201,7 @@
   </div>
 
   <!-- Floating Action Button Container -->
-  <a href="#contact" class="potato-fab" aria-label="Got questions? Let’s get farming — jump to the contact section">
+  <a href="/contact/" class="potato-fab" aria-label="Got questions? Let’s get farming — jump to the contact section">
 
     <!-- Rotating Circular Text Ring -->
     <div class="circular-text">
@@ -349,9 +225,9 @@
   <!-- Mobile floating tab bar -->
   <nav class="tabbar" aria-label="Quick navigation">
     <a href="/projects/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" /></svg><span>Projects</span></a>
-    <a href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg><span>Home</span></a>
+    <a href="/" class="active" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" /></svg><span>Home</span></a>
     <a href="/blog/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" /></svg><span>Blog</span></a>
-    <a href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg><span>Contact</span></a>
+    <a href="/contact/"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" /></svg><span>Contact</span></a>
     <button type="button" class="tabbar-a11y a11y-trigger" aria-expanded="false" aria-controls="a11y-menu" aria-label="Accessibility options">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5" r="1.8" /><path d="M5 9.5c2.2.8 4.6 1.2 7 1.2s4.8-.4 7-1.2M12 10.7V15m0 0-2.5 5m2.5-5 2.5 5" /></svg><span>A11y</span>
     </button>

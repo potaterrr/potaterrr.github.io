@@ -56,11 +56,11 @@ A11Y_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5.5"
 RAIL_ITEMS = [
     ("home", "/", "Home", '<path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" />'),
     ("projects", "/projects/", "Projects", '<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />'),
-    ("skills", "/#skills", "Skills", '<path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" />'),
-    ("work", "/#work-with-me", "Work with me", '<path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" />'),
+    ("skills", "/skills/", "Skills", '<path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.8 2.8-2.4-2.4z" />'),
+    ("work", "/work-with-me/", "Work with me", '<path d="M4.5 6.5h15v13h-15zM8 4v4M16 4v4M8.5 13l2.5 2.5 4.5-4.5" />'),
     ("timeline", "/timeline/", "Timeline", '<circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" />'),
     ("blog", "/blog/", "Blog", '<path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" />'),
-    ("contact", "/#contact", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
+    ("contact", "/contact/", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
 ]
 
 
@@ -105,7 +105,7 @@ def tabbar(active: str = "") -> str:
         ("home", "/", "Home", '<path d="M3 11.5 12 4l9 7.5M5.5 10v9.5h13V10" />'),
         ("projects", "/projects/", "Projects", '<path d="M3.5 7.5a2 2 0 0 1 2-2h4l2 2.5h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z" />'),
         ("blog", "/blog/", "Blog", '<path d="M6 4.5h9.5L19 8v11.5H6zM9 9h6M9 12.5h6M9 16h4" />'),
-        ("contact", "/#contact", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
+        ("contact", "/contact/", "Contact", '<path d="M4.5 6a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H9l-4.5 3.5z" />'),
     ]
     links = []
     for key, href, label, icon in entries:
@@ -138,6 +138,108 @@ A11Y_MENU = """  <div class="a11y-menu" id="a11y-menu" hidden>
       </div>
     </div>
   </div>"""
+
+
+SQUARE_ITEMS = [
+    ("home", "/", "Home", "🏠"),
+    ("skills", "/skills/", "Skills", "🧰"),
+    ("work", "/work-with-me/", "Work with me", "💼"),
+    ("contact", "/contact/", "Contact", "📮"),
+]
+
+
+def square_nav(active: str = "") -> str:
+    tiles = []
+    for key, href, label, icon in SQUARE_ITEMS:
+        if key == active:
+            tiles.append(
+                f'<span class="square-btn is-current" aria-current="page"><span class="sq-icon">{icon}</span><span class="sq-label">{label}</span></span>'
+            )
+        else:
+            tiles.append(
+                f'<a class="square-btn" href="{href}"><span class="sq-icon">{icon}</span><span class="sq-label">{label}</span><span class="sq-arrow" aria-hidden="true">↗</span></a>'
+            )
+    return f"""    <section class="square-nav-wrap">
+      <div class="container">
+        <p class="square-nav-kicker">$ cd ../next</p>
+        <nav class="square-nav" aria-label="Continue exploring">
+          {"".join(tiles)}
+        </nav>
+      </div>
+    </section>"""
+
+
+def simple_page(key: str, title: str, kicker: str, lead: str, partial: str,
+                desc: str, og: str) -> str:
+    content = (ROOT / "partials" / partial).read_text(encoding="utf-8")
+    canonical = f"{SITE}/{key}/"
+    jsonld = ld({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": f"{title} — potaterrr",
+        "url": canonical,
+        "description": desc,
+        "author": {"@type": "Person", "name": "Christian John", "url": SITE + "/"},
+    })
+    return f"""{head(f"{title} — potaterrr", desc, canonical, active=key,
+             image=f"{SITE}/assets/og/{og}.png", jsonld=jsonld)}
+{shell_open(key)}
+
+  <main>
+    <section class="page-head">
+      <div class="container">
+        <p class="hero-kicker">{kicker}</p>
+        <h1 class="page-title">{title}</h1>
+        <p class="page-lead">{lead}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+{content}
+      </div>
+    </section>
+
+{square_nav(key)}
+  </main>
+
+{FOOTER}
+{shell_close()}
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
+"""
+
+
+def skills_page() -> str:
+    return simple_page(
+        "skills", "Skills", "$ ls ~/skills",
+        "The toolkit behind the builds — chosen to fit your stack, not to sell you a new one.",
+        "skills.html",
+        "Python automation, n8n, Make.com, webhooks, LLM pipelines and CI/CD — the toolkit behind the builds.",
+        "skills",
+    )
+
+
+def work_page() -> str:
+    return simple_page(
+        "work", "Work with me", "$ cat packages.md",
+        "Automation for clinics and busy teams. Start with the voice receptionist or bring any repetitive process — fixed-scope starting points, final scope confirmed on a fit call.",
+        "work-with-me.html",
+        "Automation Sprint, Voice Receptionist and HIPAA Build — fixed-scope starting points for clinics and busy teams.",
+        "work-with-me",
+    )
+
+
+def contact_page() -> str:
+    return simple_page(
+        "contact", "Contact", "$ ping potaterrr",
+        "Book a fit call about your clinic's phones or any workflow you want off your plate — or message me on WhatsApp.",
+        "contact.html",
+        "Book a fit call with Christian John (potaterrr), or reach out on WhatsApp, Telegram, Facebook or email.",
+        "contact",
+    )
 
 
 def shell_open(active: str = "") -> str:
@@ -664,7 +766,7 @@ def post_page(post, posts) -> str:
 {related_block}
             <div class="author-card">
               <img src="/assets/pfp-192.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" />
-              <p><strong>Christian John · potaterrr</strong>Automation developer building AI voice receptionists and pipelines on Make.com, n8n and Python. If a task is repetitive, I know a workflow for it. <a href="/#contact">Work with me &rarr;</a></p>
+              <p><strong>Christian John · potaterrr</strong>Automation developer building AI voice receptionists and pipelines on Make.com, n8n and Python. If a task is repetitive, I know a workflow for it. <a href="/work-with-me/">Work with me &rarr;</a></p>
             </div>
             <div class="post-cta">
               <p><strong>Have a process like this one eating your week?</strong> I map it, build the pipeline, and hand over the docs plus a way to see when it breaks.</p>
@@ -884,6 +986,9 @@ def write_sitemap(posts):
         ("/", TODAY, "1.0"),
         ("/projects/", TODAY, "0.9"),
         ("/timeline/", TODAY, "0.8"),
+        ("/skills/", TODAY, "0.7"),
+        ("/work-with-me/", TODAY, "0.8"),
+        ("/contact/", TODAY, "0.9"),
         ("/blog/", TODAY, "0.9"),
     ]
     urls += [(f"/projects/{p['slug']}/", TODAY, "0.8") for p in PROJECTS]
@@ -975,6 +1080,12 @@ def main():
         out.mkdir(parents=True, exist_ok=True)
         (out / "index.html").write_text(project_page(p), encoding="utf-8")
 
+    # standalone section pages
+    for key, builder in (("skills", skills_page), ("work-with-me", work_page), ("contact", contact_page)):
+        out = ROOT / key
+        out.mkdir(exist_ok=True)
+        (out / "index.html").write_text(builder(), encoding="utf-8")
+
     # timeline
     tl = ROOT / "timeline"
     tl.mkdir(exist_ok=True)
@@ -992,6 +1103,9 @@ def main():
         og_card(og / "blog" / f"{p['slug']}.png", f"$ cat notes/{p['date']}.md", p["title"], f"{p['display']}  ·  {p['reading']}")
     og_card(og / "blog" / "index.png", "$ ls ~/notes", "Automation field notes", f"{len(posts)} posts  ·  what broke and what it taught me")
     og_card(og / "timeline.png", "$ git log --oneline", "Timeline", "Everything shipped, newest first")
+    og_card(og / "skills.png", "$ ls ~/skills", "Skills", "Python, n8n, Make.com, webhooks, LLM pipelines")
+    og_card(og / "work-with-me.png", "$ cat packages.md", "Work with me", "Automation Sprint · Voice Receptionist · HIPAA Build")
+    og_card(og / "contact.png", "$ ping potaterrr", "Contact", "Book a fit call or send a message")
 
     print(f"built {len(PROJECTS)} project pages, {len(posts)} posts, archive, feeds, sitemap")
 
