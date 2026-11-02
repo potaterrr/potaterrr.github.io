@@ -770,7 +770,7 @@
         },
         {
           "label": "Rounds",
-          "value": "15"
+          "value": "16"
         },
         {
           "label": "Runs",
@@ -807,7 +807,7 @@
           "bullets": [
             "Watch Tippy shuffle, then pick the card they're under",
             "Correct picks bank Tippy Coins, wrong picks take them away",
-            "The deck grows from 3 to 15 cards across 15 rounds",
+            "The deck grows from 3 to 15 cards across 16 rounds",
             "Stay in the green — going into debt ends the run",
             "Everything runs locally: no accounts, no backend, no network calls"
           ]
