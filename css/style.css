@@ -1178,64 +1178,6 @@ html.reduce-motion *::after {
   z-index: 1;
 }
 
-.bento {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-top: 44px;
-}
-
-.bento-tile {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 128px;
-  padding: 18px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  color: var(--text);
-  text-decoration: none;
-  overflow: hidden;
-  grid-column: span 2;
-  transition: transform var(--dur-med) var(--ease-out), border-color var(--dur-med) ease, box-shadow var(--dur-med) ease;
-}
-
-.bento-tile:hover {
-  text-decoration: none;
-  transform: translateY(-3px);
-  border-color: rgba(240, 180, 41, 0.5);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
-}
-
-.bento-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-}
-
-.bento-icon {
-  font-size: 1rem;
-}
-
-.bento-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  line-height: 1.2;
-}
-
-.bento-desc {
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
 /* ---------- HIPAA compliance badge ---------- */
 .badge-hipaa {
   display: inline-flex;
@@ -1362,85 +1304,6 @@ html[data-theme="light"] .badge-hipaa {
   margin: -8px 0 30px;
 }
 
-.bento-arrow {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  color: var(--muted);
-  font-size: 1rem;
-  transition: color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
-}
-
-.bento-tile:hover .bento-arrow {
-  color: var(--accent);
-  transform: translate(2px, -2px);
-}
-
-.bento-featured {
-  grid-column: span 2;
-  grid-row: span 2;
-  background:
-    linear-gradient(160deg, rgba(240, 180, 41, 0.09), transparent 55%),
-    var(--surface);
-  border-color: rgba(240, 180, 41, 0.45);
-}
-
-.bento-featured .bento-title {
-  font-size: clamp(1.5rem, 2.4vw, 2rem);
-  margin-top: 4px;
-}
-
-.bento-reel-item {
-  display: inline-block;
-  font-family: var(--mono);
-  font-size: 1.05rem;
-  color: var(--green);
-  transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
-}
-
-.bento-reel-item.swap {
-  opacity: 0;
-  transform: translateY(6px);
-}
-
-.bento-cmd {
-  display: block;
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--accent);
-  background: #0a0e14;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 9px 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.bento-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-}
-
-.bento-chips img {
-  width: 22px;
-  height: 22px;
-  filter: invert(61%) sepia(72%) saturate(530%) hue-rotate(352deg) brightness(96%) contrast(92%);
-}
-
-.bento-chips i {
-  font-style: normal;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--accent);
-  background: var(--accent-soft);
-  border: 1px solid rgba(240, 180, 41, 0.3);
-  border-radius: 999px;
-  padding: 3px 10px;
-}
-
 @media (max-width: 680px) {
   .hero-bento {
     padding: 48px 0 48px;
@@ -1481,15 +1344,6 @@ html[data-theme="light"] .badge-hipaa {
     line-height: 1.35;
   }
 
-  .bento {
-    grid-template-columns: 1fr;
-  }
-
-  .bento-tile,
-  .bento-featured {
-    grid-column: 1 / -1;
-    grid-row: auto;
-  }
 }
 
 /* ---------- Tools marquee ---------- */

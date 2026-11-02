@@ -235,20 +235,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  /* ---------- Bento projects reel (cycling project names) ---------- */
-  const reelEl = document.querySelector("[data-reel]");
-  if (reelEl && !stillMotion) {
-    const names = ["scrapers", "voice agents", "signal engines", "LLM pipelines", "webhooks"];
-    let ri = 0;
-    setInterval(() => {
-      reelEl.classList.add("swap");
-      setTimeout(() => {
-        ri = (ri + 1) % names.length;
-        reelEl.textContent = names[ri];
-        reelEl.classList.remove("swap");
-      }, 180);
-    }, 2600);
-  }
 });
 
 /* ---------- Intro boot overlay (once per session, skipped for a week) ---------- */
