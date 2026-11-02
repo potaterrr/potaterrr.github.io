@@ -1,0 +1,568 @@
+{
+  "categories": [
+    {
+      "id": "startup",
+      "title": "Startup",
+      "kicker": "// startup",
+      "blurb": "The company I'm part of, and the softphone I build for it."
+    },
+    {
+      "id": "webui",
+      "title": "Web UI",
+      "kicker": "// web ui",
+      "blurb": "Interface work: the caller console prototype."
+    },
+    {
+      "id": "voice",
+      "title": "Voice & Calls",
+      "kicker": "// voice",
+      "blurb": "AI receptionists and phone automation."
+    },
+    {
+      "id": "llm",
+      "title": "LLM & Human-in-the-loop",
+      "kicker": "// llm",
+      "blurb": "Agents that draft, a human who approves."
+    },
+    {
+      "id": "scraping",
+      "title": "Scraping & Data",
+      "kicker": "// data",
+      "blurb": "Pipelines that pull, clean and deliver."
+    },
+    {
+      "id": "ops",
+      "title": "Ops & Publishing",
+      "kicker": "// ops",
+      "blurb": "Webhooks and schedules that keep things moving."
+    },
+    {
+      "id": "games",
+      "title": "Games",
+      "kicker": "// games",
+      "blurb": "Small playable things, built for fun."
+    }
+  ],
+  "projects": [
+    {
+      "slug": "happyphone",
+      "category": "startup",
+      "title": "HappyPhone",
+      "tagline": "The startup I'm part of — and the internal softphone I build for its callers.",
+      "summary": "HappyPhone is a call-center startup, and I build the internal softphone: the web app every caller logs into, loads a list into, and calls from.",
+      "status": "In development",
+      "badges": ["Startup I'm part of"],
+      "metrics": [
+        { "label": "My role", "value": "Internal softphone" },
+        { "label": "Caller app", "value": "caller.happyphone.lol" },
+        { "label": "Stage", "value": "Working prototype" }
+      ],
+      "tech": ["WebRTC", "Kamailio", "RTPEngine", "VoIP.ms", "WSS", "JWT"],
+      "links": [
+        { "label": "HappyPhone", "href": "https://happyphone.lol/", "primary": true, "external": true },
+        { "label": "Startup page", "href": "https://happyphone.lol/startup/", "external": true },
+        { "label": "The 101", "href": "https://happyphone.lol/101/", "external": true }
+      ],
+      "sections": [
+        {
+          "title": "What HappyPhone is",
+          "body": [
+            "HappyPhone is a small startup that puts real helpers on the phone for American businesses. The pitch is deliberately simple: a clear offer, a simple six-column sheet, real humans, and honest math.",
+            "I'm on the team, and my corner of it is the internal tooling the callers actually touch."
+          ]
+        },
+        {
+          "title": "My role: the internal softphone",
+          "body": [
+            "Every caller needs their own login, their own extension, and their own call list. I'm building the web app that gives them exactly that — plus the gateway that gets the audio out to the phone network."
+          ],
+          "bullets": [
+            "Caller sign-in with three fields, always in the same order: username, extension, password",
+            "Per-caller call lists, filled by drag-and-drop CSV or a pasted Google Sheet link",
+            "Secure <code>wss</code> gateway on Kamailio + RTPEngine, routing outbound calls through the team's VoIP.ms sub-account",
+            "JWT-based auth — raw SIP passwords never live in the browser",
+            "Every call recorded and logged into the team's sheet"
+          ]
+        },
+        {
+          "title": "Where it lives",
+          "body": [
+            "The real home will be <code>caller.happyphone.lol</code>, with the login at <code>#/login-webui</code> and the dashboard at <code>#/dashboard</code>. Until then, the working prototype is the HappyFone WebUI below."
+          ]
+        }
+      ],
+      "embed": {
+        "title": "The HappyPhone startup page",
+        "src": "https://happyphone.lol/startup/",
+        "href": "https://happyphone.lol/startup/",
+        "note": "Embedded from happyphone.lol. If the frame doesn't load, open the startup page directly."
+      },
+      "related_projects": ["happyfone-webui"],
+      "related_posts": []
+    },
+    {
+      "slug": "happyfone-webui",
+      "category": "webui",
+      "title": "HappyFone WebUI",
+      "tagline": "The working prototype of the HappyPhone caller softphone.",
+      "summary": "A dependency-free agent console for the HappyPhone callers: sign-in, a live agent state machine, T9 dialing, a simulated call lifecycle, and persistent call history.",
+      "status": "Prototype",
+      "badges": ["Prototype", "Part of HappyPhone"],
+      "metrics": [
+        { "label": "Type", "value": "Caller console" },
+        { "label": "Built with", "value": "Vanilla JS" },
+        { "label": "Auth", "value": "Mock JWT" }
+      ],
+      "tech": ["Vanilla JS", "ES Modules", "CSS", "localStorage"],
+      "links": [
+        { "label": "Open the demo", "href": "https://potaterrr.github.io/happyfone-webui/", "primary": true, "external": true },
+        { "label": "Repo", "href": "https://github.com/potaterrr/happyfone-webui", "external": true },
+        { "label": "HappyPhone", "href": "/projects/happyphone/" }
+      ],
+      "sections": [
+        {
+          "title": "What it is",
+          "body": [
+            "HappyFone WebUI is the prototype of the softphone I'm building for HappyPhone. It is a production-style agent console with no framework and no dependencies — plain HTML, CSS and ES modules, deployed on GitHub Pages.",
+            "The point was to make the caller's day concrete before wiring real telephony: where they sign in, how they go available, what happens between calls, and what they see when one ends."
+          ]
+        },
+        {
+          "title": "What's inside",
+          "bullets": [
+            "Mock auth and a session guard: username, extension, password; direct dashboard visits bounce back to sign-in",
+            "Agent state machine — <code>AVAILABLE</code>, <code>ON_CALL</code>, <code>WRAP_UP</code>, <code>AUX</code> — with a live timer",
+            "AUX reasons (lunch, short break, bio, coaching, training) that pause the dialer until the agent returns",
+            "Simulated call lifecycle: ringing, connected timer, mute, hold/resume and hangup",
+            "Keyboard-first dialing, including T9 letter mapping and DTMF tones while connected",
+            "A five-second wrap-up countdown, then back to available",
+            "Persistent call history that survives reloads, with click-to-dial",
+            "Responsive dark UI with accessible focus states and reduced-motion support"
+          ]
+        },
+        {
+          "title": "What is still simulated",
+          "body": [
+            "Auth is mocked and calls are simulated — there is no real audio path yet. The production softphone is the one I'm building at <code>caller.happyphone.lol</code>: real JWT auth, a Kamailio + RTPEngine gateway, and calls through the team's VoIP.ms sub-account."
+          ]
+        }
+      ],
+      "related_projects": ["happyphone"],
+      "related_posts": ["one-receptionist-three-engines"]
+    },
+    {
+      "slug": "ai-voice-receptionist",
+      "category": "voice",
+      "title": "AI Voice Receptionist",
+      "tagline": "Answer every missed and after-hours clinic call. Book the slot. Alert the front desk.",
+      "summary": "An AI receptionist for clinics and appointment-based practices, built three times — Make, n8n and Zapier — over one shared Retell voice layer.",
+      "status": "Live on synthetic calls",
+      "badges": ["HIPAA-compliant build available", "3 builds"],
+      "metrics": [
+        { "label": "Voice layer", "value": "Retell" },
+        { "label": "Branches", "value": "Make · n8n · Zapier" },
+        { "label": "Compliance", "value": "HIPAA build available" }
+      ],
+      "tech": ["Retell", "Make", "n8n", "Zapier", "Google Calendar", "Google Sheets", "Gmail"],
+      "links": [
+        { "label": "Watch the simulation", "href": "/?demo=vr#how-it-works", "primary": true },
+        { "label": "Repo", "href": "https://github.com/potaterrr/voice-receptionist", "external": true }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "A clinic's phone is its front door. When nobody picks up — lunch, after hours, a busy morning — the caller either leaves a vague voicemail or calls the next practice.",
+            "This is an AI receptionist that picks up instead: it captures structured intake, checks the calendar, books a real slot, logs the call and alerts the front desk with a summary."
+          ]
+        },
+        {
+          "title": "What it does",
+          "bullets": [
+            "Answers missed and after-hours calls, 24/7",
+            "Captures patient intake as structured data (not a transcript to re-read)",
+            "Conflict-checks Google Calendar and books a real slot",
+            "Alerts the front desk with a short summary",
+            "Logs every call to Google Sheets",
+            "Configurable services, hours, intake fields and escalation"
+          ]
+        },
+        {
+          "title": "How it's built",
+          "body": [
+            "One shared voice layer on Retell, three interchangeable engines. The same receptionist is implemented on Make, n8n and Zapier so a clinic can keep the stack it already pays for instead of adopting a new one.",
+            "The n8n branch runs end to end on synthetic call payloads — real Google Calendar booking, Sheets logging and Gmail alerts. The phone call itself is simulated; live telephony is a documented Retell setup away. Make and Zapier remain simulated."
+          ]
+        },
+        {
+          "title": "Compliance",
+          "body": [
+            "A HIPAA-compliant build is available for practices that will handle real patient information: scoped architecture, BAAs, access controls, audit logging, a PHI-safe infrastructure and vendor review before go-live. Compliance is established per deployment, not claimed by the public demo."
+          ]
+        }
+      ],
+      "related_projects": ["happyfone-webui", "ar-invoice-reminder"],
+      "related_posts": ["one-receptionist-three-engines"]
+    },
+    {
+      "slug": "ar-invoice-reminder",
+      "category": "llm",
+      "title": "AR Invoice Reminder",
+      "tagline": "A daily n8n agent that chases overdue invoices — and never sends anything itself.",
+      "summary": "Reads an invoice tracker, computes days past due, drafts a tone-matched reminder with Gemini, and files it as a Gmail draft for a human to approve.",
+      "status": "Live on a real tracker",
+      "badges": ["Human-in-the-loop", "Never auto-sends"],
+      "metrics": [
+        { "label": "Runs", "value": "Daily · 09:00" },
+        { "label": "Engine", "value": "n8n" },
+        { "label": "Output", "value": "Gmail draft" }
+      ],
+      "tech": ["n8n", "Gemini", "Google Sheets", "Gmail", "Structured output"],
+      "links": [
+        { "label": "Watch it draft", "href": "/?demo=ar#how-it-works", "primary": true },
+        { "label": "Repo", "href": "https://github.com/potaterrr/ar-invoice-reminder-agent", "external": true },
+        { "label": "The bugs behind it", "href": "/blog/ar-invoice-agent-challenges.html" }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "Chasing overdue invoices is the work nobody schedules. It is not hard — it is just always later, until a receivable is 90 days old and the polite reminder you meant to send in week two would now read like an apology for your own silence.",
+            "This is a daily n8n workflow that reads the invoice tracker, works out how late each invoice is, and drafts a reminder whose tone matches the delay."
+          ]
+        },
+        {
+          "title": "How it works",
+          "bullets": [
+            "Schedule trigger fires at 09:00 and reads the invoice sheet",
+            "A Code node drops paid and void rows, parses amounts and dates, computes days past due and picks a tone",
+            "Gemini drafts against a structured output parser",
+            "A second Code node enforces the signature and falls back to a template if the model returns nothing usable",
+            "The draft lands in Gmail — nobody sends an email automatically",
+            "The follow-up date is written back to the sheet"
+          ]
+        },
+        {
+          "title": "Guardrails",
+          "bullets": [
+            "Tone is computed in code, not guessed: friendly under 14 days, firm to 30, solution-oriented after",
+            "The signature is rebuilt in code, so the model can't rewrite it",
+            "A 7-day cooldown per invoice stops duplicate chasing",
+            "Strict JSON, no placeholders, a human presses send"
+          ]
+        }
+      ],
+      "related_projects": ["dead-lead-retrieval", "ai-voice-receptionist"],
+      "related_posts": ["ar-invoice-agent-challenges", "why-my-ai-never-sends-emails"]
+    },
+    {
+      "slug": "dead-lead-retrieval",
+      "category": "llm",
+      "title": "Dead Lead Retrieval",
+      "tagline": "Dormant leads rarely die because someone said no. They die because nobody followed up.",
+      "summary": "An n8n automation that drafts personalized check-ins with an LLM, files them as Gmail drafts, and tracks every lead through ClickUp — with a human always in the loop.",
+      "status": "Released",
+      "badges": ["Human-in-the-loop", "Gmail drafts"],
+      "metrics": [
+        { "label": "Engine", "value": "n8n" },
+        { "label": "LLM", "value": "OpenRouter" },
+        { "label": "Tracking", "value": "ClickUp" }
+      ],
+      "tech": ["n8n", "OpenRouter", "Gmail", "ClickUp", "Google Sheets"],
+      "links": [
+        { "label": "Watch it run", "href": "/?demo=dlf#how-it-works", "primary": true },
+        { "label": "Repo", "href": "https://github.com/potaterrr/dead-lead-retrieval", "external": true },
+        { "label": "Why it never sends", "href": "/blog/why-my-ai-never-sends-emails.html" }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "A dormant list is not a dead list. Most of it is people who got busy, changed priorities, or never got a second reply — and manual follow-up is the first thing to slip when the week gets loud.",
+            "This pipeline resurrects those leads with personalized check-in emails that a human approves, and keeps the status honest in ClickUp."
+          ]
+        },
+        {
+          "title": "The loop",
+          "bullets": [
+            "Pull the dormant leads and their original context",
+            "An LLM drafts a short, specific check-in — never a generic blast",
+            "The email is filed as a Gmail draft for review",
+            "A booking link is added so a reply turns into a call",
+            "ClickUp tracks each lead through the review lifecycle"
+          ]
+        },
+        {
+          "title": "Guardrails",
+          "bullets": [
+            "AI drafts, a human approves — nothing sends itself",
+            "Anti-hallucination rules: the only link in any email is mine",
+            "Original context is passed to the model so the note is relevant",
+            "Every action is visible in the CRM, not buried in a mailbox"
+          ]
+        }
+      ],
+      "related_projects": ["ar-invoice-reminder", "ai-voice-receptionist"],
+      "related_posts": ["why-my-ai-never-sends-emails", "ar-invoice-agent-challenges"]
+    },
+    {
+      "slug": "job-scrapper",
+      "category": "scraping",
+      "title": "job-scrapper",
+      "tagline": "A Python scraper that watches OnlineJobs.ph and posts one Discord embed per job.",
+      "summary": "Searches configurable categories, pulls full descriptions, summarizes each listing with Gemini, and posts to Discord every four hours with URL dedupe.",
+      "status": "Live · every 4 hours",
+      "badges": ["GitHub Actions", "Gemini", "Discord"],
+      "metrics": [
+        { "label": "Cadence", "value": "Every 4 hours" },
+        { "label": "Output", "value": "Discord embeds" },
+        { "label": "Runtime", "value": "GitHub Actions" }
+      ],
+      "tech": ["Python", "GitHub Actions", "Gemini", "Discord", "BeautifulSoup"],
+      "links": [
+        { "label": "Repo", "href": "https://github.com/potaterrr/job-scrapper", "primary": true, "external": true },
+        { "label": "The Discord rewrite", "href": "/blog/job-scrapper-discord-gemini.html" }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "Job boards reward the first reply. A scraper that checks every ten minutes gets blocked; one that checks once a day is too late.",
+            "job-scrapper searches OnlineJobs.ph on a four-hour cadence, keeps the freshest listing per keyword, and posts one rich Discord embed per job so the channel stays readable."
+          ]
+        },
+        {
+          "title": "How it works",
+          "bullets": [
+            "Searches each category's keywords with a randomized 5–12 second pause between requests",
+            "Parses every result card and sorts by the exact posting timestamp",
+            "Keeps the top listing per keyword, dedupes across keywords, caps per category",
+            "Visits each listing for the full description and splits out the \"How to Apply\" section",
+            "Summarizes each job with Gemini (falling back to raw fields if the API fails)",
+            "Dedupes by URL through <code>seen_jobs.json</code> so repeat runs stay quiet"
+          ]
+        },
+        {
+          "title": "Notes",
+          "body": [
+            "It started as a Make.com webhook pipeline and moved fully into GitHub Actions: scrape, summarize, post — no second platform in the loop."
+          ]
+        }
+      ],
+      "related_projects": ["signal-checker", "rss-news"],
+      "related_posts": ["job-scrapper-discord-gemini", "feeding-make-com-from-python"]
+    },
+    {
+      "slug": "signal-checker",
+      "category": "scraping",
+      "title": "signal-checker",
+      "tagline": "An SMA crossover pipeline that evaluates daily prices and dispatches signals as JSON.",
+      "summary": "Pulls ~400 days of daily closes with yfinance, computes a 50/200-day SMA crossover, and posts BUY, SELL or HOLD to a Make.com webhook every weekday.",
+      "status": "Live · weekdays 21:00 UTC",
+      "badges": ["GitHub Actions", "yfinance"],
+      "metrics": [
+        { "label": "Signal", "value": "SMA crossover" },
+        { "label": "Schedule", "value": "Weekdays 21:00 UTC" },
+        { "label": "Output", "value": "Webhook JSON" }
+      ],
+      "tech": ["Python", "yfinance", "GitHub Actions", "Make"],
+      "links": [
+        { "label": "Repo", "href": "https://github.com/potaterrr/signal-checker", "primary": true, "external": true }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "A small, deliberately boring signals pipeline: one strategy, one schedule, one JSON payload. It exists to keep the downstream automation fed, not to predict the market."
+          ]
+        },
+        {
+          "title": "How it works",
+          "bullets": [
+            "Fetches roughly 400 days of daily closes through yfinance (50/200-day defaults)",
+            "Computes a simple moving-average crossover and emits <code>BUY</code>, <code>SELL</code> or <code>HOLD</code>",
+            "Dispatches the result as JSON to a Make.com webhook",
+            "Runs on GitHub Actions every weekday at 21:00 UTC",
+            "Configurable through environment variables: symbol, SMA windows, webhook URL",
+            "Forex pairs like <code>USD/PHP</code> are normalized automatically to yfinance format"
+          ]
+        }
+      ],
+      "related_projects": ["job-scrapper", "make-commits"],
+      "related_posts": []
+    },
+    {
+      "slug": "rss-news",
+      "category": "ops",
+      "title": "rss-news",
+      "tagline": "A weekly AI and tech digest that drafts, illustrates and publishes itself.",
+      "summary": "Python pulls tech and AI RSS feeds, filters by keyword and dedupes, then hands the digest to Make.com for Gemini drafting, Imagen graphics and Facebook publishing.",
+      "status": "Live · Sundays 06:00 PHT",
+      "badges": ["GitHub Actions", "Make.com", "Gemini"],
+      "metrics": [
+        { "label": "Cadence", "value": "Weekly" },
+        { "label": "Feeds", "value": "HN · Phoronix · Verge" },
+        { "label": "Output", "value": "Facebook post" }
+      ],
+      "tech": ["Python", "RSS", "Make", "Gemini", "Imagen", "Facebook Pages"],
+      "links": [
+        { "label": "Repo", "href": "https://github.com/potaterrr/rss-news", "primary": true, "external": true },
+        { "label": "The ops math", "href": "/blog/make-com-free-plan-ops-math.html" }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "A personal automation for the AI Tech & Automation Hub page: collect the week's useful links, filter the noise, and publish a digest without touching it."
+          ]
+        },
+        {
+          "title": "Pipeline",
+          "bullets": [
+            "Python fetches Hacker News, Phoronix, The Verge and other RSS feeds",
+            "Keyword filtering plus <code>seen_articles.json</code> dedupe so nothing posts twice",
+            "The digest is POSTed to a Make.com webhook",
+            "Gemini drafts the post, Imagen generates the graphic, Facebook Pages publishes it",
+            "GitHub Actions runs the whole thing every Sunday at 06:00 PHT"
+          ]
+        }
+      ],
+      "related_projects": ["make-commits", "job-scrapper"],
+      "related_posts": ["make-com-free-plan-ops-math"]
+    },
+    {
+      "slug": "make-commits",
+      "category": "ops",
+      "title": "make-commits",
+      "tagline": "Every GitHub push becomes a Facebook post, seconds later.",
+      "summary": "A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push — built and running inside the Make free tier.",
+      "status": "Live",
+      "badges": ["Webhooks", "Make free tier"],
+      "metrics": [
+        { "label": "Trigger", "value": "GitHub push" },
+        { "label": "Ops per push", "value": "~2" },
+        { "label": "Delay", "value": "Seconds" }
+      ],
+      "tech": ["Make", "GitHub webhooks", "Facebook Pages"],
+      "links": [
+        { "label": "Repo", "href": "https://github.com/potaterrr/make-commits", "primary": true, "external": true },
+        { "label": "The ops math", "href": "/blog/make-com-free-plan-ops-math.html" }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "A small proof that webhooks beat polling: <code>git push</code> fires a GitHub webhook, Make catches it instantly, and a digest lands on a Facebook Page seconds later.",
+            "One post per push lists every commit message, so the page reads like a changelog rather than a stream of noise."
+          ]
+        },
+        {
+          "title": "Architecture",
+          "bullets": [
+            "GitHub push webhook → Make custom webhook → Facebook Pages post",
+            "About 2 operations per push — even ten pushes a day stays well inside 1,000 ops/month",
+            "No polling, no delay",
+            "Ships with a sanitized scenario blueprint and a step-by-step setup guide"
+          ]
+        }
+      ],
+      "related_projects": ["rss-news", "signal-checker"],
+      "related_posts": ["make-com-free-plan-ops-math"]
+    },
+    {
+      "slug": "tippy-card-monte",
+      "category": "games",
+      "title": "Tippy Card Monte",
+      "tagline": "Follow the shuffle. Find Tippy. Stay out of debt.",
+      "summary": "A pixel-art card monte built as a single self-contained page: watch the shuffle, pick the right card, and bank Tippy Coins while the deck grows from 3 to 15 cards.",
+      "status": "Playable",
+      "badges": ["Game", "Single file"],
+      "metrics": [
+        { "label": "Deck", "value": "3 → 15 cards" },
+        { "label": "Rounds", "value": "15" },
+        { "label": "Runs", "value": "In the browser" }
+      ],
+      "tech": ["Canvas", "Vanilla JS", "Web Audio", "localStorage"],
+      "links": [
+        { "label": "Play it", "href": "/tippy-card-monte/", "primary": true },
+        { "label": "Source", "href": "https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte", "external": true }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed."
+          ]
+        },
+        {
+          "title": "How it plays",
+          "bullets": [
+            "Watch Tippy shuffle, then pick the card they're under",
+            "Correct picks bank Tippy Coins, wrong picks take them away",
+            "The deck grows from 3 to 15 cards across 15 rounds",
+            "Stay in the green — going into debt ends the run",
+            "Everything runs locally: no accounts, no backend, no network calls"
+          ]
+        }
+      ],
+      "related_projects": ["adblock-island"],
+      "related_posts": []
+    },
+    {
+      "slug": "adblock-island",
+      "category": "games",
+      "title": "AdBlock Island",
+      "tagline": "A wholesome micro-MMO in a single HTML file. The ads took the beach; the locals kept the kettle on.",
+      "summary": "Pick a class, sweep the static, bonk ad-monsters and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
+      "status": "Beta",
+      "version": "0.6.7",
+      "channel": "beta",
+      "badges": ["Game", "Beta", "Single file"],
+      "metrics": [
+        { "label": "Version", "value": "v0.6.7 beta" },
+        { "label": "Classes", "value": "7" },
+        { "label": "Co-op", "value": "Same keyboard" }
+      ],
+      "tech": ["Canvas 2D", "Web Audio", "Vanilla JS", "Single HTML file"],
+      "links": [
+        { "label": "Play v0.6.7 beta", "href": "https://potaterrr.github.io/adblock-island/", "primary": true, "external": true },
+        { "label": "Download v0.6.7", "href": "/projects/adblock-island/adblock-island-beta-v0.6.7.zip" },
+        { "label": "Patch notes", "href": "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md", "external": true },
+        { "label": "Repo", "href": "https://github.com/potaterrr/adblock-island", "external": true }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "AdBlock Island is a small, wholesome micro-MMO about cleaning up a beach that ads have overrun. You wash ashore with a broom and a class, and the islanders save you a spot by the fire.",
+            "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio."
+          ]
+        },
+        {
+          "title": "What's in the beta",
+          "bullets": [
+            "Seven classes with their own silhouettes, gear, projectiles and hit behaviour",
+            "The wave ladder, medals, items, the Algorithm boss and kindness notes",
+            "Same-keyboard co-op for a second player",
+            "Title-screen build tag and patch notes that always agree",
+            "Runs from a static host, from the release zip, or straight from <code>file://</code>"
+          ]
+        },
+        {
+          "title": "Honest limits",
+          "body": [
+            "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them.",
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.6.7 beta</strong>."
+          ]
+        }
+      ],
+      "gallery": [
+        { "src": "/assets/projects/adblock-island/title.png", "alt": "AdBlock Island title screen with the beta badge" },
+        { "src": "/assets/projects/adblock-island/wave-card.png", "alt": "Wave cleared card with an achievement and next wave preview" },
+        { "src": "/assets/projects/adblock-island/phone.png", "alt": "AdBlock Island title screen on a phone" }
+      ],
+      "related_projects": ["tippy-card-monte"],
+      "related_posts": []
+    }
+  ]
+}

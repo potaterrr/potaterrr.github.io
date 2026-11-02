@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>make-commits — Ops &amp; Publishing · potaterrr</title>
+  <meta name="description" content="Every GitHub push becomes a Facebook post, seconds later." />
+  <meta name="author" content="Christian John" />
+  <link rel="canonical" href="https://potaterrr.github.io/projects/make-commits/" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#faf7f0" media="(prefers-color-scheme: light)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="potaterrr" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="make-commits — Ops &amp; Publishing · potaterrr" />
+  <meta property="og:description" content="Every GitHub push becomes a Facebook post, seconds later." />
+  <meta property="og:url" content="https://potaterrr.github.io/projects/make-commits/" />
+  <meta property="og:image" content="https://potaterrr.github.io/assets/og/projects/make-commits.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="make-commits — Ops &amp; Publishing · potaterrr" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="make-commits — Ops &amp; Publishing · potaterrr" />
+  <meta name="twitter:description" content="Every GitHub push becomes a Facebook post, seconds later." />
+  <meta name="twitter:image" content="https://potaterrr.github.io/assets/og/projects/make-commits.png" />
+  <link rel="icon" href="/assets/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/favicon-180.png" />
+  <link rel="alternate" type="application/rss+xml" title="potaterrr — posts" href="https://potaterrr.github.io/feed.xml" />
+  <link rel="alternate" type="application/feed+json" title="potaterrr — posts (JSON)" href="https://potaterrr.github.io/feed.json" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
+  <noscript><style>
+    .reveal{opacity:1;transform:none}
+    .intro,.post-toc,.a11y-trigger,.theme-toggle{display:none!important}
+    .barrel-slide{position:relative!important;inset:auto!important;opacity:1!important;visibility:visible!important;transform:none!important;pointer-events:auto!important}
+    .barrel-slide+.barrel-slide{display:none}
+    .barrel-controls,.barrel-hint{display:none}
+    @media (max-width:900px){
+      .nav-inner{height:auto;flex-wrap:wrap;padding:10px 0;gap:6px}
+      .nav-links{display:flex!important;position:static!important;width:100%;margin-left:0;gap:14px;flex-wrap:wrap}
+      .nav-toggle,.theme-toggle{display:none!important}
+    }
+  </style></noscript>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "make-commits",
+  "description": "A Make.com automation that listens to GitHub push webhooks and publishes one digest post per push \u2014 built and running inside the Make free tier.",
+  "url": "https://potaterrr.github.io/projects/make-commits/",
+  "image": "https://potaterrr.github.io/assets/og/projects/make-commits.png",
+  "author": {
+    "@type": "Person",
+    "name": "Christian John",
+    "url": "https://potaterrr.github.io/"
+  },
+  "keywords": "Make, GitHub webhooks, Facebook Pages"
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://potaterrr.github.io/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Projects",
+      "item": "https://potaterrr.github.io/projects/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "make-commits"
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <nav class="nav" aria-label="Site">
+    <div class="container nav-inner">
+      <a href="/" class="brand">
+        <span class="nav-avatar"><picture><source srcset="/assets/pfp-192.webp" type="image/webp" /><img src="/assets/pfp-192.jpg" alt="" width="30" height="30" decoding="async" /></picture></span>
+        <span class="brand-name">potaterrr</span>
+        <span class="brand-tag">automation</span>
+      </a>
+      <ul class="nav-links" id="site-menu">
+        <li><a href="/projects/" aria-current="page">Projects</a></li>
+        <li><a href="/#how-it-works">Demo</a></li>
+        <li><a href="/#timeline">Timeline</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/#contact" class="nav-cta">Work with me</a></li>
+      </ul>
+      <button type="button" class="theme-toggle" aria-label="Switch theme">☀️</button>
+      <button type="button" class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-menu">☰</button>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="project-hero">
+      <div class="container">
+        <a class="back-link" href="/projects/">&larr; All projects</a>
+        <p class="project-kicker">// ops</p>
+        <h1 class="project-title">make-commits</h1>
+        <p class="project-tagline">Every GitHub push becomes a Facebook post, seconds later.</p>
+        <div class="project-badges"><span class="project-badge">Webhooks</span><span class="project-badge">Make free tier</span><span class="project-badge project-badge-status">Live</span></div>
+        <div class="project-metrics"><div class="project-metric"><span>Trigger</span><strong>GitHub push</strong></div><div class="project-metric"><span>Ops per push</span><strong>~2</strong></div><div class="project-metric"><span>Delay</span><strong>Seconds</strong></div></div>
+        <div class="cta-row project-actions"><a class="btn btn-primary" href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="/blog/make-com-free-plan-ops-math.html">The ops math</a></div>
+      </div>
+    </section>
+
+    <section class="project-body">
+      <div class="container">
+        <div class="project-layout">
+          <div class="project-main">
+        <section class="project-block">
+          <h2>Overview</h2>
+          <p>A small proof that webhooks beat polling: <code>git push</code> fires a GitHub webhook, Make catches it instantly, and a digest lands on a Facebook Page seconds later.</p><p>One post per push lists every commit message, so the page reads like a changelog rather than a stream of noise.</p>
+          
+        </section>
+        <section class="project-block">
+          <h2>Architecture</h2>
+          
+          <ul class="project-list"><li>GitHub push webhook → Make custom webhook → Facebook Pages post</li><li>About 2 operations per push — even ten pushes a day stays well inside 1,000 ops/month</li><li>No polling, no delay</li><li>Ships with a sanitized scenario blueprint and a step-by-step setup guide</li></ul>
+        </section>
+
+
+        <section class="project-block">
+          <h2>Field notes</h2>
+          <div class="related-grid"><a class="related-card" href="/blog/make-com-free-plan-ops-math.html"><span class="related-meta">Aug 26, 2026 · 6 min read</span><strong>The free-plan ops math</strong><span>Make.com&#x27;s free plan gives you 1,000 operations a month. Here&#x27;s the arithmetic that decides whether your polling interval is an automation or an ops bonfire.</span></a></div>
+        </section>
+          </div>
+          <aside class="project-side" aria-label="Project details">
+            <div class="project-side-card">
+              <h2>Stack</h2>
+              <div class="proj-tech-row"><span class="proj-tech">Make</span><span class="proj-tech">GitHub webhooks</span><span class="proj-tech">Facebook Pages</span></div>
+            </div>
+            <div class="project-side-card">
+              <h2>Links</h2>
+              <ul class="project-link-list">
+                <li><a href="https://github.com/potaterrr/make-commits" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="/blog/make-com-free-plan-ops-math.html">The ops math ↗</a></li>
+              </ul>
+            </div>
+            <div class="project-side-card">
+              <h2>Category</h2>
+              <p><a href="/projects/#ops">Ops &amp; Publishing</a></p>
+            </div>
+          </aside>
+        </div>
+        <nav class="post-nav project-nav" aria-label="More projects">
+          <a href="/projects/rss-news/">&larr; rss-news</a>
+          <a href="/projects/tippy-card-monte/">Tippy Card Monte &rarr;</a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <p><em>"Mashing the boring stuff so you don't have to."</em></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js" defer></script>
+</body>
+</html>

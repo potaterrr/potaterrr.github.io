@@ -1259,6 +1259,12 @@
     a.addEventListener("click", () => openDemo(a.getAttribute("data-hiw-open")));
   });
 
-  openDemo("vr");
+  /* Project pages deep-link into a specific demo with ?demo=vr|ar|dlf. */
+  const demoParam = new URLSearchParams(window.location.search).get("demo");
+  const initialDemo =
+    demoParam && switchBtns.some((b) => b.getAttribute("data-hiw-switch") === demoParam)
+      ? demoParam
+      : "vr";
+  openDemo(initialDemo);
 
 })();

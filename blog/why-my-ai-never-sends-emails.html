@@ -16,21 +16,26 @@
   <meta property="og:title" content="Why my AI never sends emails — potaterrr" />
   <meta property="og:description" content="The human-in-the-loop pattern behind Dead Lead Retrieval: LLM drafts, Gmail holds, human approves. Guardrails, war stories and the case for keeping judgment out of the loop&#x27;s hands." />
   <meta property="og:url" content="https://potaterrr.github.io/blog/why-my-ai-never-sends-emails.html" />
-  <meta property="og:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <meta property="og:image" content="https://potaterrr.github.io/assets/og/blog/why-my-ai-never-sends-emails.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="potaterrr — automation developer" />
+  <meta property="og:image:alt" content="Why my AI never sends emails — potaterrr" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Why my AI never sends emails — potaterrr" />
   <meta name="twitter:description" content="The human-in-the-loop pattern behind Dead Lead Retrieval: LLM drafts, Gmail holds, human approves. Guardrails, war stories and the case for keeping judgment out of the loop&#x27;s hands." />
-  <meta name="twitter:image" content="https://potaterrr.github.io/assets/og-image.png" />
+  <meta name="twitter:image" content="https://potaterrr.github.io/assets/og/blog/why-my-ai-never-sends-emails.png" />
   <meta property="article:published_time" content="2026-08-26" />
+  <meta property="article:modified_time" content="2026-08-26" />
   <meta property="article:author" content="Christian John" />
   <meta property="article:section" content="Automation" />
+  <meta property="article:tag" content="LLM" />
+  <meta property="article:tag" content="Email" />
+  <meta property="article:tag" content="Guardrails" />
   <link rel="icon" href="/assets/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png" />
   <link rel="apple-touch-icon" href="/assets/favicon-180.png" />
   <link rel="alternate" type="application/rss+xml" title="potaterrr — posts" href="https://potaterrr.github.io/feed.xml" />
+  <link rel="alternate" type="application/feed+json" title="potaterrr — posts (JSON)" href="https://potaterrr.github.io/feed.json" />
   <link rel="stylesheet" href="/css/style.css" />
   <script>(function(){try{var t=localStorage.getItem("theme");if(!t)t=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";if(t==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}})();</script>
   <noscript><style>
@@ -54,6 +59,8 @@
   "datePublished": "2026-08-26",
   "dateModified": "2026-08-26",
   "inLanguage": "en",
+  "wordCount": 844,
+  "keywords": "LLM, Email, Guardrails",
   "author": {
     "@type": "Person",
     "name": "Christian John",
@@ -68,7 +75,7 @@
     "@type": "WebPage",
     "@id": "https://potaterrr.github.io/blog/why-my-ai-never-sends-emails.html"
   },
-  "image": "https://potaterrr.github.io/assets/og-image.png"
+  "image": "https://potaterrr.github.io/assets/og/blog/why-my-ai-never-sends-emails.png"
 }
   </script>
   <script type="application/ld+json">
@@ -99,6 +106,7 @@
 </head>
 <body>
   <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
   <div class="post-progress" aria-hidden="true"><span class="post-progress-fill"></span></div>
 
   <nav class="nav" aria-label="Site">
@@ -109,7 +117,7 @@
         <span class="brand-tag">automation</span>
       </a>
       <ul class="nav-links" id="site-menu">
-        <li><a href="/#projects">Projects</a></li>
+        <li><a href="/projects/">Projects</a></li>
         <li><a href="/#how-it-works">Demo</a></li>
         <li><a href="/#timeline">Timeline</a></li>
         <li><a href="/blog/" aria-current="page">Blog</a></li>
@@ -133,8 +141,11 @@
               <span class="sep" aria-hidden="true">/</span>
               <span class="reading-time">8 min read</span>
               <span class="sep" aria-hidden="true">/</span>
+              <span class="reading-time">844 words</span>
+              <span class="sep" aria-hidden="true">/</span>
               <span class="post-author-inline"><img src="/assets/pfp-192.jpg" alt="" width="22" height="22" loading="lazy" decoding="async" />Christian John</span>
             </div>
+            <div class="post-tags"><a class="tag-chip" href="/blog/?tag=llm">LLM</a><a class="tag-chip" href="/blog/?tag=email">Email</a><a class="tag-chip" href="/blog/?tag=guardrails">Guardrails</a></div>
           </header>
 
           <details class="post-toc" open>
@@ -200,6 +211,10 @@
           </div>
 
           <div class="post-foot">
+            <div class="related-posts">
+              <h2 class="related-title">Related notes</h2>
+              <div class="related-grid"><a class="related-card" href="/blog/ar-invoice-agent-challenges.html"><span class="related-meta">Oct 28, 2026 · 7 min read</span><strong>The invoice chaser: three bugs, one rule</strong><span>Building an n8n accounts-receivable agent that drafts overdue invoice reminders: Gemini returning an empty response to a structured parser, a signature the model kept rewriting, a cooldown that had to exist, and the one rule that shaped all of it.</span></a><a class="related-card" href="/blog/one-receptionist-three-engines.html"><span class="related-meta">Aug 26, 2026 · 9 min read</span><strong>One receptionist, three engines</strong><span>I built the same AI clinic receptionist on Make, n8n and Zapier. Here&#x27;s what broke, what shone, and which automation engine to pick for whom. A HIPAA-compliant build is available.</span></a></div>
+            </div>
             <div class="author-card">
               <img src="/assets/pfp-192.jpg" alt="" width="52" height="52" loading="lazy" decoding="async" />
               <p><strong>Christian John · potaterrr</strong>Automation developer building AI voice receptionists and pipelines on Make.com, n8n and Python. If a task is repetitive, I know a workflow for it. <a href="/#contact">Work with me &rarr;</a></p>
@@ -221,7 +236,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <p><em>"Mashing the boring stuff so you don't have to."</em></p>
-      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
+      <p>© <span id="year"></span> Christian John · <a href="https://github.com/potaterrr" target="_blank" rel="noopener">github.com/potaterrr</a> · <a href="/projects/">projects</a> · <a href="/blog/">all posts</a> · <a href="/feed.xml">RSS</a></p>
     </div>
   </footer>
 
