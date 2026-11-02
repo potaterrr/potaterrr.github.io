@@ -253,7 +253,7 @@ def contact_page() -> str:
         "contact", "Contact", "$ ping potaterrr",
         "Book a fit call about your clinic's phones or any workflow you want off your plate — or message me on WhatsApp.",
         "contact.html",
-        "Book a fit call with Christian John (potaterrr), or reach out on WhatsApp, Telegram, Facebook or email.",
+        "Book a fit call with Christian John (potaterrr), or reach out on WhatsApp, Cal.com, Facebook or email.",
         "contact",
     )
 
