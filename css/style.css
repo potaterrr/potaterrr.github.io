@@ -3209,3 +3209,32 @@ html[data-theme="light"] .btn-primary:hover {
   margin-bottom: 12px;
   color: var(--green);
 }
+
+/* Career timeline */
+.career-role {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin: -2px 0 8px;
+}
+
+.career-edu {
+  margin-top: 18px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.timeline-more {
+  margin-top: 18px;
+}
+
+.timeline-more a {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.timeline-more a:hover {
+  text-decoration: underline;
+}
