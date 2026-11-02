@@ -3205,7 +3205,7 @@ html[data-theme="light"] .btn-primary:hover {
 }
 
 .patch-pending h2 {
-  font-size: 1.05rem;
-  margin-bottom: 10px;
+  font-size: 1.35rem;
+  margin-bottom: 12px;
   color: var(--green);
 }

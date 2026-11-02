@@ -121,7 +121,7 @@
         <p class="project-tagline">A wholesome micro-MMO in a single HTML file. The ads took the beach; the locals kept the kettle on.</p>
         <div class="project-badges"><span class="project-badge">Game</span><span class="project-badge">Beta</span><span class="project-badge">Single file</span><span class="project-badge project-badge-status">Beta</span></div>
         <div class="project-metrics"><div class="project-metric"><span>Version</span><strong>v0.6.7 beta</strong></div><div class="project-metric"><span>Classes</span><strong>7</strong></div><div class="project-metric"><span>Co-op</span><strong>Same keyboard</strong></div></div>
-        <div class="cta-row project-actions"><a class="btn btn-primary" href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta</a><a class="btn btn-ghost" href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a><a class="btn btn-ghost" href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo</a></div>
+        <div class="cta-row project-actions"><a class="btn btn-primary" href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta</a><a class="btn btn-ghost" href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a><a class="btn btn-ghost" href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="#pending">Pending</a></div>
       </div>
     </section>
 
@@ -214,17 +214,6 @@
 <p>Massive changes: added a new <strong>Engineer</strong> class with deployable turrets and an Overclock burst, plus a full achievement pass — seven new medals (Algorithm Unplugged, Shield Wall, Sharpshooter, Speed Reader, Better Together, Big Spender, Spotless), unlock toasts, and a medal gallery in the pause screen. Wave, class, co-op, economy and cleanup milestones now all grant medals. The submission zip was refreshed.</p>
   </div>
 </details>
-<section class="patch-pending"><h2>Still pending</h2><p>This is a <strong>beta</strong>. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static <code>index.html</code> on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.</p>
-<h3>Achievements</h3>
-<p>Six wave medals ship today, listed on the pause screen. Still pending:</p>
-<ul><li>A real medal gallery: a collection screen with locked silhouettes, unlock dates, progress bars, and a &quot;new&quot; dot until you have looked at it.</li><li>Achievements for the rest of the game, not just wave milestones: first boss, 100% island clarity, ten kindness notes, a full run without being knocked out, a clear with each class, a co-op clear, wave 20.</li><li>Unlock toasts and a small fanfare when a medal lands, instead of only finding it later in the pause screen.</li><li>Account-wide achievements. Today they live in <code>localStorage</code> and vanish when site data is cleared.</li></ul>
-<h3>Cool items</h3>
-<p>Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy and Kettle Break — and most are quietly a free upgrade rank. Still pending:</p>
-<ul><li>A real inventory: slots, stacking, descriptions, and a &quot;found on wave N&quot; line.</li><li>Cosmetic drops that change how your hero looks — hats, brooms, trails, emotes — plus an equip screen. The class-picker cosmetics are the only cosmetic today.</li><li>Rarity tiers, set bonuses, and a reason to keep an item once its upgrade is maxed.</li><li>Items that change a run: one-use lures, placeable turrets, a kettle you can set down for the locals.</li><li>Trading and gifting between players. That needs accounts and a server first.</li></ul>
-<h3>What an MMORPG still needs</h3>
-<p>The &quot;MMO&quot; in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:</p>
-<ul><li><strong>Online multiplayer.</strong> Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches.</li><li><strong>Accounts and cross-device saves.</strong> Sign-in, cloud saves and conflict handling. Today progress belongs to one browser&#x27;s <code>localStorage</code>.</li><li><strong>Moderated chat.</strong> Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.</li><li><strong>Parties, friends and guilds.</strong> Invites, presence, shared objectives, and a reason to log in together.</li><li><strong>Quests, raids and world events.</strong> Content beyond the wave ladder, with rewards that respect everyone&#x27;s time.</li><li><strong>A player economy.</strong> Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.</li><li><strong>Anti-cheat and fair play.</strong> Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.</li><li><strong>Live ops.</strong> Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.</li><li><strong>Accessibility and localisation.</strong> Remapping, a screen-reader pass, reduced-motion parity, and translated copy.</li><li><strong>A content pipeline.</strong> The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.</li></ul>
-<p>Until then, the honest description is: a single-player and local co-op cozy micro-MMO with bots, in beta.</p></section>
 <details class="patch-release">
   <summary>
     <span class="patch-version">v0.6.1</span>
@@ -498,6 +487,20 @@
           <p>Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them.</p><p>Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.6.7 beta</strong>.</p>
           
         </section>
+        <section class="project-block patch-pending" id="pending">
+          <h2>Still pending</h2>
+<p>This is a <strong>beta</strong>. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static <code>index.html</code> on GitHub Pages cannot provide on its own. This section lives beside the patch notes until each line is either shipped or honestly dropped.</p>
+<h3>Achievements</h3>
+<p>Six wave medals ship today, listed on the pause screen. Still pending:</p>
+<ul><li>A real medal gallery: a collection screen with locked silhouettes, unlock dates, progress bars, and a &quot;new&quot; dot until you have looked at it.</li><li>Achievements for the rest of the game, not just wave milestones: first boss, 100% island clarity, ten kindness notes, a full run without being knocked out, a clear with each class, a co-op clear, wave 20.</li><li>Unlock toasts and a small fanfare when a medal lands, instead of only finding it later in the pause screen.</li><li>Account-wide achievements. Today they live in <code>localStorage</code> and vanish when site data is cleared.</li></ul>
+<h3>Cool items</h3>
+<p>Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy and Kettle Break — and most are quietly a free upgrade rank. Still pending:</p>
+<ul><li>A real inventory: slots, stacking, descriptions, and a &quot;found on wave N&quot; line.</li><li>Cosmetic drops that change how your hero looks — hats, brooms, trails, emotes — plus an equip screen. The class-picker cosmetics are the only cosmetic today.</li><li>Rarity tiers, set bonuses, and a reason to keep an item once its upgrade is maxed.</li><li>Items that change a run: one-use lures, placeable turrets, a kettle you can set down for the locals.</li><li>Trading and gifting between players. That needs accounts and a server first.</li></ul>
+<h3>What an MMORPG still needs</h3>
+<p>The &quot;MMO&quot; in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:</p>
+<ul><li><strong>Online multiplayer.</strong> Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches.</li><li><strong>Accounts and cross-device saves.</strong> Sign-in, cloud saves and conflict handling. Today progress belongs to one browser&#x27;s <code>localStorage</code>.</li><li><strong>Moderated chat.</strong> Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.</li><li><strong>Parties, friends and guilds.</strong> Invites, presence, shared objectives, and a reason to log in together.</li><li><strong>Quests, raids and world events.</strong> Content beyond the wave ladder, with rewards that respect everyone&#x27;s time.</li><li><strong>A player economy.</strong> Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.</li><li><strong>Anti-cheat and fair play.</strong> Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.</li><li><strong>Live ops.</strong> Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.</li><li><strong>Accessibility and localisation.</strong> Remapping, a screen-reader pass, reduced-motion parity, and translated copy.</li><li><strong>A content pipeline.</strong> The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.</li></ul>
+<p>Until then, the honest description is: a single-player and local co-op cozy micro-MMO with bots, in beta.</p>
+        </section>
 
         <section class="project-block">
           <h2>Screenshots</h2>
@@ -513,7 +516,7 @@
             <div class="project-side-card">
               <h2>Links</h2>
               <ul class="project-link-list">
-                <li><a href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta ↗</a></li><li><a href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a></li><li><a href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo ↗</a></li>
+                <li><a href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta ↗</a></li><li><a href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a></li><li><a href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="#pending">Pending</a></li>
               </ul>
             </div>
             <div class="project-side-card">

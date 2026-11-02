@@ -540,6 +540,7 @@ def render_patch_notes() -> str:
         i += 1
 
     parts = []
+    pending_body = []
     first_release = True
     while i < len(lines):
         heading = lines[i][3:].strip()
@@ -550,7 +551,7 @@ def render_patch_notes() -> str:
             i += 1
 
         if heading.lower().startswith("still pending"):
-            parts.append(f'<section class="patch-pending"><h2>{esc(heading)}</h2>{md_blocks(body)}</section>')
+            pending_body = body
             continue
 
         ver, channel, date = heading, "", ""
@@ -590,7 +591,7 @@ def render_patch_notes() -> str:
 </details>""")
         first_release = False
 
-    return f"""        <section class="project-block patch-notes" id="patch-notes">
+    patch_html = f"""        <section class="project-block patch-notes" id="patch-notes">
           <div class="patch-head">
             <h2>Patch notes</h2>
             <a class="patch-full" href="https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Full changelog ↗</a>
@@ -602,6 +603,15 @@ def render_patch_notes() -> str:
 {chr(10).join(parts)}
           </div>
         </section>"""
+
+    pending_html = ""
+    if pending_body:
+        pending_html = f"""        <section class="project-block patch-pending" id="pending">
+          <h2>Still pending</h2>
+{md_blocks(pending_body)}
+        </section>"""
+
+    return patch_html, pending_html
 
 
 def project_page(p: dict) -> str:
@@ -645,6 +655,10 @@ def project_page(p: dict) -> str:
             <p class="project-embed-note">{esc(e["note"])}</p>
           </div>
         </section>"""
+
+    patch_html, pending_html = ("", "")
+    if p.get("patch_notes"):
+        patch_html, pending_html = render_patch_notes()
 
     embed_html = ""
     if p.get("demo_url"):
@@ -736,7 +750,8 @@ def project_page(p: dict) -> str:
       <div class="container">
         <div class="project-layout">
           <div class="project-main">
-{render_sections(p.get("sections", []), render_patch_notes() if p.get("patch_notes") else "")}
+{render_sections(p.get("sections", []), patch_html)}
+{pending_html}
 {embed_html}
 {gallery}
 {related_posts_html}

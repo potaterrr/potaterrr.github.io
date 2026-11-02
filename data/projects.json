@@ -879,6 +879,10 @@
           "label": "Repo",
           "href": "https://github.com/potaterrr/adblock-island",
           "external": true
+        },
+        {
+          "label": "Pending",
+          "href": "#pending"
         }
       ],
       "sections": [

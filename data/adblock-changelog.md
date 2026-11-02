@@ -48,7 +48,7 @@ Massive changes: added a new **Engineer** class with deployable turrets and an O
 
 ## Still pending
 
-This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.
+This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section lives beside the patch notes until each line is either shipped or honestly dropped.
 
 ### Achievements
 
