@@ -45,6 +45,26 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.2 — Performance & four-boss Mania (2026-11-04)
+
+A performance patch with one Mania option. No class, dock or theme rewrites.
+
+### Performance
+
+- **Canvas resolution cap lowered to 1.5× on desktop and 1.25× on touch devices.** It still looks crisp, and it removes roughly 44–65% of the pixels a 2×/3× screen used to push every frame.
+- **60 fps render ceiling.** Logic still updates every animation frame, but 90/120 Hz screens no longer redraw the whole canvas twice as often as needed.
+- **Cached full-screen gradients.** The ocean gradient, normal vignette and Halloween layer are built once per size instead of every frame.
+- **Halloween overlay is now an offscreen layer.** The pumpkin moon, wash and vignette are composited once; only the fog and bats animate. The duplicate normal-theme vignette is skipped while Halloween is on.
+- **Minimap terrain is cached.** The static island is drawn once to an offscreen canvas; each minimap refresh only redraws corruption, markers and the camera box.
+- **Lighter water pass.** Fewer wave lines, a wider sampling step and fewer sparkles, with the same overall look.
+- **Touch-aware effects.** The Halloween overlay and ocean pass use fewer fog bands, bats and wave samples on touch devices.
+
+### Four-boss Mania
+
+- The Algorithm's pair chance is now **50%** (was 40%).
+- New **Settings → Four-boss Mania** toggle, on by default. Each boss can split **twice** below **50% health**, so one boss can still become four as the health bar drops. The live cap remains **4**.
+- Turn the toggle off to restore the old one-split rule. Partial boss rewards, the `×N` boss bar and the final-defeat collapse are unchanged.
+
 ## v0.9.1 — Halloween readability (2026-11-04)
 
 A small patch for the new seasonal theme. No gameplay changes.
