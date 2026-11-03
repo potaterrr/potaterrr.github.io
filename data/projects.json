@@ -1114,11 +1114,11 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a smoother canvas, and four-boss Mania.",
-      "summary": "Pick one of nine classes, sweep the static, and survive Mania — 50% boss pairs, Four-boss Mania, and a smoother canvas with DPR caps and cached layers. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, four-boss Mania, and smoother boss fights.",
+      "summary": "Pick one of nine classes, sweep the static, and survive Mania — 50% boss pairs, Four-boss Mania, and boss fights that lower resolution and cap adds to stay smooth. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.9.2",
-      "channel": "performance",
+      "version": "0.9.3",
+      "channel": "boss performance",
       "badges": [
         "Game",
         "Beta",
@@ -1130,7 +1130,7 @@
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.9.2 Performance"
+          "value": "v0.9.3 Boss performance"
         },
         {
           "label": "Classes",
@@ -1149,14 +1149,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.9.2",
+          "label": "Play v0.9.3",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.9.2",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.9.2.zip"
+          "label": "Download v0.9.3",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.9.3.zip"
         },
         {
           "label": "Repo",
@@ -1174,7 +1174,7 @@
           "body": [
             "AdBlock Island is a small, wholesome micro-MMO about cleaning up a beach that ads have overrun. You wash ashore with a broom and a class, and the islanders save you a spot by the fire.",
             "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio.",
-            "The v0.9.2 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. It also lowers the canvas resolution cap on high-DPI screens, caches the ocean gradient, Halloween layer and minimap terrain, adds a 60 fps render ceiling, and raises the boss pair chance to 50% with a Four-boss Mania option."
+            "The v0.9.3 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. Boss fights now lower the canvas resolution while any boss is alive, cap live adds at eight, draw fewer ornaments and projectiles with multiple bosses, and cache the sponsored cards and boss-bar gradient."
           ]
         },
         {
@@ -1183,6 +1183,7 @@
             "Nine classes with their own silhouettes, gear, projectiles and hit behaviour",
             "Archivist support and Moderator crowd control, with marks, stuns and party utility",
             "Mania: death resets the run, 50% boss pairs, and Four-boss Mania through health-bar splits",
+            "Boss fights lower resolution while active and cap adds to keep four Algorithms smooth",
             "A south-shore dock with Mira the shopkeeper, and a readable autumn-dusk Halloween theme",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
@@ -1195,7 +1196,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.2 Performance & four-boss Mania</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.3 Boss-fight performance</strong>."
           ]
         }
       ],

@@ -45,6 +45,25 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.3 — Boss-fight performance (2026-11-04)
+
+A focused hotfix for the moment the Algorithm arrives with friends.
+
+### Rendering
+
+- **Boss fights render at a lower resolution.** The canvas drops to 1.1× on desktop and 1.0× on touch while any boss is alive, then restores the normal cap when the last one dies. The scene is still sharp enough for a boss fight and much cheaper to fill.
+- **Fewer ornaments per boss.** When more than one boss is live, each body draws fewer glitch rows and two orbiting sponsored cards instead of four.
+- **Cached sponsored cards.** The orbiting cards are pre-rendered once instead of redrawing their text every frame.
+- **Cached boss-bar gradient.** The health bar no longer rebuilds its gradient every frame.
+- **Nameplate budget.** Multi-boss fights cap nearby monster nameplates, so the screen does not spend its frame on 20 tiny labels.
+
+### Boss adds
+
+- Boss adds are capped at **8 live** during multi-boss fights, and each boss summons fewer at the 70%/36% thresholds.
+- Summoned adds use a much smaller spawn burst, so four bosses cannot dump hundreds of particles in one frame.
+- Boss radial volleys are **6 projectiles** instead of 9 when more than one boss is live.
+- Single-boss fights keep the original add counts and 9-projectile volleys.
+
 ## v0.9.2 — Performance & four-boss Mania (2026-11-04)
 
 A performance patch with one Mania option. No class, dock or theme rewrites.
