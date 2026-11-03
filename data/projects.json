@@ -286,12 +286,157 @@
       ],
       "related_projects": [
         "happyfone-webui",
-        "ar-invoice-reminder"
+        "ar-invoice-reminder",
+        "sales-call-qa"
       ],
       "related_posts": [
         "one-receptionist-three-engines"
       ],
-      "demo_url": "https://potaterrr.github.io/voice-receptionist/"
+      "demo_url": "https://potaterrr.github.io/voice-receptionist/",
+      "use_cases": [
+        {
+          "title": "After-hours intake",
+          "body": "Answer the calls that arrive after the front desk closes, capture the reason for the call, and book the next open slot."
+        },
+        {
+          "title": "Lunch and overflow",
+          "body": "Pick up the calls a busy team cannot reach, so a ringing phone never becomes a lost patient."
+        },
+        {
+          "title": "New-patient screening",
+          "body": "Collect insurance, contact details and the reason for the visit before a human touches the schedule."
+        },
+        {
+          "title": "Cancellation recovery",
+          "body": "Offer freed slots to callers instead of letting them fall into voicemail."
+        }
+      ]
+    },
+    {
+      "slug": "sales-call-qa",
+      "category": "automations",
+      "title": "Sales Call QA & Coaching",
+      "tagline": "Score every sales call against the same rubric — and only bother a manager when the evidence is thin.",
+      "summary": "A Retell webhook, Gemini scoring with structured output, quoted-evidence verification, a review gate, a scorecard data table and a weekly Gmail coaching digest for sales teams.",
+      "status": "Working demo on synthetic calls",
+      "badges": [
+        "Human-in-the-loop",
+        "Evidence-checked",
+        "n8n"
+      ],
+      "metrics": [
+        {
+          "label": "Engine",
+          "value": "n8n"
+        },
+        {
+          "label": "Voice layer",
+          "value": "Retell"
+        },
+        {
+          "label": "Output",
+          "value": "Scorecard + draft"
+        }
+      ],
+      "tech": [
+        "n8n",
+        "Google Gemini",
+        "Retell",
+        "Gmail",
+        "Data tables"
+      ],
+      "links": [
+        {
+          "label": "Try the simulation",
+          "href": "/projects/sales-call-qa/demo/",
+          "primary": true,
+          "external": true
+        },
+        {
+          "label": "Download workflow JSON",
+          "href": "/projects/sales-call-qa/workflow.json"
+        },
+        {
+          "label": "Setup notes",
+          "href": "/projects/sales-call-qa/README.md"
+        },
+        {
+          "label": "The review rule",
+          "href": "#use-cases"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Overview",
+          "body": [
+            "Sales calls are the revenue engine, but managers only hear the one call they happened to sit in on. Coaching runs on memory, and the same objection gets mishandled in three different ways.",
+            "This workflow scores every call against the same five-part rubric, quotes the exact line behind each score, and routes only the calls that need a human — low confidence, a red flag, or a compliance miss. Everything else lands in a data table and a Monday digest."
+          ]
+        },
+        {
+          "title": "How it works",
+          "bullets": [
+            "Retell posts the finished call to a webhook; a form accepts a pasted transcript for testing",
+            "A Code node normalizes the payload and refuses to score a call without a usable transcript",
+            "Gemini scores opening, discovery, objection handling, next step and compliance through a structured output parser",
+            "A second Code node clamps the scores, recomputes the weighted overall, verifies each quote against the transcript, and redacts emails and phone numbers",
+            "Clean calls go to the Sales Call QA data table; risky or low-confidence calls also become a Gmail draft for a manager",
+            "Every Monday, a digest aggregates the last week per rep and files one coaching draft"
+          ]
+        },
+        {
+          "title": "Guardrails",
+          "bullets": [
+            "Every score must cite an exact quote; unverifiable evidence lowers confidence and forces review",
+            "The overall is computed in code, not guessed by the model",
+            "Any red flag, compliance below 3, or confidence below 0.75 always needs a human",
+            "No objection? Objection handling scores 3 with “no objection in transcript” — the rep is not punished for an easy call",
+            "Nothing is sent automatically — Gmail drafts wait for a manager",
+            "Transcripts are truncated, and emails and phone numbers are redacted in the stored evidence"
+          ]
+        },
+        {
+          "title": "Honest limits",
+          "body": [
+            "The demo runs on synthetic calls. The Retell webhook is wired, but live telephony needs a real Retell agent and a public n8n URL. On the demo instance the Gmail credential was expired during the build, so draft creation is skipped while the scorecard still saves — reconnect it to see the manager drafts."
+          ]
+        }
+      ],
+      "use_cases": [
+        {
+          "title": "New-hire onboarding",
+          "body": "Baseline a new SDR in week one and track opening, discovery, objection handling, next step and compliance as they improve."
+        },
+        {
+          "title": "Weekly rep coaching",
+          "body": "Give every rep a scorecard with exact quotes instead of a manager’s memory of one call."
+        },
+        {
+          "title": "Objection library",
+          "body": "Find the objections that get dismissed and turn the best responses into a shared playbook."
+        },
+        {
+          "title": "Next-step discipline",
+          "body": "Catch calls that end with “I’ll follow up sometime” and coach the date-and-owner habit."
+        },
+        {
+          "title": "AI SDR QA",
+          "body": "Score the AI SDR with the same rubric as the humans, so the comparison is honest."
+        },
+        {
+          "title": "Compliance review",
+          "body": "Check recording disclosure, pricing claims and do-not-call handling across the team."
+        }
+      ],
+      "related_projects": [
+        "dead-lead-retrieval",
+        "ai-voice-receptionist"
+      ],
+      "related_posts": [
+        "sales-call-qa"
+      ],
+      "demo_url": "/projects/sales-call-qa/demo/",
+      "demo_height": 980
     },
     {
       "slug": "ar-invoice-reminder",
@@ -373,13 +518,32 @@
       ],
       "related_projects": [
         "dead-lead-retrieval",
-        "ai-voice-receptionist"
+        "ai-voice-receptionist",
+        "sales-call-qa"
       ],
       "related_posts": [
         "ar-invoice-agent-challenges",
         "why-my-ai-never-sends-emails"
       ],
-      "demo_url": "https://potaterrr.github.io/ar-invoice-reminder-agent/"
+      "demo_url": "https://potaterrr.github.io/ar-invoice-reminder-agent/",
+      "use_cases": [
+        {
+          "title": "Net-30 and net-60 clients",
+          "body": "Sweep the tracker daily and match the reminder tone to how late the invoice actually is."
+        },
+        {
+          "title": "Retainer and milestone billing",
+          "body": "Chase the invoice without sounding like you are chasing the relationship."
+        },
+        {
+          "title": "Disputed invoices",
+          "body": "Stop the sequence when a client replies with a question and escalate with the full context."
+        },
+        {
+          "title": "Owner approval",
+          "body": "Every reminder waits as a Gmail draft; nobody sends a collections email by accident."
+        }
+      ]
     },
     {
       "slug": "dead-lead-retrieval",
@@ -466,7 +630,25 @@
         "why-my-ai-never-sends-emails",
         "ar-invoice-agent-challenges"
       ],
-      "demo_url": "https://potaterrr.github.io/dead-lead-retrieval/"
+      "demo_url": "https://potaterrr.github.io/dead-lead-retrieval/",
+      "use_cases": [
+        {
+          "title": "Dormant CRM",
+          "body": "Reopen old leads with a specific note that references the original conversation, not a blast."
+        },
+        {
+          "title": "Quote follow-up",
+          "body": "Follow up on estimates that never got a yes or a no, before they go cold."
+        },
+        {
+          "title": "Event and webinar lists",
+          "body": "Turn a tired attendee list into real conversations with a human approving every send."
+        },
+        {
+          "title": "Trial expiry",
+          "body": "Check in before a trial quietly lapses, with the original context already in the draft."
+        }
+      ]
     },
     {
       "slug": "job-scrapper",
@@ -546,6 +728,24 @@
       "related_posts": [
         "job-scrapper-discord-gemini",
         "feeding-make-com-from-python"
+      ],
+      "use_cases": [
+        {
+          "title": "Job seekers",
+          "body": "Get fresh listings in Discord before the board fills with applicants."
+        },
+        {
+          "title": "Recruiters",
+          "body": "Watch niche categories and keywords without refreshing the site all day."
+        },
+        {
+          "title": "Niche boards",
+          "body": "Swap the source and keep the same summarize-and-post pipeline."
+        },
+        {
+          "title": "Alert channels",
+          "body": "One embed per job, deduped, every four hours, so the channel stays readable."
+        }
       ]
     },
     {
@@ -610,7 +810,25 @@
         "job-scrapper",
         "make-commits"
       ],
-      "related_posts": []
+      "related_posts": [],
+      "use_cases": [
+        {
+          "title": "Personal watchlist",
+          "body": "One symbol, one strategy, one scheduled JSON payload."
+        },
+        {
+          "title": "Downstream bots",
+          "body": "Feed Make, n8n or a Telegram bot without scraping a chart."
+        },
+        {
+          "title": "Paper trading",
+          "body": "Test a crossover rule before risking money on it."
+        },
+        {
+          "title": "Forex and equities",
+          "body": "Normalize symbols like USD/PHP automatically and keep the schedule boring."
+        }
+      ]
     },
     {
       "slug": "rss-news",
@@ -682,6 +900,24 @@
       ],
       "related_posts": [
         "make-com-free-plan-ops-math"
+      ],
+      "use_cases": [
+        {
+          "title": "Community pages",
+          "body": "A weekly AI and tech digest that drafts, illustrates and publishes itself."
+        },
+        {
+          "title": "Newsletters",
+          "body": "Collect the useful links, filter the noise, and leave the post ready to review."
+        },
+        {
+          "title": "Brand monitoring",
+          "body": "Watch a keyword set across feeds and surface only the links that matter."
+        },
+        {
+          "title": "Content repurposing",
+          "body": "Turn the week’s reading into a post with a graphic, without opening five tabs."
+        }
       ]
     },
     {
@@ -750,6 +986,24 @@
       ],
       "related_posts": [
         "make-com-free-plan-ops-math"
+      ],
+      "use_cases": [
+        {
+          "title": "Build in public",
+          "body": "Every push becomes a changelog post seconds later, with no manual posting."
+        },
+        {
+          "title": "Team updates",
+          "body": "A shared page that shows what shipped without another stand-up."
+        },
+        {
+          "title": "Client visibility",
+          "body": "Give a client a progress feed without exposing the repository."
+        },
+        {
+          "title": "Portfolio syndication",
+          "body": "Keep the social page alive while the real work stays in Git."
+        }
       ]
     },
     {
@@ -860,20 +1114,21 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. The ads took the beach; the locals kept the kettle on.",
-      "summary": "Pick a class, sweep the static, bonk ad-monsters, clear Endless mode and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. The ads took the beach. Mania took the schedule.",
+      "summary": "Pick a class, sweep the static, survive Mania — death resets the run, two bosses can spawn, and bosses split at 50%. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.7.0",
-      "channel": "beta",
+      "version": "0.8.0",
+      "channel": "mania",
       "badges": [
         "Game",
         "Beta",
+        "Mania",
         "Single file"
       ],
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.7.0 beta"
+          "value": "v0.8.0 Mania"
         },
         {
           "label": "Classes",
@@ -892,14 +1147,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.7.0 beta",
+          "label": "Play v0.8.0 Mania",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.7.0",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.7.0.zip"
+          "label": "Download v0.8.0",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.8.0.zip"
         },
         {
           "label": "Repo",
@@ -923,6 +1178,7 @@
           "title": "What's in the beta",
           "bullets": [
             "Seven classes with their own silhouettes, gear, projectiles and hit behaviour",
+            "Mania: death resets the run, two bosses can spawn, and bosses split at 50%",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
             "Five Endless medals and a damage curve that punishes no-upgrade runs",
@@ -934,7 +1190,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.7.0 beta</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.8.0 Mania</strong>."
           ]
         }
       ],

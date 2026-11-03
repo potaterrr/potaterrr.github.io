@@ -4,6 +4,32 @@ All notable changes to AdBlock Island. The game is a single `index.html`, and th
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release since the first build is listed below, newest first.
 
+## v0.8.0 — Mania (2026-11-04)
+
+Mania mode is live. Death resets the run, and the Algorithm brings friends.
+
+### Death resets the run
+
+- Dying now restarts the run at **wave 1 (Super Easy)**. Joy, upgrades, level, XP, boss progress and island corruption reset with it.
+- The death animation still plays, then the island resets. There is no bench respawn.
+- Medals, notes, settings, cosmetics and lifetime bests still persist.
+
+### Boss mania
+
+- The Algorithm encounter has a **40% chance** to spawn **two bosses at once**.
+- Any boss below **50% health** summons another boss. Cap: **4 active bosses**.
+- Downing one boss pays partial Joy and XP; only the last one triggers the island collapse and the Algorithm Unplugged medal.
+- The boss bar and off-screen marker show `THE ALGORITHM ×N` while more than one is live.
+
+### Title
+
+- The title screen now carries the **MANIA** badge and a rules note: death resets the run, two bosses can spawn, bosses split at 50%.
+- The page title and social metadata read **AdBlock Island: Mania**.
+
+### Notes
+
+- The next-pass classes (**Archivist / support** and **Moderator / crowd control**) and the dock/shopkeeper are still planned, not shipped.
+
 ## v0.7.0 — beta (2026-11-04)
 
 Endless mode, checkpoints, mandatory upgrades and a damage curve. The campaign still ends at wave 10; the door after it now goes somewhere.
