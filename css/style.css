@@ -3210,3 +3210,19 @@ html[data-theme="light"] .btn-primary:hover {
   color: var(--accent);
   margin: -2px 0 8px;
 }
+
+/* Unsubscribe page footer link */
+.unsub-footer {
+  margin-top: 10px;
+}
+
+.unsub-footer a {
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.unsub-footer a:hover {
+  text-decoration: underline;
+}
