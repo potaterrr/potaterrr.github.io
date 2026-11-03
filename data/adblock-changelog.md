@@ -113,6 +113,11 @@ Massive changes: added a new **Engineer** class with deployable turrets and an O
 
 This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.
 
+### Next pass (planned)
+
+- **Two new classes.** **Archivist / support** and **Moderator / crowd control**, built as procedural Canvas art rather than image assets: class portraits, silhouettes, held gear, projectiles, hit effects, HUD icons and class-select cards. Each gets its own weapon, palette, silhouette and attack behaviour — no reskins.
+- **Dock and shopkeeper.** A small dock on the south shore and a shopkeeper NPC/stall, reserved as hooks for a future shop, travel and expansion content. Neither is a shop yet; they are the place and the character.
+
 ### Achievements
 
 Campaign medals, class clears, co-op, the boss, spending, cleanup and the new Endless milestones ship today, with a gallery and unlock toasts in the pause screen. Still pending:
