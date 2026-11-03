@@ -552,8 +552,11 @@ def md_blocks(lines) -> str:
     return "\n".join(out)
 
 
-def render_patch_notes() -> str:
-    md = (ROOT / "data" / "adblock-changelog.md").read_text(encoding="utf-8")
+def render_patch_notes(
+    filename: str = "adblock-changelog.md",
+    source_url: str = "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md",
+) -> str:
+    md = (ROOT / "data" / filename).read_text(encoding="utf-8")
     lines = md.splitlines()
     if lines and lines[0].startswith("# "):
         lines = lines[1:]
@@ -621,7 +624,7 @@ def render_patch_notes() -> str:
     patch_html = f"""        <section class="project-block patch-notes" id="patch-notes">
           <div class="patch-head">
             <h2>Patch notes</h2>
-            <a class="patch-full" href="https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md" target="_blank" rel="noopener">Full changelog ↗</a>
+            <a class="patch-full" href="{esc(source_url)}" target="_blank" rel="noopener">Full changelog ↗</a>
           </div>
           <div class="patch-intro">
 {md_blocks(intro)}
@@ -685,7 +688,10 @@ def project_page(p: dict) -> str:
 
     patch_html, pending_html = ("", "")
     if p.get("patch_notes"):
-        patch_html, pending_html = render_patch_notes()
+        patch_html, pending_html = render_patch_notes(
+            p.get("changelog", "adblock-changelog.md"),
+            p.get("changelog_url", "https://github.com/potaterrr/adblock-island/blob/main/CHANGELOG.md"),
+        )
 
     embed_html = ""
     if p.get("demo_url"):

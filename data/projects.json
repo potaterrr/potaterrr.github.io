@@ -756,25 +756,26 @@
       "slug": "tippy-card-monte",
       "category": "games",
       "title": "Tippy Card Monte",
-      "tagline": "Follow the shuffle. Find Tippy. Stay out of debt.",
-      "summary": "A pixel-art card monte built as a single self-contained page: watch the shuffle, pick the right card, and bank Tippy Coins while the deck grows from 3 to 16 cards.",
+      "tagline": "Follow the shuffle. Five modes. One very smug coin.",
+      "summary": "A pixel-art card monte in a single page: Classic, Endless, Daily, Blitz and Zen, plus checkpoint perks, mode bests and 13 medals. No build, no backend.",
       "status": "Playable",
       "badges": [
         "Game",
-        "Single file"
+        "Single file",
+        "5 modes"
       ],
       "metrics": [
         {
-          "label": "Deck",
-          "value": "3 → 16 cards"
+          "label": "Modes",
+          "value": "5"
         },
         {
-          "label": "Rounds",
-          "value": "16"
+          "label": "Campaign",
+          "value": "16 rounds"
         },
         {
-          "label": "Runs",
-          "value": "In the browser"
+          "label": "Endless",
+          "value": "Depth chase"
         }
       ],
       "tech": [
@@ -790,6 +791,10 @@
           "primary": true
         },
         {
+          "label": "Download v1.2.0",
+          "href": "/projects/tippy-card-monte/tippy-card-monte.zip"
+        },
+        {
           "label": "Source",
           "href": "https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte",
           "external": true
@@ -799,24 +804,57 @@
         {
           "title": "Overview",
           "body": [
-            "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed."
+            "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.",
+            "The 1.2.0 update turns it into a mode-based game: Classic, Endless, Daily, Blitz and Zen, with per-mode bests, checkpoint perks and a medal gallery."
           ]
         },
         {
-          "title": "How it plays",
+          "title": "Five modes",
           "bullets": [
-            "Watch Tippy shuffle, then pick the card they're under",
-            "Correct picks bank Tippy Coins, wrong picks take them away",
-            "The deck grows from 3 to 16 cards across 16 rounds",
-            "Stay in the green — going into debt ends the run",
-            "Everything runs locally: no accounts, no backend, no network calls"
+            "Classic — 16 rounds, seven stages, 3 to 16 cards. Finish above 0p to win.",
+            "Endless — no fail. Start at 16 cards, climb forever, and cash out when you want to bank your best depth.",
+            "Daily — one date-seeded 16-round shuffle per day. Today’s best score is saved.",
+            "Blitz — eight fast rounds with 6 to 16 cards. Pure score chase.",
+            "Zen — 16 rounds, no fail, no debt pressure, slower peeks."
+          ]
+        },
+        {
+          "title": "Checkpoints and perks",
+          "bullets": [
+            "Every 4 Endless depths pauses for a 30/40/50…p checkpoint bonus.",
+            "Choose one of three random perks: Longer Peek, Fewer Shuffles, Slow Hands, Coin Purse, Safety Net or Streak Guard.",
+            "Each perk has three ranks. Safety Net forgives one miss; Streak Guard keeps the streak.",
+            "The HUD shows the next checkpoint count and a double-press CASH OUT button."
+          ]
+        },
+        {
+          "title": "Medals and bests",
+          "bullets": [
+            "13 medals persist in localStorage, with unlock toasts and a gallery on the title screen.",
+            "Each mode keeps its own best score or best Endless depth.",
+            "The result screen reports mode, depth, new medals and the mode best.",
+            "Everything runs locally: no accounts, no backend, no network calls."
           ]
         }
       ],
       "related_projects": [
         "adblock-island"
       ],
-      "related_posts": []
+      "related_posts": [],
+      "version": "1.2.0",
+      "patch_notes": true,
+      "changelog": "tippy-changelog.md",
+      "changelog_url": "https://github.com/potaterrr/potaterrr.github.io/blob/main/data/tippy-changelog.md",
+      "gallery": [
+        {
+          "src": "/assets/projects/tippy-card-monte/title.png",
+          "alt": "Tippy Card Monte title screen with the mode selector and medal button"
+        },
+        {
+          "src": "/assets/projects/tippy-card-monte/checkpoint.png",
+          "alt": "Endless checkpoint screen with three perk cards and a cash out button"
+        }
+      ]
     },
     {
       "slug": "adblock-island",
