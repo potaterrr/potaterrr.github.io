@@ -4,6 +4,80 @@ All notable changes to AdBlock Island. The game is a single `index.html`, and th
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release since the first build is listed below, newest first.
 
+## Still pending
+
+This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.
+
+### Achievements
+
+Campaign medals, class clears, co-op, the boss, spending, cleanup and the new Endless milestones ship today, with a gallery and unlock toasts in the pause screen. Still pending:
+
+- Dated unlock history, locked silhouettes, progress bars, and a "new" dot until you have looked at it.
+- Achievements for ten kindness notes, a full run without being knocked out, and other non-wave milestones.
+- Account-wide achievements. Today they live in `localStorage` and vanish when site data is cleared.
+
+### Cool items
+
+Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy and Kettle Break — and most are quietly a free upgrade rank. Still pending:
+
+- A real inventory: slots, stacking, descriptions, and a "found on wave N" line.
+- Cosmetic drops that change how your hero looks — hats, brooms, trails, emotes — plus an equip screen. The class-picker cosmetics are the only cosmetic today.
+- Rarity tiers, set bonuses, and a reason to keep an item once its upgrade is maxed.
+- Items that change a run: one-use lures, placeable turrets, a kettle you can set down for the locals.
+- Trading and gifting between players. That needs accounts and a server first.
+
+### What an MMORPG still needs
+
+The "MMO" in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:
+
+- **Online multiplayer.** Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches. The concrete next step is the **4-player room-code plan** in [v0.7.0](#planned-4-player-online-rooms): Vercel static + signaling, free Redis, host-authoritative WebRTC, no accounts or anti-cheat yet.
+- **Accounts and cross-device saves.** Sign-in, cloud saves and conflict handling. Today progress belongs to one browser's `localStorage`.
+- **Moderated chat.** Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.
+- **Parties, friends and guilds.** Invites, presence, shared objectives, and a reason to log in together.
+- **Quests, raids and world events.** Content beyond the wave ladder, with rewards that respect everyone's time.
+- **A player economy.** Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.
+- **Anti-cheat and fair play.** Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.
+- **Live ops.** Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.
+- **Accessibility and localisation.** Remapping, a screen-reader pass, reduced-motion parity, and translated copy.
+- **A content pipeline.** The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.
+
+Until then, the honest description is: a single-player and local co-op cozy micro-MMO with bots, in beta.
+
+---
+
+## v0.9.0 — Archivist, Moderator & the dock (2026-11-04)
+
+Two new classes, a real south-shore dock, a Halloween theme, and a companion pass.
+
+### Two new classes
+
+- **Archivist / support.** Index Dart pierces and marks an ad, Cross-Reference marks and briefly stuns a cone, and Public Record heals and shields nearby friends while marking every ad in a wide ring. 100 HP, 0.90 power, 1.1 HP/s regen.
+- **Moderator / crowd control.** Ban Hammer knocks and stuns, Lock Thread roots a crowd, and Mass Ban is a wide knockback/stun/damage shockwave. 135 HP, 0.95 power, and 10% less incoming damage.
+- Both classes ship with procedural Canvas art: portraits, distinct silhouettes, headgear, held gear (stamp staff / gavel), projectiles, hit effects, HUD icons (`ledger`, `gavel`, `lock`), class-select cards and their own wave-5 medals (**Due Diligence**, **Thread Locked**).
+- The class picker now shows **nine classes**.
+
+### Dock and shopkeeper
+
+- The south shore now has a real **dock** (planks, posts, crates, lantern, bobbing boat and sign) with a minimap marker.
+- **Mira** the shopkeeper has a stall, awning, jars, a nameplate and an `F` prompt. The panel is honest about scope: the place and the character exist, while the shop, boat travel and dock quests are the next expansion.
+- The interaction prompt follows you between the kindness bench and the dock.
+
+### Companions
+
+- The AI healer is gone. Companions are exactly two, drawn from **AdBlocker, Reader-Mode, Archivist and Moderator**, and they never heal the real player. **Fact-Checker** and **Medic** remain player-only classes.
+- The Archivist companion marks ads; the Moderator companion stuns them. Their damage stays at 10% of the player's.
+
+### Halloween theme
+
+- **Default-on Halloween theme** with a Settings toggle: dark-purple paper and panels, a pumpkin moon, low fog, bats, jack-o'-lanterns on the beach, a purple sea, and a **HALLOWEEN** badge on the title screen.
+- The canvas gets a fog/vignette overlay; the HUD and title screen use the same palette so it reads as a theme rather than a tint.
+- Turn it off in **Settings → Halloween theme** for the original pastel island.
+
+### Notes
+
+- The Archivist/Moderator classes and the dock no longer appear in the pending list: they shipped.
+- Docs, README and the release zip are updated for v0.9.0.
+
 ## v0.8.0 — Mania (2026-11-04)
 
 Mania mode is live. Death resets the run, and the Algorithm brings friends.
@@ -28,7 +102,7 @@ Mania mode is live. Death resets the run, and the Algorithm brings friends.
 
 ### Notes
 
-- The next-pass classes (**Archivist / support** and **Moderator / crowd control**) and the dock/shopkeeper are still planned, not shipped.
+- The Archivist, Moderator, dock and shopkeeper were still planned at this point; they shipped in **v0.9.0**.
 
 ## v0.7.0 — beta (2026-11-04)
 
@@ -138,50 +212,6 @@ Massive changes: added four new classes — Engineer (deployable turrets + Overc
 ## v0.6.2 — beta (2026-11-02)
 
 Massive changes: added a new **Engineer** class with deployable turrets and an Overclock burst, plus a full achievement pass — seven new medals (Algorithm Unplugged, Shield Wall, Sharpshooter, Speed Reader, Better Together, Big Spender, Spotless), unlock toasts, and a medal gallery in the pause screen. Wave, class, co-op, economy and cleanup milestones now all grant medals. The submission zip was refreshed.
-
-## Still pending
-
-This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.
-
-### Next pass (planned)
-
-- **Two new classes.** **Archivist / support** and **Moderator / crowd control**, built as procedural Canvas art rather than image assets: class portraits, silhouettes, held gear, projectiles, hit effects, HUD icons and class-select cards. Each gets its own weapon, palette, silhouette and attack behaviour — no reskins.
-- **Dock and shopkeeper.** A small dock on the south shore and a shopkeeper NPC/stall, reserved as hooks for a future shop, travel and expansion content. Neither is a shop yet; they are the place and the character.
-
-### Achievements
-
-Campaign medals, class clears, co-op, the boss, spending, cleanup and the new Endless milestones ship today, with a gallery and unlock toasts in the pause screen. Still pending:
-
-- Dated unlock history, locked silhouettes, progress bars, and a "new" dot until you have looked at it.
-- Achievements for ten kindness notes, a full run without being knocked out, and other non-wave milestones.
-- Account-wide achievements. Today they live in `localStorage` and vanish when site data is cleared.
-
-### Cool items
-
-Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy and Kettle Break — and most are quietly a free upgrade rank. Still pending:
-
-- A real inventory: slots, stacking, descriptions, and a "found on wave N" line.
-- Cosmetic drops that change how your hero looks — hats, brooms, trails, emotes — plus an equip screen. The class-picker cosmetics are the only cosmetic today.
-- Rarity tiers, set bonuses, and a reason to keep an item once its upgrade is maxed.
-- Items that change a run: one-use lures, placeable turrets, a kettle you can set down for the locals.
-- Trading and gifting between players. That needs accounts and a server first.
-
-### What an MMORPG still needs
-
-The "MMO" in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:
-
-- **Online multiplayer.** Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches. The concrete next step is the **4-player room-code plan** in [v0.7.0](#planned-4-player-online-rooms): Vercel static + signaling, free Redis, host-authoritative WebRTC, no accounts or anti-cheat yet.
-- **Accounts and cross-device saves.** Sign-in, cloud saves and conflict handling. Today progress belongs to one browser's `localStorage`.
-- **Moderated chat.** Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.
-- **Parties, friends and guilds.** Invites, presence, shared objectives, and a reason to log in together.
-- **Quests, raids and world events.** Content beyond the wave ladder, with rewards that respect everyone's time.
-- **A player economy.** Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.
-- **Anti-cheat and fair play.** Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.
-- **Live ops.** Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.
-- **Accessibility and localisation.** Remapping, a screen-reader pass, reduced-motion parity, and translated copy.
-- **A content pipeline.** The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.
-
-Until then, the honest description is: a single-player and local co-op cozy micro-MMO with bots, in beta.
 
 ## [0.6.1] — 2026-10-30
 

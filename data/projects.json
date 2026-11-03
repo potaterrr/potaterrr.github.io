@@ -1114,25 +1114,27 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. The ads took the beach. Mania took the schedule.",
-      "summary": "Pick a class, sweep the static, survive Mania — death resets the run, two bosses can spawn, and bosses split at 50%. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a south-shore dock, and a Halloween tide.",
+      "summary": "Pick one of nine classes, sweep the static, and survive Mania — death resets the run, two bosses can spawn, and bosses split at 50%. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.8.0",
-      "channel": "mania",
+      "version": "0.9.0",
+      "channel": "archivist",
       "badges": [
         "Game",
         "Beta",
         "Mania",
+        "9 classes",
+        "Halloween",
         "Single file"
       ],
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.8.0 Mania"
+          "value": "v0.9.0 Archivist"
         },
         {
           "label": "Classes",
-          "value": "7"
+          "value": "9"
         },
         {
           "label": "Co-op",
@@ -1147,14 +1149,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.8.0 Mania",
+          "label": "Play v0.9.0",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.8.0",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.8.0.zip"
+          "label": "Download v0.9.0",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.9.0.zip"
         },
         {
           "label": "Repo",
@@ -1171,14 +1173,17 @@
           "title": "Overview",
           "body": [
             "AdBlock Island is a small, wholesome micro-MMO about cleaning up a beach that ads have overrun. You wash ashore with a broom and a class, and the islanders save you a spot by the fire.",
-            "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio."
+            "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio.",
+            "The v0.9.0 build adds the Archivist and Moderator classes, a real south-shore dock with Mira the shopkeeper, and a default-on Halloween theme with a Settings toggle."
           ]
         },
         {
           "title": "What's in the beta",
           "bullets": [
-            "Seven classes with their own silhouettes, gear, projectiles and hit behaviour",
+            "Nine classes with their own silhouettes, gear, projectiles and hit behaviour",
+            "Archivist support and Moderator crowd control, with marks, stuns and party utility",
             "Mania: death resets the run, two bosses can spawn, and bosses split at 50%",
+            "A south-shore dock with Mira the shopkeeper, and a Halloween theme with pumpkins, fog and bats",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
             "Five Endless medals and a damage curve that punishes no-upgrade runs",
@@ -1190,7 +1195,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.8.0 Mania</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.0 Archivist, Moderator & the dock</strong>."
           ]
         }
       ],
