@@ -25,16 +25,6 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
-      - name: Inject unsubscribe webhook from repository secret
-        env:
-          UNSUBSCRIBE_WEBHOOK: ${{ secrets.UNSUBSCRIBE_WEBHOOK }}
-        run: |
-          if [ -z "$UNSUBSCRIBE_WEBHOOK" ]; then
-            echo "::warning::UNSUBSCRIBE_WEBHOOK secret is not set - the unsubscribe form will show its email fallback."
-            exit 0
-          fi
-          python3 -c 'import os, pathlib; p = pathlib.Path("unsubscribe.html"); t = p.read_text(encoding="utf-8"); token = "__UNSUBSCRIBE_WEBHOOK__"; assert token in t, "injection token missing"; p.write_text(t.replace(token, os.environ["UNSUBSCRIBE_WEBHOOK"]), encoding="utf-8")'
-          echo "Injected unsubscribe webhook from secret."
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

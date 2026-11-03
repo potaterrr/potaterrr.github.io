@@ -66,7 +66,7 @@
             won't hear from me again.
           </p>
 
-          <form id="unsub-form" class="unsub-form reveal" method="POST" novalidate>
+          <form id="unsub-form" class="unsub-form reveal" method="post" enctype="text/plain" action="mailto:kristiandyanbusiness@gmail.com?subject=unsubscribe" novalidate>
             <label class="unsub-label" for="email">Email address</label>
             <input
               class="unsub-input"
@@ -88,7 +88,7 @@
           </p>
 
           <p id="unsub-help" class="unsub-help">
-            One click. No "manage preferences" maze. A short confirmation email follows.
+            One click. Your mail app opens with the request — send it and I'll confirm by email.
           </p>
         </div>
 
@@ -96,20 +96,16 @@
           <p class="hero-kicker">$ done</p>
           <h1 class="unsub-title">You're unsubscribed</h1>
           <p class="unsub-lead">
-            <strong id="done-email"></strong> is on the suppression list.
-            I check it before every send, so this is the last email.
+            <strong id="done-email"></strong> is queued for removal.
+            Your mail app should have opened with the request — press send,
+            and the opt-out is processed on the next check.
           </p>
           <p class="unsub-help">
-            A confirmation email is on its way. Changed your mind, or that
-            wasn't you? Email
-            <a href="mailto:kristiandyanbusiness@gmail.com">me directly</a> and
-            I'll fix it.
+            No mail app? <a id="done-mailto" href="mailto:kristiandyanbusiness@gmail.com?subject=unsubscribe">Email me directly</a>
+            and I'll remove you by hand. Changed your mind, or that wasn't you?
+            Reply to the confirmation and I'll undo it.
           </p>
         </div>
-
-        <!-- POST target: keeps the browser on this page and sidesteps CORS,
-             so the form still works with JavaScript disabled. -->
-        <iframe name="unsub-target" title="" class="unsub-frame" aria-hidden="true" tabindex="-1"></iframe>
 
         <p class="unsub-legal">
           Christian John Vallejos · 480 Rubyville St, Baesa, Caloocan City, Philippines
@@ -180,58 +176,39 @@
   (function () {
     "use strict";
 
-    /* The Make webhook URL is injected at deploy time from the GitHub
-       Actions secret UNSUBSCRIBE_WEBHOOK (see .github/workflows/deploy.yml).
-       If that secret is not configured, the token stays and the form shows
-       an email fallback instead of pretending the request succeeded. */
-    var UNSUBSCRIBE_WEBHOOK = "__UNSUBSCRIBE_WEBHOOK__";
-    var WEBHOOK_READY = /^https:\/\/[^\s]+$/.test(UNSUBSCRIBE_WEBHOOK);
-
+    var EMAIL = "kristiandyanbusiness@gmail.com";
     var form = document.getElementById("unsub-form");
-    var errorState = document.getElementById("unsub-error");
     var input = document.getElementById("email");
-    var frame = document.querySelector(".unsub-frame");
     var formState = document.getElementById("form-state");
     var doneState = document.getElementById("done-state");
     var doneEmail = document.getElementById("done-email");
+    var doneMailto = document.getElementById("done-mailto");
 
-    /* The email in every outreach link, so the field arrives pre-filled. */
     var prefill = new URLSearchParams(window.location.search).get("email");
     if (prefill) input.value = prefill.trim();
 
-    var submitted = false;
-
-    /* Without JS the browser still posts the form; Make shows its raw
-       response. With JS we hide that and swap in the thank-you. */
-    frame.addEventListener("load", function () {
-      if (!submitted) return; /* the initial about:blank load */
-      doneEmail.textContent = input.value.trim();
-      formState.hidden = true;
-      doneState.hidden = false;
-      doneState.focus();
-    });
+    function mailto(value) {
+      return "mailto:" + EMAIL
+        + "?subject=" + encodeURIComponent("unsubscribe")
+        + "&body=" + encodeURIComponent("Unsubscribe " + value);
+    }
 
     form.addEventListener("submit", function (e) {
       var value = input.value.trim();
-      if (!value || input.validity && !input.checkValidity()) {
+      if (!value || (input.validity && !input.checkValidity())) {
         e.preventDefault();
         input.focus();
         return;
       }
-      if (!WEBHOOK_READY) {
-        e.preventDefault();
-        errorState.hidden = false;
-        errorState.focus();
-        return;
-      }
-      errorState.hidden = true;
-      /* Point the form at Make at submit time so the constant above is the
-         only place the URL lives. */
-      form.action = UNSUBSCRIBE_WEBHOOK;
-      form.method = "POST";
-      form.target = "unsub-target";
-      submitted = true;
-      /* No preventDefault: the real POST goes to the iframe. */
+      e.preventDefault();
+      var url = mailto(value);
+      doneEmail.textContent = value;
+      doneMailto.href = url;
+      formState.hidden = true;
+      doneState.hidden = false;
+      doneState.focus();
+      /* Show the done state first; the mailto handoff must not lose it. */
+      window.location.href = url;
     });
   })();
   </script>
