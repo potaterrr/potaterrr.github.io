@@ -45,6 +45,16 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.6 — One boss, 50% per wave (2026-11-04)
+
+The boss encounter is no longer a guaranteed pair or a guaranteed spawn.
+
+- **One boss only.** The opening pair roll is gone. `spawnBoss()` always creates a single Algorithm.
+- **50% chance per wave.** Once the island is **64% clear**, each wave rolls a **50%** chance to wake the boss. If the roll fails, it tries again on the next wave. The encounter can only happen once per run.
+- The roll is per wave, not per frame, so standing still does not reroll it.
+- Splits, the 75% HP ladder, smaller children, +25%/+50% speed tiers and randomised beams/summons are unchanged.
+- The help panel and Mania note now explain the one-boss, 50%-per-wave rule.
+
 ## v0.9.5 — Boss split lock (2026-11-04)
 
 A small fix for the four-boss ladder.
