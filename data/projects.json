@@ -823,9 +823,9 @@
       "category": "games",
       "title": "AdBlock Island",
       "tagline": "A wholesome micro-MMO in a single HTML file. The ads took the beach; the locals kept the kettle on.",
-      "summary": "Pick a class, sweep the static, bonk ad-monsters and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
+      "summary": "Pick a class, sweep the static, bonk ad-monsters, clear Endless mode and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.6.7",
+      "version": "0.7.0",
       "channel": "beta",
       "badges": [
         "Game",
@@ -835,7 +835,7 @@
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.6.7 beta"
+          "value": "v0.7.0 beta"
         },
         {
           "label": "Classes",
@@ -854,14 +854,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.6.7 beta",
+          "label": "Play v0.7.0 beta",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.6.7",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.6.7.zip"
+          "label": "Download v0.7.0",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.7.0.zip"
         },
         {
           "label": "Repo",
@@ -885,8 +885,9 @@
           "title": "What's in the beta",
           "bullets": [
             "Seven classes with their own silhouettes, gear, projectiles and hit behaviour",
-            "The wave ladder, medals, items, the Algorithm boss and kindness notes",
+            "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
+            "Five Endless medals and a damage curve that punishes no-upgrade runs",
             "Title-screen build tag and patch notes that always agree",
             "Runs from a static host, from the release zip, or straight from <code>file://</code>"
           ]
@@ -894,8 +895,8 @@
         {
           "title": "Honest limits",
           "body": [
-            "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.6.7 beta</strong>."
+            "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.7.0 beta</strong>."
           ]
         }
       ],

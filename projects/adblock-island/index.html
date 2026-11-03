@@ -40,7 +40,7 @@
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "name": "AdBlock Island",
-  "description": "Pick a class, sweep the static, bonk ad-monsters and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
+  "description": "Pick a class, sweep the static, bonk ad-monsters, clear Endless mode and leave a kind note for whoever washes ashore next. Canvas 2D and Web Audio, no build, no backend.",
   "url": "https://potaterrr.github.io/projects/adblock-island/",
   "image": "https://potaterrr.github.io/assets/og/projects/adblock-island.png",
   "author": {
@@ -120,8 +120,8 @@
         <h1 class="project-title">AdBlock Island</h1>
         <p class="project-tagline">A wholesome micro-MMO in a single HTML file. The ads took the beach; the locals kept the kettle on.</p>
         <div class="project-badges"><span class="project-badge">Game</span><span class="project-badge">Beta</span><span class="project-badge">Single file</span><span class="project-badge project-badge-status">Beta</span></div>
-        <div class="project-metrics"><div class="project-metric"><span>Version</span><strong>v0.6.7 beta</strong></div><div class="project-metric"><span>Classes</span><strong>7</strong></div><div class="project-metric"><span>Co-op</span><strong>Same keyboard</strong></div></div>
-        <div class="cta-row project-actions"><a class="btn btn-primary" href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta</a><a class="btn btn-ghost" href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a><a class="btn btn-ghost" href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="#pending">Pending</a></div>
+        <div class="project-metrics"><div class="project-metric"><span>Version</span><strong>v0.7.0 beta</strong></div><div class="project-metric"><span>Classes</span><strong>7</strong></div><div class="project-metric"><span>Co-op</span><strong>Same keyboard</strong></div></div>
+        <div class="cta-row project-actions"><a class="btn btn-primary" href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.7.0 beta</a><a class="btn btn-ghost" href="/projects/adblock-island/adblock-island-beta-v0.7.0.zip">Download v0.7.0</a><a class="btn btn-ghost" href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo</a><a class="btn btn-ghost" href="#pending">Pending</a></div>
       </div>
     </section>
 
@@ -146,6 +146,32 @@
           <div class="patch-list">
 <details class="patch-release" open>
   <summary>
+    <span class="patch-version">v0.7.0</span>
+    <span class="patch-channel">beta</span>
+    <time class="patch-date" datetime="2026-11-04">Nov 4, 2026</time>
+    <span class="patch-plus" aria-hidden="true">+</span>
+  </summary>
+  <div class="patch-body">
+<p>Endless mode, checkpoints, mandatory upgrades and a damage curve. The campaign still ends at wave 10; the door after it now goes somewhere.</p>
+<h3 id="endless-mode">Endless mode</h3>
+<ul><li>Clearing wave 10 changes the final button from <strong>Keep going</strong> to <strong>Enter Endless</strong>. Wave 11 begins <strong>Endless mode</strong>: there is no final wave, and the tier label, banner and HUD all say so.</li><li><strong>Checkpoints every three endless waves.</strong> Waves <strong>11, 14, 17, 20…</strong> pause the island and pay a checkpoint bundle: <strong>80, 100, 120… Joy</strong> (<code>60 + 20 × checkpoint</code>).</li><li>A checkpoint is a real pause. The upgrade shop opens, and the next wave is locked until you buy at least one upgrade (or every upgrade is maxed). <strong>Step away</strong> lets you leave the checkpoint and wander; the wave card brings it back. <code>Esc</code> and the close button will not skip it.</li><li><strong>Dying in Endless restarts the current wave.</strong> Joy, upgrades and checkpoint progress are kept. The old bench respawn still applies in the campaign.</li><li>The HUD wave card shows <code>Endless</code>, the current depth, and the enemy damage pressure. The pause screen remembers your deepest endless wave.</li></ul>
+<h3 id="upgrades-before-every-wave">Upgrades before every wave</h3>
+<ul><li>After every wave clear, the next wave is <strong>gated</strong>: while you can afford an upgrade and have not bought one since the clear, the card replaces <strong>Next wave</strong> with <strong>Upgrade first</strong>. <code>Enter</code>, <code>N</code> and the wave card all go through the same gate.</li><li>Free items and cleansing do <strong>not</strong> open the gate. Spending Joy does.</li><li>If nothing is affordable, the island lets you pass rather than soft-lock the run.</li><li>The wave panel now spells out the gate instead of hiding it behind a disabled button.</li></ul>
+<h3 id="the-ads-hit-back">The ads hit back</h3>
+<ul><li>Enemy damage gains a pressure multiplier on top of the existing wave recipe:</li><li>waves 1–6: <strong>×1.00</strong></li><li>waves 7–10: <strong>×1.05 → ×1.20</strong></li><li>wave 11+: <strong>×1.50</strong>, rising by ×0.10 per wave and capping at <strong>×2.60</strong></li><li>It applies to contact hits, the Algorithm, sponsored beams, flyers and pop-up damage. By wave 16–20 an unupgraded 85–100 HP hero dies in a few hits; the same wave is survivable with <strong>Deep Breaths</strong> ranks and a little care.</li><li>A late death with no vitality ranks now suggests Deep Breaths instead of silently letting the run stall.</li></ul>
+<h3 id="achievements">Achievements</h3>
+<p>Five new medals join the gallery:</p>
+<ul><li><strong>Beyond the Ladder</strong> — enter Endless mode.</li><li><strong>Tea Break</strong> — reach your first endless checkpoint.</li><li><strong>Deep Static</strong> — reach wave 20 in Endless.</li><li><strong>Kettle On</strong> — reach five endless checkpoints.</li><li><strong>Ad Infinitum</strong> — reach wave 30 in Endless.</li></ul>
+<h3 id="planned-4-player-online-rooms">Planned: 4-player online rooms</h3>
+<p>Not shipped. The current build is still single-player and same-keyboard co-op. The plan for the next online step:</p>
+<ul><li><strong>Vercel</strong> hosts the static game plus a tiny signaling API. A free Redis store (Vercel Marketplace/Upstash) holds room codes and SDP/ICE.</li><li><strong>4 players per room</strong>, joined by a short room code or link.</li><li><strong>One player hosts the simulation.</strong> WebRTC data channels carry inputs and snapshots; the host is authoritative for ads, waves, the boss, the island and checkpoints.</li><li><strong>No accounts, no anti-cheat, no host migration.</strong> If the host leaves, the room closes. Cross-device saves and moderated public chat remain later work.</li><li>Phases: deploy → room lobby/signaling → 2-player sync → 4-player polish (TURN, reconnect, chat).</li></ul>
+<p>This is deliberately separate from the single-file build. The shipped file stays offline-capable.</p>
+<h3 id="distribution">Distribution</h3>
+<ul><li><code>adblock-island-beta-v0.7.0.zip</code> is rebuilt from <code>index.html</code>, <code>README.md</code> and <code>CHANGELOG.md</code>.</li><li>The game is still one HTML file with no build step, no CDN, no fonts, no backend and no network calls.</li></ul>
+  </div>
+</details>
+<details class="patch-release">
+  <summary>
     <span class="patch-version">v0.6.7</span>
     <span class="patch-channel">beta</span>
     <time class="patch-date" datetime="2026-11-02">Nov 2, 2026</time>
@@ -153,9 +179,9 @@
   </summary>
   <div class="patch-body">
 <p>Massive changes: class identity pass. Every class now has its own silhouette and held gear instead of sharing the Reader&#x27;s robe, cape and pointed hat — the Engineer gets a hard hat and a swinging wrench, the Medic a cross cap and a syringe staff, the Hacker a hood, visor and handheld terminal, the Streamer headphones, a mic boom and an antenna. The Engineer, Medic, Hacker and Streamer also stopped borrowing the Reader&#x27;s attack: they now throw their own wrench bolts, syringes, exploit bolts and hype shards, each drawn as a real prop with its own hit behaviour (turret shots fire visible bolts, syringes patch you on impact, exploit bolts pierce and mark, hype shards pierce a crowd). Class cards, in-game sprites and projectiles all read as different kits now.</p>
-<h3>Bug fixes</h3>
+<h3 id="bug-fixes">Bug fixes</h3>
 <ul><li><strong>New classes borrowed the Reader&#x27;s attack.</strong> <code>doAttack()</code> had no branches for Engineer, Medic, Hacker or Streamer, so all four fell through to the Reader&#x27;s piercing beam. Each one now has its own projectile, hit behaviour and sound.</li><li><strong>New classes borrowed the Reader&#x27;s body.</strong> <code>drawHeroBody()</code> only special-cased AdBlocker and Fact-Checker; everything else was drawn with the Reader&#x27;s cape, robe and pointed hat. The four new kits now have their own silhouettes and headgear.</li><li><strong>Projectiles all looked the same.</strong> <code>drawProjectiles()</code> only knew three shapes, so every class shot rendered as the same recoloured circle. Wrench bolts, syringes, exploit glyphs and hype shards now have real art.</li><li><strong>Piercing shots hit the same ad every frame.</strong> A single shard could tick against one target repeatedly and delete a boss in a fraction of a second. Projectiles now track what they have already hit.</li><li><strong>Turrets dealt invisible damage.</strong> Turret fire was instant with no travel or miss chance. Turrets now launch visible bolts.</li><li><strong>The overclock buff only boosted damage.</strong> It now also shortens attack cooldown by 40%, as the description promised.</li><li><strong>Patch notes were listed oldest-first</strong> under a heading that says newest-first. The list is now genuinely newest-first.</li><li><strong>The PATCH NOTES button rendered as a raw link.</strong> It was an <code>&lt;a&gt;</code> wearing the <code>.big-btn</code> class, so it stayed inline: default link colour and underline, and no full-width hit area. It now renders exactly like <em>wash ashore</em>.</li></ul>
-<h3>Distribution</h3>
+<h3 id="distribution">Distribution</h3>
 <ul><li>The release zip (<code>adblock-island-beta-v0.6.7.zip</code>) is a <strong>self-contained static build</strong>: one <code>index.html</code> with all CSS, JavaScript, canvas art, audio and save data inline. No CDN, no fonts, no <code>fetch</code>, no WebSockets, no backend.</li><li>It runs from <code>file://</code>, from GitHub Pages, or from any static host you upload it to. Drop the <code>index.html</code> on a host and it plays.</li><li><strong>Co-op is local, not networked.</strong> &quot;Play with a friend&quot; puts player two on the same keyboard (arrow keys) on the same screen. There is no online matchmaking, no peer-to-peer and no server — a single static HTML file cannot provide those on its own. The zip is fully playable online as a single-player/co-op game; it is not an online multiplayer client.</li><li>The submission zip lives at the repo root as <code>adblock-island-beta-v0.6.7.zip</code> and is intentionally <strong>not committed</strong> to git; it is rebuilt from <code>index.html</code>, <code>README.md</code> and <code>CHANGELOG.md</code>.</li></ul>
   </div>
 </details>
@@ -223,11 +249,11 @@
   </summary>
   <div class="patch-body">
 <p>A <strong>quieter phone HUD</strong>. Nothing on the island changed — the same handful of facts was being told three times, and now it is told once. Desktop is untouched, and moving a mouse brings the full layout straight back.</p>
-<h3>At a glance</h3>
+<h3 id="at-a-glance">At a glance</h3>
 <div class="patch-table-wrap"><table><thead><tr><th>Element</th><th>Before</th><th>After</th></tr></thead><tbody><tr><td>Top band</td><td>170 px tall, XP bar, four-line wave card</td><td>144 px tall, <code>Lv N</code> chip, two-line wave card</td></tr><tr><td>Tool buttons</td><td>five unlabelled icons</td><td>mute, chat and pause</td></tr><tr><td>Clarity card</td><td>ring + objective sentence + bar</td><td>ring and percentage only</td></tr><tr><td>Wave banner</td><td>105 px, 3.2 s on screen</td><td>71 px pill, 1.9 s</td></tr><tr><td>Pop-up windows</td><td>up to 3</td><td>up to 2, spawned in the middle band</td></tr><tr><td>Toast tray</td><td>4 messages, 3 s each</td><td>2 messages, 2.2 s each</td></tr><tr><td>Touch buttons</td><td>SKILL/BONK label chips</td><td>icon only, thinner edges</td></tr><tr><td>Companion state</td><td>hidden below 860 px</td><td>one quiet line under the wave card</td></tr></tbody></table></div>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>The top bar consolidates.</strong> The player card drops its XP bar — a <code>Lv N</code> chip sits beside your name instead — and shrinks from 66 px to 56 px. The wave card goes from four lines to two, with the crew folded onto the count line (<code>4 left · 4 pop-ups</code>). The clarity card keeps its ring and percentage and loses the objective sentence and progress bar, which repeated what the ring already said.</li><li><strong>Five tool buttons become three.</strong> Mute, chat and pause stay; help and settings were already one tap away in the pause panel, so they no longer sit over the play area.</li><li><strong>The wave banner is a pill, not a paragraph.</strong> It loses the tier note, halves in height, and stays on screen for 1.9 s instead of 3.2 s. It also sits lower now, at 21% of the screen, so it clears both top cards while it is up.</li><li><strong>Pop-up ads are capped at two on a phone</strong>, in the middle band, so they never land under the top cards or the thumb buttons.</li><li><strong>The toast tray keeps two messages</strong>, for 2.2 s instead of 3 s, in smaller type.</li><li><strong>Touch buttons lose their floating SKILL/BONK labels</strong> and carry thinner borders and softer shadows. Tap targets are unchanged in size — thumbs still need them.</li><li><strong>Companion state is visible on phones again.</strong> The status chips were <code>display:none</code> below 860 px, so the health and down timer of your two allies never showed on the platform where it matters. A single quiet line under the wave card now carries it, in rose when someone is down.</li></ul>
-<h3>Verified</h3>
+<h3 id="verified">Verified</h3>
 <ul><li>11 phone-HUD checks at 390×844: level chip replaces the XP bar, two-line wave card naming the crew, companion line, tool row down to mute/chat/pause, ring-only clarity card, no floating button labels, help and settings still reachable through pause, pop-up cap of two, toast tray of two, and a mouse restoring the full desktop layout.</li><li>A touch soak cleared wave 1 with the pop-up cap never exceeded, the compact banner clearing both top cards, and no runtime errors.</li></ul>
   </div>
 </details>
@@ -240,20 +266,20 @@
   </summary>
   <div class="patch-body">
 <p>A <strong>balance pass across the whole island</strong>: fewer but realer allies, a ladder that reads like stages instead of a multiplier, and damage numbers that finally reflect the class you picked.</p>
-<h3>Your party</h3>
+<h3 id="your-party">Your party</h3>
 <p>The seven roaming locals are gone. Whichever class you leave on the title screen supplies the two heroes already on the island, so the party is always all three classes and always yours.</p>
 <div class="patch-table-wrap"><table><thead><tr><th>Hero</th><th>Class</th><th>What they bring</th></tr></thead><tbody><tr><td><strong>Tidal</strong></td><td>AdBlocker</td><td>The line to stand behind: a short, wide swing that keeps ads off you.</td></tr><tr><td><strong>Moss</strong></td><td>Fact-Checker</td><td>Marks ads for extra damage and patches you up 8 HP on a cooldown.</td></tr><tr><td><strong>Juniper</strong></td><td>Reader-Mode</td><td>Reaches across a crowd from the back and keeps the flanks clean.</td></tr></tbody></table></div>
 <p>Pick the AdBlocker and you wash ashore beside <strong>Moss</strong> and <strong>Juniper</strong>; pick the Reader and you get <strong>Tidal</strong> and <strong>Moss</strong>. They cleanse, chip ads, mark, heal, and can now be <strong>knocked out</strong> — a downed companion sits out 14 seconds and walks back from the bench at 60% health, and the HUD chips (or, on a phone, the ally line) name each one with their health or their timer.</p>
-<h3>The ladder</h3>
+<h3 id="the-ladder">The ladder</h3>
 <p><code>STAGE_CREWS</code> replaces the old type-pool maths. Every stage is a fixed recipe, so the preview on the cleared-wave card always matches the fight, and each tier introduces something instead of just multiplying the last one.</p>
 <div class="patch-table-wrap"><table><thead><tr><th>Wave</th><th>Tier</th><th>Crew</th><th>Health</th><th>Damage</th></tr></thead><tbody><tr><td>1</td><td>Super Easy</td><td>4 pop-ups</td><td>×0.55</td><td>×0.60</td></tr><tr><td>2</td><td>Super Easy</td><td>3 pop-ups, 2 banners</td><td>×0.70</td><td>×0.72</td></tr><tr><td>3</td><td>Easy</td><td>4 pop-ups, 2 banners</td><td>×0.85</td><td>×0.84</td></tr><tr><td>4</td><td>Easy</td><td>3 pop-ups, 2 banners, 1 mimic</td><td>×1.00</td><td>×0.95</td></tr><tr><td>5</td><td>Normal</td><td>4 pop-ups, 2 banners, 2 mimics</td><td>×1.15</td><td>×1.05</td></tr><tr><td>6</td><td>Normal</td><td>4 pop-ups, 3 banners, 2 mimics</td><td>×1.30</td><td>×1.12</td></tr><tr><td>7</td><td>Hard</td><td>4 pop-ups, 2 banners, 2 mimics, 1 behemoth</td><td>×1.42</td><td>×1.20</td></tr><tr><td>8</td><td>Hard</td><td>3 pop-ups, 3 banners, 3 mimics, 2 behemoths</td><td>×1.55</td><td>×1.28</td></tr><tr><td>9</td><td>Super Hard</td><td>4 pop-ups, 3 banners, 3 mimics, 3 behemoths</td><td>×1.68</td><td>×1.36</td></tr><tr><td>10</td><td>Super Hard</td><td>5 pop-ups, 3 banners, 3 mimics, 3 behemoths</td><td>×1.80</td><td>×1.45</td></tr><tr><td>11+</td><td>Super Hard+</td><td>the same shape, one more ad per wave up to 20</td><td>+0.10 a wave</td><td>+0.06 a wave</td></tr></tbody></table></div>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>Crew readouts.</strong> The wave card names what is still standing (<code>2 pop-ups · 1 behemoth</code>) instead of only counting it, and the cleared-wave panel previews the next crew by type.</li><li><strong>Companion down and revival.</strong> A companion knocked to zero HP is out for 14 seconds, then walks back from the bench at 60% health with a line about what they missed.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>Harder across the board.</strong> Late crews are bigger (13 ads at wave 9, 14 at wave 10, up from 11 and 12), wave damage multipliers climb further (Super Hard is ×1.45, up from ×1.27), contact attacks land every 1.3–0.92 s instead of 1.5–1.05 s, player invulnerability after a hit drops from 0.62 s to 0.5 s, and Banner Bat flyers are faster and hit for 9 instead of 8.</li><li><strong>The scaling layers no longer stack into sponges.</strong> Monster health carried both a wave multiplier and a level-plus-elapsed-time multiplier; the elapsed-time term is gone and the per-level term drops from 0.13 to 0.05. On a level-10 save, wave 10 is about 2.6× base health instead of roughly 4.2×, while the stage table carries the curve. A maxed level-10 AdBlocker needs around 40 seconds of clean damage for the Super Hard crew instead of minutes.</li><li><strong>Class power is real.</strong> <code>playerDamage()</code> now applies the class damage stat, which had been defined and then ignored: Fact-Checker 0.92, AdBlocker 1.00, Reader-Mode 1.16. The tank keeps its sustained sword, the checker pays for its healing, the reader gets its advertised output.</li><li><strong>Companions can no longer steal kills.</strong> Their finishing hit used to pay 20% Joy and XP because only player damage counted; a kill is now the party&#x27;s kill at full value.</li><li><strong>The Algorithm fights back.</strong> Its free damage from bystanders is capped at two helpers for about 3.5 DPS (seven locals used to solo the fight), and its health is sized to expected player damage — 1100 + 95 per level, down from 1500 + 170 — with sponsored beams and banner volleys arriving more often and 22 contact damage instead of 20.</li><li><strong>The help panel tells the truth about who is beside you</strong>, naming your companions, explaining that they are the classes you did not pick, and leaving the other locals to the kettle.</li></ul>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li>The class <code>damage</code> stat had no effect on any attack.</li><li>A companion landing the last hit cut your reward to a fifth.</li></ul>
-<h3>Verified</h3>
+<h3 id="verified">Verified</h3>
 <ul><li>23 headless checks against the real page: ladder counts and health curve, crew recipes through <code>startWave</code>, class damage ordering, full-value party kills, the cleared-wave card, companion down and revival, boss sizing and capped chip damage, and i-frames swallowing a second hit.</li><li>An autopilot soak cleared waves 1 and 2 (9 ads, first medal, first item, level 3) with no runtime errors and no deaths.</li></ul>
   </div>
 </details>
@@ -266,9 +292,9 @@
   </summary>
   <div class="patch-body">
 <p>Beta launch polish.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>A social preview card.</strong> <code>social-card.jpg</code> is a 1200×630 crop of the title screen with the beta badge, used by Open Graph and Twitter cards, so links to the game unfurl as the island instead of a bare URL.</li><li><strong>Fuller link metadata.</strong> The head now carries <code>og:url</code>, <code>og:site_name</code>, <code>og:locale</code>, <code>og:image</code> (with type, size and alt text), <code>twitter:card</code>, <code>twitter:title</code>, <code>twitter:description</code> and <code>twitter:image</code>, plus a canonical URL and app names for iOS.</li><li><strong>Screenshots in the README.</strong> Desktop title screen, a wave-cleared card showing the achievement and the next-wave preview, and the phone title screen.</li><li><strong><code>robots.txt</code> and <code>sitemap.xml</code></strong> so the public page is indexable and the beta is easy to find.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>The beta now counts from zero.</strong> Every release in this log is numbered <code>0.x</code>, from <code>0.0.0</code> to this build, so the version line matches the project&#x27;s actual status. The title badge, the build tag, the page metadata and the help panel all read the same <code>VERSION</code> constant.</li><li><strong>The local storage keys changed.</strong> They are now <code>adblock-island.save.v0</code>, <code>adblock-island.notes.v0</code> and <code>adblock-island.settings.v0</code>. These are storage-schema tags rather than game versions; progress, kindness notes and settings saved under the old keys do not carry over, so the first visit after this build starts fresh.</li><li>The page now has a <code>&lt;noscript&gt;</code> card explaining that the island needs JavaScript, instead of a dead title screen.</li><li>Description and preview copy mention the beta and the current version.</li></ul>
   </div>
 </details>
@@ -281,9 +307,9 @@
   </summary>
   <div class="patch-body">
 <p>The wave card gets keyboard manners.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong><code>Enter</code> takes the next wave.</strong> With the wave-cleared card open, <code>Enter</code> does exactly what the pink <em>Next wave · 10s</em> button does and starts the countdown. If you dismissed the card, <code>Enter</code> brings it back instead of skipping the choice.</li><li><strong><code>U</code> opens upgrades from the card.</strong> Pressing <code>U</code> while the card is open jumps straight to the shop, same as the <em>Upgrade</em> button, and leaves the wave cleared and waiting for you.</li><li>A quiet <code>Enter next wave · U upgrade</code> hint sits under the next-wave preview on desktop, and both buttons carry a tooltip. The hint is hidden on touch, where the buttons are the only input.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li>The help panel&#x27;s controls line now lists <code>Enter</code> next to <code>N</code> wave choice and <code>U</code> upgrades.</li></ul>
   </div>
 </details>
@@ -296,9 +322,9 @@
   </summary>
   <div class="patch-body">
 <p>The wave ladder keeps its promise.</p>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li><strong>Waves stopped after the island had been restored once.</strong> <code>updateWaves</code> bailed out whenever the island-clarity victory flag was set, so returning players got the wave 1 ads, killed them, and then nothing: no cleared popup, no reward and no way to call the next wave. The clarity victory and the wave ladder are now independent, and every visit can climb from Super Easy to Super Hard again.</li><li><strong>The cleared-wave popup could be swallowed.</strong> It used to be a one-shot 800 ms timer that only fired while the game was in the <code>playing</code> state, so pausing, being knocked out, or the island-restored panel opening at the same moment could lose it. The choice card now lives on a retry counter in the update loop: it opens when play resumes, survives a pause or a knockout, and reopens after the victory panel is dismissed.</li><li>Waves cleared while the Algorithm is on the island still wait for the boss (that interruption is deliberate), but the popup is no longer lost in the process.</li></ul>
-<h3>Verified</h3>
+<h3 id="verified">Verified</h3>
 <ul><li>A save with <code>won: true</code> now clears waves 1→10: every wave spawns its full crew (4, 5, 6, 7, 8, 9, 9, 10, 11, 12 ads), every clear opens the choice card with the right medal or item, and wave 10 shows the &quot;You saved this island from serving ads&quot; win card.</li><li>Pausing immediately after a clear, dying during it, and finishing the boss at the same moment all still lead to the popup.</li></ul>
   </div>
 </details>
@@ -311,9 +337,9 @@
   </summary>
   <div class="patch-body">
 <p>Beta, labelled.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>A beta badge on the title screen.</strong> A loud <code>beta · v0.5.1</code> pill sits next to the &quot;wholesome micro-MMO&quot; kicker, and the build tag in the bottom-right corner now reads <code>v0.5.1 · beta</code>. The pill&#x27;s tooltip and the help panel&#x27;s &quot;This build&quot; block both say the build is a beta.</li><li><strong>A &quot;Still pending&quot; section at the top of these patch notes</strong>, covering the achievements and items that are still thin, and the MMORPG essentials — online multiplayer, accounts, moderated chat, parties, quests, economy, anti-cheat, live ops — that a static page cannot provide on its own. Mirrored in the README.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li>The page <code>&lt;title&gt;</code> and <code>&lt;meta name=&quot;description&quot;&gt;</code> now say <strong>beta</strong> and the current version, so link previews and search results match the build.</li><li>The help panel&#x27;s &quot;This build&quot; block points at the pending list instead of implying the game is finished.</li></ul>
   </div>
 </details>
@@ -326,9 +352,9 @@
   </summary>
   <div class="patch-body">
 <p>Waves become a ladder you climb on purpose.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>Upgrade or next wave.</strong> Clearing a wave no longer rolls straight into the next one. A card opens with what you just swept, the story chapter you unlocked, the reward you earned and a preview of the next tier. <strong>Upgrade</strong> opens the shop; buying things never starts the next wave. <strong>Next wave</strong> starts a <strong>10-second countdown</strong> on the card under your portrait. The countdown pauses while the shop or any panel is open, and <code>N</code> or tapping the wave card reopens the choice if you dismissed it.</li><li><strong>Medals.</strong> Six achievements, tracked on the pause screen and kept between visits: First Sweep (wave 1), Polite Static (wave 3), They Brought Friends (wave 5), Banner Bane (wave 7), Hold the Line (wave 9) and Island Saved (wave 10).</li><li><strong>Free items.</strong> Waves without a medal hand out something instead: Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy or Kettle Break. Most are a free upgrade rank; the rest are Joy or a full heal. Found items are listed on the pause screen.</li><li><strong>A story chapter per wave.</strong> The island log runs from &quot;the first pop-up bursts like wet paper&quot; to the kettle at the end of the ladder, one short entry per clear, also written into the chat log so you can reread it. Waves 11+ have a small pool of extra entries.</li><li><strong>An ending for the ladder.</strong> Clearing <strong>Super Hard</strong> (wave 10) shows <em>&quot;You saved this island from serving ads&quot;</em>, fires the confetti, awards the Island Saved medal, and unlocks endless <strong>Super Hard+</strong> waves. The victory is remembered in the save.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>Every run starts at Super Easy.</strong> Waves used to resume from <code>save.wave</code>; now the ladder always begins at wave 1, while levels, Joy, upgrades, medals, items and the island itself persist. Restarting the climb is the point, not a punishment.</li><li><strong>The boss no longer eats a wave.</strong> If the Algorithm interrupts the schedule, the wave is marked held and re-spawned properly once it is dealt with, instead of being counted as cleared with no ads on the field.</li><li>The HUD wave card is now a button when a wave is cleared (&quot;cleared · tap to choose&quot;) and shows the countdown while one is running.</li><li>The pause screen &quot;current plan&quot; follows the wave state, and the help panel documents the choice, the countdown and the ladder&#x27;s ending.</li></ul>
   </div>
 </details>
@@ -341,9 +367,9 @@
   </summary>
   <div class="patch-body">
 <p>The island gets its story told.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>A backstory in the help panel.</strong> Pressing <code>H</code> now opens with &quot;The story so far&quot;: the ads came with the tide, the locals kept the kettle on, and you wash ashore with a broom and nowhere else to be. Two short paragraphs above the existing plan, class abilities, controls, ads, waves and co-op blocks.</li><li><strong>A credit and disclaimer footer.</strong> The bottom of the help panel names it as an original solo project by <a href="https://github.com/potaterrr" target="_blank" rel="noopener">@potaterrr</a>, links to the source, and notes that every asset is hand-written — no third-party art, fonts, audio, or libraries — and that the game is a work of parody with no real advertisers involved.</li><li><strong>README: backstory, how to play, patch notes, disclaimer.</strong> The readme now opens with the island&#x27;s story, then a seven-step how-to-play that matches the actual game loop (classes, aim, cleansing, waves, the Algorithm, the bench, co-op), then a patch-notes table covering every release from 0.0.0 to 0.4.3, then a plain-language disclaimer: original work by potaterrr, no third-party assets, no affiliation, no data collection.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li>The &quot;note on the fiction&quot; paragraph moved into the fuller disclaimer at the end of the README, so the affiliation and parody notice sits next to the ownership statement instead of being buried mid-document.</li></ul>
   </div>
 </details>
@@ -356,7 +382,7 @@
   </summary>
   <div class="patch-body">
 <p>The title screen gets the phone treatment too.</p>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>The class picker is compact on phones.</strong> The three full-width portrait cards are now short rows: a cropped portrait on the left, name, role and description on the right, abilities underneath. On a 390×844 phone the title card drops from 1424px to 948px tall and each class card from roughly 450px to 125px, so all three classes fit on one screen instead of one and a bit.</li><li><strong>Phone-sized class blurbs.</strong> Each class has a two-line description for the compact card, so nothing is cut off with an ellipsis. Desktop and tablet keep the original longer copy.</li><li>Tighter title spacing under 500px (logo, tagline, name field, button, links) so the &quot;wash ashore&quot; button and the whole picker share the first screen.</li></ul>
   </div>
 </details>
@@ -369,7 +395,7 @@
   </summary>
   <div class="patch-body">
 <p>A phone-sized pass over the controls.</p>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li><strong>Touch controls no longer eat the screen.</strong> The thumbstick and the four action buttons scale with the viewport: BONK drops from 82px to 61–67px on phones, the two skills from 60px to 45–49px, and the dash from 50px to 37–41px, while tablets and desktops keep the larger layout. The whole cluster stays inside the safe-area insets.</li><li><strong>The HUD card fits its content.</strong> Its width is now pinned to the space beside the tool row instead of shrinking to the nickname, so the HP and XP numbers are no longer clipped and the audio/chat/help buttons can&#x27;t sit on top of it. On very narrow phones the tool buttons compact and the JOY box steps aside.</li><li><strong>The wave banner</strong> keeps its tier on one line and sits below the top cards instead of on top of them.</li><li><strong>Short and landscape screens.</strong> The title screen now scrolls from the top instead of centering itself out of reach, so &quot;wash ashore&quot; can&#x27;t be pushed off-screen, and full-screen layers use <code>dvh</code> so a mobile browser&#x27;s toolbar can&#x27;t cover the bottom controls.</li></ul>
   </div>
 </details>
@@ -382,11 +408,11 @@
   </summary>
   <div class="patch-body">
 <p>Waves, a friend on the arrow keys, and aim that stops guessing.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>Waves.</strong> Ads now arrive in crews instead of trickling in. Difficulty climbs from <strong>Super Easy</strong> through <strong>Easy</strong>, <strong>Normal</strong>, <strong>Hard</strong>, <strong>Super Hard</strong>, into endless <strong>Super Hard+</strong>, with more ads, more health, more damage, and faster movement each step. Clearing a crew pays bonus Joy and XP, then the island takes a 4–5 second breath.</li><li><strong>Wave notifications.</strong> A banner announces every wave and every clear, a HUD card under your portrait tracks the current wave, tier, and remaining ads (or the countdown to the next one), and the locals comment in chat. The boss interrupts the schedule, and the card says so.</li><li><strong>Same-keyboard co-op.</strong> Turn on &quot;play with a friend&quot; on the title screen for a second hero on the arrow keys. They move with arrows, auto-swing at whatever they face, take real damage, and share the camera, the wave, and the Joy. The camera holds both heroes and leashes player 2 to one screen.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>Aim no longer depends on device detection at all.</strong> If the mouse moved or clicked recently, the mouse is aiming — no media query, no pointer-kind flag. Touch input simply clears the flag. Moving a mouse on a touchscreen laptop also flips the HUD back to the desktop layout, so the mode is always visible.</li></ul>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li>The AdBlocker&#x27;s auto-sword could still draw attention to the wrong direction; it now has its own arc colour and never modifies the aim.</li></ul>
   </div>
 </details>
@@ -399,9 +425,9 @@
   </summary>
   <div class="patch-body">
 <p>Attacks now go where you point.</p>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li><strong>Aim assist was pulling swings sideways.</strong> It picked the ad nearest to the <em>player</em> inside the aim cone, so a closer ad could steal a swing from the one you were actually pointing at. It now picks the ad nearest to your <strong>aim line</strong>, and large bodies get a much smaller amount of extra grace, so a boss standing next to you can no longer drag your attack 30–50° off target.</li><li><strong>The AdBlocker&#x27;s auto-sword was hijacking the aim.</strong> It reused the normal attack direction and swept a full 360°, so every 0.85 s the visible swing snapped to whichever ad was closest — including ones behind you — while your buffered mouse aim appeared to be ignored. The sword now has its own animation, swings only in the forward arc, and never touches the direction you aimed.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li>The auto-swing draws its own small gold arc, separate from the shield bash, so you can tell the two apart.</li></ul>
   </div>
 </details>
@@ -414,9 +440,9 @@
   </summary>
   <div class="patch-body">
 <p>The mouse works everywhere now.</p>
-<h3>Fixed</h3>
+<h3 id="fixed">Fixed</h3>
 <ul><li><strong>Mouse aim on hybrid devices.</strong> The game used to pick touch mode purely from the <code>(pointer: coarse)</code> media query, so a touchscreen laptop, a tablet with a trackpad, or a Chromebook treated the mouse as if it did not exist. Aim now follows whichever device was used last: move the mouse and it takes over instantly, tap the screen and the thumbstick takes over again.</li><li><strong>Aim keeps updating over the HUD.</strong> Pointer moves were only tracked on the canvas, so the aim froze while the cursor crossed the minimap, chat, or top bar. They are tracked window-wide now.</li><li><strong>Mouse aim is instant.</strong> The hero used to ease toward the cursor with a short smoothing delay, which read as an unresponsive aim. It now points at the cursor exactly.</li></ul>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li>Two faint pips in front of the hero show the aim direction at a glance.</li></ul>
   </div>
 </details>
@@ -429,11 +455,11 @@
   </summary>
   <div class="patch-body">
 <p>Aiming, weapons, and paperwork.</p>
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>The AdBlocker gets a sword.</strong> The mallet is gone; the tank now carries a proper arming sword and shield. Gold trim arrives at level 3, a steel glow at level 6.</li><li><strong>Short-range auto-attack for the AdBlocker.</strong> The sword swings on its own every 0.85 s at the nearest ad within 64 px, for a small slice of damage. Stand your ground and the crowd in front of you keeps chipping away even when you are busy blocking, dashing, or reading the wall.</li><li><strong>Aim assist.</strong> Attacks snap onto the nearest ad inside the aim cone (about 24° on desktop, 34° on touch), so shots land where you meant them to instead of where your thumb happened to be.</li><li><strong>Version display.</strong> The current version sits on the title card and in the help panel.</li><li><strong>Docs.</strong> A full README and this changelog.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li><strong>Desktop aiming is free again.</strong> The mouse no longer locks onto enemies. Point wherever you like — including while walking — and the character aims there. If the mouse sits still for 8 seconds, aim falls back to the direction you are walking, so keyboard-only play still works.</li><li><strong>Phones aim where you move.</strong> The stick direction is the aim direction, with the leading cursor pip showing it, and attacks pick the nearest ad in that direction.</li></ul>
-<h3>Removed</h3>
+<h3 id="removed">Removed</h3>
 <ul><li>The enemy-lock reticle from 0.2.0. It was helpful, but it stole the cursor from players who wanted to keep aiming by hand.</li></ul>
   </div>
 </details>
@@ -445,7 +471,7 @@
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
   <div class="patch-body">
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li>The aim cursor travels with the player: it rides ahead of you while walking, and a mobile pip shows the stick direction.</li></ul>
   </div>
 </details>
@@ -457,9 +483,9 @@
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
   <div class="patch-body">
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li><strong>The cast is now chibi MMORPG adventurers</strong>, drawn procedurally on the canvas with class armour, weapons, headgear, and idle flourishes: AdBlocker (plumed helm, kite shield, mallet), Fact-Checker (hood, cupid collar, magnifier staff), Reader-Mode (wizard hat, floating tome, quill wand).</li><li>Gear tiers: gold trim from level 3, weapon glow from level 6.</li><li>Each hero and local rolls their own skin and hair; bots spawn at levels 1–6 with visible weapons.</li><li>Full-body class-select banners and a matching HUD portrait.</li><li>The sitting pose actually sits on the bench instead of standing in front of it.</li></ul>
-<h3>Changed</h3>
+<h3 id="changed">Changed</h3>
 <ul><li>HUD portraits, cosmetic previews, bots, and the player all share one hero renderer.</li></ul>
   </div>
 </details>
@@ -471,7 +497,7 @@
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
   <div class="patch-body">
-<h3>Added</h3>
+<h3 id="added">Added</h3>
 <ul><li>Initial release: three classes (AdBlocker, Fact-Checker, Reader-Mode), four ad-monsters plus The Algorithm boss, Joy and clarity progression, permanent upgrades and cosmetics, roaming locals with chat, the kindness wall, procedural ocean and lo-fi audio, responsive retro-pastel UI, touch controls, and local save data.</li><li>Deployed to GitHub Pages at &lt;https://potaterrr.github.io/adblock-island/&gt;.</li></ul>
   </div>
 </details>
@@ -480,25 +506,25 @@
         <section class="project-block">
           <h2>What&#x27;s in the beta</h2>
           
-          <ul class="project-list"><li>Seven classes with their own silhouettes, gear, projectiles and hit behaviour</li><li>The wave ladder, medals, items, the Algorithm boss and kindness notes</li><li>Same-keyboard co-op for a second player</li><li>Title-screen build tag and patch notes that always agree</li><li>Runs from a static host, from the release zip, or straight from <code>file://</code></li></ul>
+          <ul class="project-list"><li>Seven classes with their own silhouettes, gear, projectiles and hit behaviour</li><li>The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes</li><li>Same-keyboard co-op for a second player</li><li>Five Endless medals and a damage curve that punishes no-upgrade runs</li><li>Title-screen build tag and patch notes that always agree</li><li>Runs from a static host, from the release zip, or straight from <code>file://</code></li></ul>
         </section>
         <section class="project-block">
           <h2>Honest limits</h2>
-          <p>Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them.</p><p>Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.6.7 beta</strong>.</p>
+          <p>Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.</p><p>Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.7.0 beta</strong>.</p>
           
         </section>
         <section class="project-block patch-pending" id="pending">
           <h2>Still pending</h2>
-<p>This is a <strong>beta</strong>. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static <code>index.html</code> on GitHub Pages cannot provide on its own. This section lives beside the patch notes until each line is either shipped or honestly dropped.</p>
-<h3>Achievements</h3>
-<p>Six wave medals ship today, listed on the pause screen. Still pending:</p>
-<ul><li>A real medal gallery: a collection screen with locked silhouettes, unlock dates, progress bars, and a &quot;new&quot; dot until you have looked at it.</li><li>Achievements for the rest of the game, not just wave milestones: first boss, 100% island clarity, ten kindness notes, a full run without being knocked out, a clear with each class, a co-op clear, wave 20.</li><li>Unlock toasts and a small fanfare when a medal lands, instead of only finding it later in the pause screen.</li><li>Account-wide achievements. Today they live in <code>localStorage</code> and vanish when site data is cleared.</li></ul>
-<h3>Cool items</h3>
+<p>This is a <strong>beta</strong>. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static <code>index.html</code> on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.</p>
+<h3 id="achievements">Achievements</h3>
+<p>Campaign medals, class clears, co-op, the boss, spending, cleanup and the new Endless milestones ship today, with a gallery and unlock toasts in the pause screen. Still pending:</p>
+<ul><li>Dated unlock history, locked silhouettes, progress bars, and a &quot;new&quot; dot until you have looked at it.</li><li>Achievements for ten kindness notes, a full run without being knocked out, and other non-wave milestones.</li><li>Account-wide achievements. Today they live in <code>localStorage</code> and vanish when site data is cleared.</li></ul>
+<h3 id="cool-items">Cool items</h3>
 <p>Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare Lens, Worn Sandals, Cool Cloth, Jar of Joy and Kettle Break — and most are quietly a free upgrade rank. Still pending:</p>
 <ul><li>A real inventory: slots, stacking, descriptions, and a &quot;found on wave N&quot; line.</li><li>Cosmetic drops that change how your hero looks — hats, brooms, trails, emotes — plus an equip screen. The class-picker cosmetics are the only cosmetic today.</li><li>Rarity tiers, set bonuses, and a reason to keep an item once its upgrade is maxed.</li><li>Items that change a run: one-use lures, placeable turrets, a kettle you can set down for the locals.</li><li>Trading and gifting between players. That needs accounts and a server first.</li></ul>
-<h3>What an MMORPG still needs</h3>
+<h3 id="what-an-mmorpg-still-needs">What an MMORPG still needs</h3>
 <p>The &quot;MMO&quot; in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:</p>
-<ul><li><strong>Online multiplayer.</strong> Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches.</li><li><strong>Accounts and cross-device saves.</strong> Sign-in, cloud saves and conflict handling. Today progress belongs to one browser&#x27;s <code>localStorage</code>.</li><li><strong>Moderated chat.</strong> Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.</li><li><strong>Parties, friends and guilds.</strong> Invites, presence, shared objectives, and a reason to log in together.</li><li><strong>Quests, raids and world events.</strong> Content beyond the wave ladder, with rewards that respect everyone&#x27;s time.</li><li><strong>A player economy.</strong> Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.</li><li><strong>Anti-cheat and fair play.</strong> Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.</li><li><strong>Live ops.</strong> Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.</li><li><strong>Accessibility and localisation.</strong> Remapping, a screen-reader pass, reduced-motion parity, and translated copy.</li><li><strong>A content pipeline.</strong> The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.</li></ul>
+<ul><li><strong>Online multiplayer.</strong> Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches. The concrete next step is the <strong>4-player room-code plan</strong> in <a href="#planned-4-player-online-rooms" target="_blank" rel="noopener">v0.7.0</a>: Vercel static + signaling, free Redis, host-authoritative WebRTC, no accounts or anti-cheat yet.</li><li><strong>Accounts and cross-device saves.</strong> Sign-in, cloud saves and conflict handling. Today progress belongs to one browser&#x27;s <code>localStorage</code>.</li><li><strong>Moderated chat.</strong> Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.</li><li><strong>Parties, friends and guilds.</strong> Invites, presence, shared objectives, and a reason to log in together.</li><li><strong>Quests, raids and world events.</strong> Content beyond the wave ladder, with rewards that respect everyone&#x27;s time.</li><li><strong>A player economy.</strong> Trading, currency sinks, and anti-dupe rules. Joy is single-player and is not an economy yet.</li><li><strong>Anti-cheat and fair play.</strong> Server authority, validation and rate limits. Anything that lives only on the client is a suggestion.</li><li><strong>Live ops.</strong> Seasons, events, balance patches, and consent-based telemetry so balance changes are informed.</li><li><strong>Accessibility and localisation.</strong> Remapping, a screen-reader pass, reduced-motion parity, and translated copy.</li><li><strong>A content pipeline.</strong> The island is one hand-written file; more classes, enemies and stories need tooling that does not exist yet.</li></ul>
 <p>Until then, the honest description is: a single-player and local co-op cozy micro-MMO with bots, in beta.</p>
         </section>
 
@@ -516,7 +542,7 @@
             <div class="project-side-card">
               <h2>Links</h2>
               <ul class="project-link-list">
-                <li><a href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.6.7 beta ↗</a></li><li><a href="/projects/adblock-island/adblock-island-beta-v0.6.7.zip">Download v0.6.7</a></li><li><a href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="#pending">Pending</a></li>
+                <li><a href="https://potaterrr.github.io/adblock-island/" target="_blank" rel="noopener">Play v0.7.0 beta ↗</a></li><li><a href="/projects/adblock-island/adblock-island-beta-v0.7.0.zip">Download v0.7.0</a></li><li><a href="https://github.com/potaterrr/adblock-island" target="_blank" rel="noopener">Repo ↗</a></li><li><a href="#pending">Pending</a></li>
               </ul>
             </div>
             <div class="project-side-card">

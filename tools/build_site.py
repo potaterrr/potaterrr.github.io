@@ -479,6 +479,12 @@ def md_inline(text: str) -> str:
     return t
 
 
+def slugify(text: str) -> str:
+    text = unescape(re.sub(r"<[^>]+>", "", text)).lower()
+    text = re.sub(r"[^\w\s-]", "", text)
+    return re.sub(r"[\s_-]+", "-", text).strip("-")
+
+
 def md_blocks(lines) -> str:
     out = []
     i = 0
@@ -503,11 +509,13 @@ def md_blocks(lines) -> str:
             out.append(f'<div class="patch-table-wrap"><table><thead><tr>{th}</tr></thead><tbody>{trs}</tbody></table></div>')
             continue
         if line.startswith("### "):
-            out.append(f"<h3>{md_inline(line[4:])}</h3>")
+            heading = md_inline(line[4:])
+            out.append(f'<h3 id="{slugify(heading)}">{heading}</h3>')
             i += 1
             continue
         if line.startswith("#### "):
-            out.append(f"<h4>{md_inline(line[5:])}</h4>")
+            heading = md_inline(line[5:])
+            out.append(f'<h4 id="{slugify(heading)}">{heading}</h4>')
             i += 1
             continue
         if line.startswith(">"):

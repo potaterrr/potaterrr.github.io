@@ -4,6 +4,61 @@ All notable changes to AdBlock Island. The game is a single `index.html`, and th
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release since the first build is listed below, newest first.
 
+## v0.7.0 — beta (2026-11-04)
+
+Endless mode, checkpoints, mandatory upgrades and a damage curve. The campaign still ends at wave 10; the door after it now goes somewhere.
+
+### Endless mode
+
+- Clearing wave 10 changes the final button from **Keep going** to **Enter Endless**. Wave 11 begins **Endless mode**: there is no final wave, and the tier label, banner and HUD all say so.
+- **Checkpoints every three endless waves.** Waves **11, 14, 17, 20…** pause the island and pay a checkpoint bundle: **80, 100, 120… Joy** (`60 + 20 × checkpoint`).
+- A checkpoint is a real pause. The upgrade shop opens, and the next wave is locked until you buy at least one upgrade (or every upgrade is maxed). **Step away** lets you leave the checkpoint and wander; the wave card brings it back. `Esc` and the close button will not skip it.
+- **Dying in Endless restarts the current wave.** Joy, upgrades and checkpoint progress are kept. The old bench respawn still applies in the campaign.
+- The HUD wave card shows `Endless`, the current depth, and the enemy damage pressure. The pause screen remembers your deepest endless wave.
+
+### Upgrades before every wave
+
+- After every wave clear, the next wave is **gated**: while you can afford an upgrade and have not bought one since the clear, the card replaces **Next wave** with **Upgrade first**. `Enter`, `N` and the wave card all go through the same gate.
+- Free items and cleansing do **not** open the gate. Spending Joy does.
+- If nothing is affordable, the island lets you pass rather than soft-lock the run.
+- The wave panel now spells out the gate instead of hiding it behind a disabled button.
+
+### The ads hit back
+
+- Enemy damage gains a pressure multiplier on top of the existing wave recipe:
+  - waves 1–6: **×1.00**
+  - waves 7–10: **×1.05 → ×1.20**
+  - wave 11+: **×1.50**, rising by ×0.10 per wave and capping at **×2.60**
+- It applies to contact hits, the Algorithm, sponsored beams, flyers and pop-up damage. By wave 16–20 an unupgraded 85–100 HP hero dies in a few hits; the same wave is survivable with **Deep Breaths** ranks and a little care.
+- A late death with no vitality ranks now suggests Deep Breaths instead of silently letting the run stall.
+
+### Achievements
+
+Five new medals join the gallery:
+
+- **Beyond the Ladder** — enter Endless mode.
+- **Tea Break** — reach your first endless checkpoint.
+- **Deep Static** — reach wave 20 in Endless.
+- **Kettle On** — reach five endless checkpoints.
+- **Ad Infinitum** — reach wave 30 in Endless.
+
+### Planned: 4-player online rooms
+
+Not shipped. The current build is still single-player and same-keyboard co-op. The plan for the next online step:
+
+- **Vercel** hosts the static game plus a tiny signaling API. A free Redis store (Vercel Marketplace/Upstash) holds room codes and SDP/ICE.
+- **4 players per room**, joined by a short room code or link.
+- **One player hosts the simulation.** WebRTC data channels carry inputs and snapshots; the host is authoritative for ads, waves, the boss, the island and checkpoints.
+- **No accounts, no anti-cheat, no host migration.** If the host leaves, the room closes. Cross-device saves and moderated public chat remain later work.
+- Phases: deploy → room lobby/signaling → 2-player sync → 4-player polish (TURN, reconnect, chat).
+
+This is deliberately separate from the single-file build. The shipped file stays offline-capable.
+
+### Distribution
+
+- `adblock-island-beta-v0.7.0.zip` is rebuilt from `index.html`, `README.md` and `CHANGELOG.md`.
+- The game is still one HTML file with no build step, no CDN, no fonts, no backend and no network calls.
+
 ## v0.6.7 — beta (2026-11-02)
 
 Massive changes: class identity pass. Every class now has its own silhouette and held gear instead of sharing the Reader's robe, cape and pointed hat — the Engineer gets a hard hat and a swinging wrench, the Medic a cross cap and a syringe staff, the Hacker a hood, visor and handheld terminal, the Streamer headphones, a mic boom and an antenna. The Engineer, Medic, Hacker and Streamer also stopped borrowing the Reader's attack: they now throw their own wrench bolts, syringes, exploit bolts and hype shards, each drawn as a real prop with its own hit behaviour (turret shots fire visible bolts, syringes patch you on impact, exploit bolts pierce and mark, hype shards pierce a crowd). Class cards, in-game sprites and projectiles all read as different kits now.
@@ -48,15 +103,14 @@ Massive changes: added a new **Engineer** class with deployable turrets and an O
 
 ## Still pending
 
-This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section lives beside the patch notes until each line is either shipped or honestly dropped.
+This is a **beta**. The list below is deliberately not in the build yet. Some of it is a weekend of work; some of it needs a server, accounts and moderation, which a single static `index.html` on GitHub Pages cannot provide on its own. This section stays at the top of the patch notes until each line is either shipped or honestly dropped.
 
 ### Achievements
 
-Six wave medals ship today, listed on the pause screen. Still pending:
+Campaign medals, class clears, co-op, the boss, spending, cleanup and the new Endless milestones ship today, with a gallery and unlock toasts in the pause screen. Still pending:
 
-- A real medal gallery: a collection screen with locked silhouettes, unlock dates, progress bars, and a "new" dot until you have looked at it.
-- Achievements for the rest of the game, not just wave milestones: first boss, 100% island clarity, ten kindness notes, a full run without being knocked out, a clear with each class, a co-op clear, wave 20.
-- Unlock toasts and a small fanfare when a medal lands, instead of only finding it later in the pause screen.
+- Dated unlock history, locked silhouettes, progress bars, and a "new" dot until you have looked at it.
+- Achievements for ten kindness notes, a full run without being knocked out, and other non-wave milestones.
 - Account-wide achievements. Today they live in `localStorage` and vanish when site data is cleared.
 
 ### Cool items
@@ -73,7 +127,7 @@ Waves currently hand out seven small things — Spare Broom, Wool Blanket, Spare
 
 The "MMO" in micro-MMO is currently a polite lie: the other players are bots, and co-op is two people on one keyboard. To be an actual MMORPG, the game still needs:
 
-- **Online multiplayer.** Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches.
+- **Online multiplayer.** Authoritative servers, rooms or shards, lag compensation and state sync. GitHub Pages is static hosting, so this needs a backend — or a peer-to-peer/WebRTC experiment with all of its NAT headaches. The concrete next step is the **4-player room-code plan** in [v0.7.0](#planned-4-player-online-rooms): Vercel static + signaling, free Redis, host-authoritative WebRTC, no accounts or anti-cheat yet.
 - **Accounts and cross-device saves.** Sign-in, cloud saves and conflict handling. Today progress belongs to one browser's `localStorage`.
 - **Moderated chat.** Server-side filtering, reporting, mute/block, rate limits, and a human process behind it. An unmoderated chat is not something to ship.
 - **Parties, friends and guilds.** Invites, presence, shared objectives, and a reason to log in together.
