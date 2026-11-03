@@ -1114,11 +1114,11 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a 1 → 2 → 4 boss split ladder, and faster splits.",
-      "summary": "Pick one of nine classes, sweep the static, and survive Mania — bosses split at 75% into two smaller bosses, then four, and speed up each split. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a four-boss cap, and survivors you can pick off one at a time.",
+      "summary": "Pick one of nine classes, sweep the static, and survive Mania — bosses split at 75% into two smaller bosses, then four, then stop. Kill the survivors one by one. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.9.4",
-      "channel": "boss ladder",
+      "version": "0.9.5",
+      "channel": "boss lock",
       "badges": [
         "Game",
         "Beta",
@@ -1130,7 +1130,7 @@
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.9.4 Boss ladder"
+          "value": "v0.9.5 Boss lock"
         },
         {
           "label": "Classes",
@@ -1149,14 +1149,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.9.4",
+          "label": "Play v0.9.5",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.9.4",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.9.4.zip"
+          "label": "Download v0.9.5",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.9.5.zip"
         },
         {
           "label": "Repo",
@@ -1174,7 +1174,7 @@
           "body": [
             "AdBlock Island is a small, wholesome micro-MMO about cleaning up a beach that ads have overrun. You wash ashore with a broom and a class, and the islanders save you a spot by the fire.",
             "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio.",
-            "The v0.9.4 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. Bosses now split at 75% HP: one boss becomes two smaller bosses, and each child can split once more into four. Two bosses move and attack 25% faster; four are 50% faster. Beams and summons are randomised."
+            "The v0.9.5 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. Bosses split at 75% HP from one to two to four smaller bosses, then splitting locks: the remaining four can be killed one at a time. Two bosses move and attack 25% faster; four are 50% faster. Beams and summons are randomised."
           ]
         },
         {
@@ -1184,6 +1184,7 @@
             "Archivist support and Moderator crowd control, with marks, stuns and party utility",
             "Mania: death resets the run, 50% boss pairs, and a 75% HP split ladder from one boss to four",
             "Two bosses move and attack 25% faster; four bosses are 50% faster",
+            "Once four bosses are live, splitting stops and the survivors can be killed one by one",
             "Randomised boss beams and summons, with smaller split bosses",
             "A south-shore dock with Mira the shopkeeper, and a readable autumn-dusk Halloween theme",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
@@ -1197,7 +1198,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.4 Boss split ladder</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.5 Boss split lock</strong>."
           ]
         }
       ],

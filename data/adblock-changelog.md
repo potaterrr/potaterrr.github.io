@@ -45,6 +45,15 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.5 — Boss split lock (2026-11-04)
+
+A small fix for the four-boss ladder.
+
+- Once **four bosses are live**, splitting stops for the rest of that fight. Previously a low-health survivor could split again after you killed one, refilling the arena.
+- From that point the four (or however many remain) can be killed **one at a time**. The boss bar moves to the next live Algorithm, and partial rewards still apply.
+- The lock resets when the boss fight ends and when a new run starts.
+- The 75% split ladder, smaller children, +25%/+50% speed tiers and randomised beams/summons are unchanged.
+
 ## v0.9.4 — Boss split ladder (2026-11-04)
 
 The Algorithm now splits on a readable health ladder instead of a one-off twin.
