@@ -12,13 +12,13 @@ Endless mode, checkpoints, mandatory upgrades and a damage curve. The campaign s
 
 - Clearing wave 10 changes the final button from **Keep going** to **Enter Endless**. Wave 11 begins **Endless mode**: there is no final wave, and the tier label, banner and HUD all say so.
 - **Checkpoints every three endless waves.** Waves **11, 14, 17, 20…** pause the island and pay a checkpoint bundle: **80, 100, 120… Joy** (`60 + 20 × checkpoint`).
-- A checkpoint is a real pause. The upgrade shop opens, and the next wave is locked until you buy at least one upgrade (or every upgrade is maxed). **Step away** lets you leave the checkpoint and wander; the wave card brings it back. `Esc` and the close button will not skip it.
+- A checkpoint is a real pause. The upgrade shop opens, and the next wave is locked until you buy at least one upgrade (or every upgrade is maxed). **Step away** lets you leave the checkpoint and wander; the wave card brings it back. `Esc` and the close button will not skip it. *(Corrected in the footnote below: Continue is now always available.)*
 - **Dying in Endless restarts the current wave.** Joy, upgrades and checkpoint progress are kept. The old bench respawn still applies in the campaign.
 - The HUD wave card shows `Endless`, the current depth, and the enemy damage pressure. The pause screen remembers your deepest endless wave.
 
 ### Upgrades before every wave
 
-- After every wave clear, the next wave is **gated**: while you can afford an upgrade and have not bought one since the clear, the card replaces **Next wave** with **Upgrade first**. `Enter`, `N` and the wave card all go through the same gate.
+- After every wave clear, the next wave is **gated**: while you can afford an upgrade and have not bought one since the clear, the card replaces **Next wave** with **Upgrade first**. `Enter`, `N` and the wave card all go through the same gate. *(Corrected in the footnote below: the next wave is always available.)*
 - Free items and cleansing do **not** open the gate. Spending Joy does.
 - If nothing is affordable, the island lets you pass rather than soft-lock the run.
 - The wave panel now spells out the gate instead of hiding it behind a disabled button.
@@ -58,6 +58,14 @@ This is deliberately separate from the single-file build. The shipped file stays
 
 - `adblock-island-beta-v0.7.0.zip` is rebuilt from `index.html`, `README.md` and `CHANGELOG.md`.
 - The game is still one HTML file with no build step, no CDN, no fonts, no backend and no network calls.
+
+### Footnote — run-only progression (2026-11-04)
+
+This is a correction to the same v0.7.0 release, not a new version.
+
+- **Joy and upgrade ranks reset to zero at the start of every run.** Level, XP, boss progress and island corruption reset too; run progress is no longer written to `localStorage`.
+- **The next wave is always available.** Upgrading is optional again: choose `Upgrade` if you want, or take `Next wave` immediately. Checkpoint `Continue` is always enabled.
+- Medals, kindness notes, settings, collected items and lifetime bests still persist.
 
 ## v0.6.7 — beta (2026-11-02)
 
