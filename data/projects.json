@@ -1011,7 +1011,7 @@
       "category": "games",
       "title": "Tippy Card Monte",
       "tagline": "Follow the shuffle. Five modes. One very smug coin.",
-      "summary": "A pixel-art card monte in a single page: Classic, Endless, Daily, Blitz and Zen, plus checkpoint perks, mode bests and 13 medals. No build, no backend.",
+      "summary": "A pixel-art card monte in a single page: Classic, Endless, Daily, Blitz and Zen, plus checkpoint perks, mode bests, 13 medals and landscape fullscreen. No build, no backend.",
       "status": "Playable",
       "badges": [
         "Game",
@@ -1045,7 +1045,7 @@
           "primary": true
         },
         {
-          "label": "Download v1.2.0",
+          "label": "Download v1.2.1",
           "href": "/projects/tippy-card-monte/tippy-card-monte.zip"
         },
         {
@@ -1059,7 +1059,7 @@
           "title": "Overview",
           "body": [
             "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.",
-            "The 1.2.0 update turns it into a mode-based game: Classic, Endless, Daily, Blitz and Zen, with per-mode bests, checkpoint perks and a medal gallery."
+            "The 1.2.1 update adds fullscreen with a landscape lock on touch devices, and fixes the CASH OUT buttons so one press banks the run. The game still has five modes — Classic, Endless, Daily, Blitz and Zen — with per-mode bests, checkpoint perks and a medal gallery."
           ]
         },
         {
@@ -1078,7 +1078,7 @@
             "Every 4 Endless depths pauses for a 30/40/50…p checkpoint bonus.",
             "Choose one of three random perks: Longer Peek, Fewer Shuffles, Slow Hands, Coin Purse, Safety Net or Streak Guard.",
             "Each perk has three ranks. Safety Net forgives one miss; Streak Guard keeps the streak.",
-            "The HUD shows the next checkpoint count and a double-press CASH OUT button."
+            "The HUD shows the next checkpoint count and a single-press CASH OUT button; the checkpoint screen has its own CASH OUT button."
           ]
         },
         {
@@ -1087,7 +1087,8 @@
             "13 medals persist in localStorage, with unlock toasts and a gallery on the title screen.",
             "Each mode keeps its own best score or best Endless depth.",
             "The result screen reports mode, depth, new medals and the mode best.",
-            "Everything runs locally: no accounts, no backend, no network calls."
+            "Everything runs locally: no accounts, no backend, no network calls.",
+        "Fullscreen toggles from the title screen, the HUD, or F; touch devices request landscape and show a rotate prompt if the lock is unavailable."
           ]
         }
       ],
@@ -1095,7 +1096,7 @@
         "adblock-island"
       ],
       "related_posts": [],
-      "version": "1.2.0",
+      "version": "1.2.1",
       "patch_notes": true,
       "changelog": "tippy-changelog.md",
       "changelog_url": "https://github.com/potaterrr/potaterrr.github.io/blob/main/data/tippy-changelog.md",
@@ -1114,11 +1115,11 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a 50% boss roll each wave, and a pop-up trap.",
-      "summary": "Pick one of nine classes, sweep the static, and survive Mania — one boss per run on a 50% wave roll, a 75% HP split ladder, and pop-up ads that punish CLICK HERE. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a 50% boss roll, and a fullscreen toggle.",
+      "summary": "Pick one of nine classes, sweep the static, and survive Mania — one boss per run on a 50% wave roll, a 75% HP split ladder, pop-up ads that punish CLICK HERE, and a fullscreen toggle. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.9.7",
-      "channel": "trap & flow",
+      "version": "0.9.8",
+      "channel": "fullscreen",
       "badges": [
         "Game",
         "Beta",
@@ -1130,7 +1131,7 @@
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.9.7 Trap & flow"
+          "value": "v0.9.8 Fullscreen"
         },
         {
           "label": "Classes",
@@ -1149,14 +1150,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.9.7",
+          "label": "Play v0.9.8",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.9.7",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.9.7.zip"
+          "label": "Download v0.9.8",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.9.8.zip"
         },
         {
           "label": "Repo",
@@ -1188,6 +1189,7 @@
             "Once four bosses are live, splitting stops and the survivors can be killed one by one",
             "Leaving the upgrade shop after a clear starts the next wave",
             "CLICK HERE on a pop-up is a trap; click the ✕",
+            "A title-screen fullscreen toggle; orientation stays unlocked",
             "A south-shore dock with Mira the shopkeeper, and a readable autumn-dusk Halloween theme",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
@@ -1200,7 +1202,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.7 Upgrade exit & ad trap</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.8 Fullscreen option</strong>."
           ]
         }
       ],

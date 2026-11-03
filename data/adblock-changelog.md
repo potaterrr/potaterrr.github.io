@@ -45,6 +45,15 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.8 — Fullscreen option (2026-11-04)
+
+A small title-screen and settings addition. No gameplay changes.
+
+- Added a **fullscreen** button to the title screen, alongside help and co-op.
+- The Settings fullscreen button now toggles in and out and updates its label.
+- Fullscreen is best-effort: if the browser blocks it, the game explains instead of failing silently.
+- AdBlock Island does **not** lock orientation; portrait and landscape both stay available as before.
+
 ## v0.9.7 — Upgrade exit & ad trap (2026-11-04)
 
 Two flow changes.

@@ -4,6 +4,23 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.2.1 — 2026-11-04
+
+Fullscreen and a cash-out fix.
+
+### Fullscreen
+
+- Added a **FULLSCREEN** button to the title screen and a **FULL** button in the game HUD.
+- Press **F** to toggle fullscreen from anywhere in the game.
+- On touch devices the game best-effort locks the screen to **landscape** after entering fullscreen. If the browser cannot lock orientation, a **ROTATE TO LANDSCAPE** prompt covers the table until the device is turned.
+- Exiting fullscreen unlocks the orientation again.
+
+### Cash out
+
+- The HUD **CASH OUT** button now banks the run on a **single press**; the old double-press confirmation was removed.
+- The checkpoint **CASH OUT** button is now resilient: it works even if the checkpoint promise was already cleared, and it always ends the run.
+- Both paths land on the result screen with the current depth and score.
+
 ## v1.2.0 — 2026-11-04
 
 Five modes, endless checkpoints, perks and medals.

@@ -1023,6 +1023,53 @@ img { display: block; }
   pointer-events: none;
 }
 
+
+/* ---------------------------------------------------------- fullscreen */
+.fs-btn { font-size: 8px !important; }
+#fs-rotate-hint {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: none;
+  place-items: center;
+  padding: 24px;
+  background: rgba(11, 15, 29, .96);
+  text-align: center;
+}
+body.fs-rotate #fs-rotate-hint { display: grid; }
+.rotate-card {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+  max-width: 340px;
+  padding: 24px 20px;
+  border: 3px solid var(--gold);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: 0 0 0 4px rgba(247,197,49,.12), 0 12px 0 rgba(0,0,0,.3);
+}
+.rotate-icon {
+  font-family: var(--font-pixel);
+  font-size: 32px;
+  color: var(--gold-l);
+  animation: rotateHint 1.6s ease-in-out infinite;
+}
+@keyframes rotateHint { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(90deg); } }
+.rotate-card b {
+  color: var(--gold-l);
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.rotate-card span {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+@media (max-width: 820px), (max-aspect-ratio: 1/1) {
+  .hud .fs-btn { display: none; }
+}
+
 /* ------------------------------------------------------------- responsive */
 @media (max-width: 820px), (max-aspect-ratio: 1/1) {
   .title-layout {
@@ -1336,6 +1383,7 @@ img { display: block; }
         <div class="title-meta" id="mode-meta"></div>
         <div class="title-bottom">
           <span class="fineprint" id="title-fineprint">Finish above 0p to win. All 16 picks is a BIG WIN. Debt is real.</span>
+          <button class="btn btn-ghost btn-small fs-btn" id="btn-fullscreen" type="button" aria-pressed="false">FULLSCREEN</button>
           <button class="btn btn-ghost btn-small sound-btn js-sound" type="button" aria-pressed="false">SND ON</button>
         </div>
       </div>
@@ -1364,6 +1412,7 @@ img { display: block; }
         <span class="hud-sub" id="stage-value">ROOKIE</span>
       </div>
       <button class="btn btn-ghost btn-small stop-btn" id="btn-stop" type="button" hidden>CASH OUT</button>
+      <button class="btn btn-ghost btn-small fs-btn" id="btn-fullscreen-game" type="button" aria-pressed="false">FULL</button>
       <button class="btn btn-ghost btn-small sound-btn js-sound" type="button" aria-pressed="false">SND ON</button>
     </header>
     <main class="stage" id="stage">
@@ -1434,7 +1483,14 @@ img { display: block; }
     </div>
   </div>
 
-  <div class="corner-credit">TIPPY CARD MONTE · V1.2.0</div>
+  <div id="fs-rotate-hint" role="status" aria-live="polite">
+    <div class="rotate-card">
+      <div class="rotate-icon" aria-hidden="true">↻</div>
+      <b>ROTATE TO LANDSCAPE</b>
+      <span>The table needs the wider side. Turn your device sideways to keep playing.</span>
+    </div>
+  </div>
+  <div class="corner-credit">TIPPY CARD MONTE · V1.2.1</div>
 </div>
 
 <script>
@@ -1583,6 +1639,9 @@ img { display: block; }
     roundTotal: $('#round-total'),
     stageValue: $('#stage-value'),
     btnStop: $('#btn-stop'),
+    btnFullscreen: $('#btn-fullscreen'),
+    btnFullscreenGame: $('#btn-fullscreen-game'),
+    fsRotateHint: $('#fs-rotate-hint'),
     modeGrid: $('#mode-grid'),
     modeDesc: $('#mode-desc'),
     modeMeta: $('#mode-meta'),
@@ -1862,6 +1921,62 @@ img { display: block; }
       button.setAttribute('aria-pressed', String(!state.muted));
     });
   }
+
+  function fullscreenActive() {
+    return !!(document.fullscreenElement || document.webkitFullscreenElement);
+  }
+
+  function updateFullscreenUI() {
+    const on = fullscreenActive();
+    [el.btnFullscreen, el.btnFullscreenGame].forEach((button) => {
+      if (!button) return;
+      button.textContent = on ? 'EXIT FULL' : (button === el.btnFullscreenGame ? 'FULL' : 'FULLSCREEN');
+      button.setAttribute('aria-pressed', String(on));
+    });
+    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const portrait = window.innerHeight > window.innerWidth;
+    document.body.classList.toggle('fs-rotate', on && coarse && portrait);
+  }
+
+  async function toggleFullscreen() {
+    const root = document.documentElement;
+    const request = root.requestFullscreen || root.webkitRequestFullscreen;
+    if (fullscreenActive()) {
+      try {
+        const p = (document.exitFullscreen || document.webkitExitFullscreen)?.call(document);
+        if (p && p.catch) p.catch(() => {});
+      } catch (error) {}
+      try { if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock(); } catch (error) {}
+      updateFullscreenUI();
+      return;
+    }
+    if (!request) {
+      showToast('FULLSCREEN UNAVAILABLE', 'This browser does not expose fullscreen for pages.', true);
+      return;
+    }
+    try {
+      const p = request.call(root, { navigationUI: 'hide' });
+      if (p && p.catch) p.catch(() => showToast('FULLSCREEN BLOCKED', 'The browser refused the request.', true));
+    } catch (error) {
+      showToast('FULLSCREEN BLOCKED', 'The browser refused the request.', true);
+    }
+    // Fullscreen is required for orientation lock in browsers that support it.
+    try {
+      if (screen.orientation && screen.orientation.lock) await screen.orientation.lock('landscape');
+    } catch (error) {
+      // iOS/Safari and some desktops do not support the lock. The rotate
+      // overlay below is the fallback on touch devices.
+    }
+    updateFullscreenUI();
+  }
+
+  el.btnFullscreen?.addEventListener('click', toggleFullscreen);
+  el.btnFullscreenGame?.addEventListener('click', toggleFullscreen);
+  document.addEventListener('fullscreenchange', updateFullscreenUI);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+  window.addEventListener('resize', updateFullscreenUI);
+  window.addEventListener('orientationchange', () => setTimeout(updateFullscreenUI, 120));
+  updateFullscreenUI();
 
   function updateBestLabel() {
     renderModes();
@@ -2664,26 +2779,19 @@ img { display: block; }
 
   el.btnStop.addEventListener('click', () => {
     if (state.mode !== 'endless' || state.screen !== 'game') return;
-    if (!state.stopArmed) {
-      state.stopArmed = true;
-      el.btnStop.textContent = 'SURE?';
-      setTimeout(() => {
-        state.stopArmed = false;
-        el.btnStop.textContent = 'CASH OUT';
-      }, 2200);
-    } else {
-      state.stopArmed = false;
-      el.btnStop.textContent = 'CASH OUT';
-      cashOut();
-    }
+    state.stopArmed = false;
+    cashOut();
   });
 
   el.btnCashoutCheckpoint.addEventListener('click', () => {
-    if (!state.checkpointResolve) return;
+    if (state.mode !== 'endless') return;
+    // Resolve the checkpoint promise if it is still pending, then end the
+    // run. Do not require a second click or a live resolver: the checkpoint
+    // can be cashed out even if the perk promise was already cleared.
     const resolve = state.checkpointResolve;
     state.checkpointResolve = null;
-    resolve(null);
-    cashOut();
+    if (resolve) resolve(null);
+    setTimeout(cashOut, 0);
   });
 
   document.querySelectorAll('.js-sound').forEach((button) => {
@@ -2691,6 +2799,11 @@ img { display: block; }
   });
 
   window.addEventListener('keydown', (event) => {
+    if (event.key === 'f' || event.key === 'F') {
+      event.preventDefault();
+      toggleFullscreen();
+      return;
+    }
     if (event.key === 'm' || event.key === 'M') {
       toggleSound();
       return;

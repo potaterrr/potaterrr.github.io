@@ -40,7 +40,7 @@
   "@context": "https://schema.org",
   "@type": "CreativeWork",
   "name": "Tippy Card Monte",
-  "description": "A pixel-art card monte in a single page: Classic, Endless, Daily, Blitz and Zen, plus checkpoint perks, mode bests and 13 medals. No build, no backend.",
+  "description": "A pixel-art card monte in a single page: Classic, Endless, Daily, Blitz and Zen, plus checkpoint perks, mode bests, 13 medals and landscape fullscreen. No build, no backend.",
   "url": "https://potaterrr.github.io/projects/tippy-card-monte/",
   "image": "https://potaterrr.github.io/assets/og/projects/tippy-card-monte.png",
   "author": {
@@ -121,7 +121,7 @@
         <p class="project-tagline">Follow the shuffle. Five modes. One very smug coin.</p>
         <div class="project-badges"><span class="project-badge">Game</span><span class="project-badge">Single file</span><span class="project-badge">5 modes</span><span class="project-badge project-badge-status">Playable</span></div>
         <div class="project-metrics"><div class="project-metric"><span>Modes</span><strong>5</strong></div><div class="project-metric"><span>Campaign</span><strong>16 rounds</strong></div><div class="project-metric"><span>Endless</span><strong>Depth chase</strong></div></div>
-        <div class="cta-row project-actions"><a class="btn btn-primary" href="/tippy-card-monte/">Play it</a><a class="btn btn-ghost" href="/projects/tippy-card-monte/tippy-card-monte.zip">Download v1.2.0</a><a class="btn btn-ghost" href="https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte" target="_blank" rel="noopener">Source</a></div>
+        <div class="cta-row project-actions"><a class="btn btn-primary" href="/tippy-card-monte/">Play it</a><a class="btn btn-ghost" href="/projects/tippy-card-monte/tippy-card-monte.zip">Download v1.2.1</a><a class="btn btn-ghost" href="https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte" target="_blank" rel="noopener">Source</a></div>
       </div>
     </section>
 
@@ -131,7 +131,7 @@
           <div class="project-main">
         <section class="project-block">
           <h2>Overview</h2>
-          <p>Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.</p><p>The 1.2.0 update turns it into a mode-based game: Classic, Endless, Daily, Blitz and Zen, with per-mode bests, checkpoint perks and a medal gallery.</p>
+          <p>Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.</p><p>The 1.2.1 update adds fullscreen with a landscape lock on touch devices, and fixes the CASH OUT buttons so one press banks the run. The game still has five modes — Classic, Endless, Daily, Blitz and Zen — with per-mode bests, checkpoint perks and a medal gallery.</p>
           
         </section>
         <section class="project-block patch-notes" id="patch-notes">
@@ -146,8 +146,23 @@
           <div class="patch-list">
 <details class="patch-release" open>
   <summary>
+    <span class="patch-version">v1.2.1</span>
+    
+    <time class="patch-date" datetime="2026-11-04">Nov 4, 2026</time>
+    <span class="patch-plus" aria-hidden="true">+</span>
+  </summary>
+  <div class="patch-body">
+<p>Fullscreen and a cash-out fix.</p>
+<h3 id="fullscreen">Fullscreen</h3>
+<ul><li>Added a <strong>FULLSCREEN</strong> button to the title screen and a <strong>FULL</strong> button in the game HUD.</li><li>Press <strong>F</strong> to toggle fullscreen from anywhere in the game.</li><li>On touch devices the game best-effort locks the screen to <strong>landscape</strong> after entering fullscreen. If the browser cannot lock orientation, a <strong>ROTATE TO LANDSCAPE</strong> prompt covers the table until the device is turned.</li><li>Exiting fullscreen unlocks the orientation again.</li></ul>
+<h3 id="cash-out">Cash out</h3>
+<ul><li>The HUD <strong>CASH OUT</strong> button now banks the run on a <strong>single press</strong>; the old double-press confirmation was removed.</li><li>The checkpoint <strong>CASH OUT</strong> button is now resilient: it works even if the checkpoint promise was already cleared, and it always ends the run.</li><li>Both paths land on the result screen with the current depth and score.</li></ul>
+  </div>
+</details>
+<details class="patch-release">
+  <summary>
     <span class="patch-version">v1.2.0</span>
-    <span class="patch-channel">beta</span>
+    
     <time class="patch-date" datetime="2026-11-04">Nov 4, 2026</time>
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
@@ -169,7 +184,7 @@
 <details class="patch-release">
   <summary>
     <span class="patch-version">v1.1.0</span>
-    <span class="patch-channel">beta</span>
+    
     <time class="patch-date" datetime="2026-11-03">Nov 3, 2026</time>
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
@@ -181,7 +196,7 @@
 <details class="patch-release">
   <summary>
     <span class="patch-version">v1.0.0</span>
-    <span class="patch-channel">beta</span>
+    
     <time class="patch-date" datetime="2026-10-30">Oct 30, 2026</time>
     <span class="patch-plus" aria-hidden="true">+</span>
   </summary>
@@ -200,14 +215,13 @@
         <section class="project-block">
           <h2>Checkpoints and perks</h2>
           
-          <ul class="project-list"><li>Every 4 Endless depths pauses for a 30/40/50…p checkpoint bonus.</li><li>Choose one of three random perks: Longer Peek, Fewer Shuffles, Slow Hands, Coin Purse, Safety Net or Streak Guard.</li><li>Each perk has three ranks. Safety Net forgives one miss; Streak Guard keeps the streak.</li><li>The HUD shows the next checkpoint count and a double-press CASH OUT button.</li></ul>
+          <ul class="project-list"><li>Every 4 Endless depths pauses for a 30/40/50…p checkpoint bonus.</li><li>Choose one of three random perks: Longer Peek, Fewer Shuffles, Slow Hands, Coin Purse, Safety Net or Streak Guard.</li><li>Each perk has three ranks. Safety Net forgives one miss; Streak Guard keeps the streak.</li><li>The HUD shows the next checkpoint count and a single-press CASH OUT button; the checkpoint screen has its own CASH OUT button.</li></ul>
         </section>
         <section class="project-block">
           <h2>Medals and bests</h2>
           
-          <ul class="project-list"><li>13 medals persist in localStorage, with unlock toasts and a gallery on the title screen.</li><li>Each mode keeps its own best score or best Endless depth.</li><li>The result screen reports mode, depth, new medals and the mode best.</li><li>Everything runs locally: no accounts, no backend, no network calls.</li></ul>
+          <ul class="project-list"><li>13 medals persist in localStorage, with unlock toasts and a gallery on the title screen.</li><li>Each mode keeps its own best score or best Endless depth.</li><li>The result screen reports mode, depth, new medals and the mode best.</li><li>Everything runs locally: no accounts, no backend, no network calls.</li><li>Fullscreen toggles from the title screen, the HUD, or F; touch devices request landscape and show a rotate prompt if the lock is unavailable.</li></ul>
         </section>
-
 
         <section class="project-block">
           <h2>Screenshots</h2>
@@ -223,7 +237,7 @@
             <div class="project-side-card">
               <h2>Links</h2>
               <ul class="project-link-list">
-                <li><a href="/tippy-card-monte/">Play it</a></li><li><a href="/projects/tippy-card-monte/tippy-card-monte.zip">Download v1.2.0</a></li><li><a href="https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte" target="_blank" rel="noopener">Source ↗</a></li>
+                <li><a href="/tippy-card-monte/">Play it</a></li><li><a href="/projects/tippy-card-monte/tippy-card-monte.zip">Download v1.2.1</a></li><li><a href="https://github.com/potaterrr/potaterrr.github.io/tree/main/tippy-card-monte" target="_blank" rel="noopener">Source ↗</a></li>
               </ul>
             </div>
             <div class="project-side-card">
