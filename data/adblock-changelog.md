@@ -45,6 +45,36 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.4 — Boss split ladder (2026-11-04)
+
+The Algorithm now splits on a readable health ladder instead of a one-off twin.
+
+### Splitting
+
+- A boss splits at **75% health**, not 50%.
+- The parent is consumed by the split and replaced by **two smaller bosses**. Each child can split once at 75%, so **1 → 2 → 4**.
+- Split bosses shrink with each generation: **82%** of the parent's size, then **67%**. Their hitbox radius shrinks with the art.
+- **Four-boss Mania** remains in Settings. Turn it off and only the first generation splits, stopping at two.
+- The split itself does not pay a boss reward; only killing the final live boss ends the fight.
+
+### Speed
+
+- **1 boss:** normal speed.
+- **2 bosses:** **+25%** movement and attack tempo.
+- **3–4 bosses:** **+50%** movement and attack tempo.
+- The multiplier applies to movement, beam cooldowns, radial volleys and ad-break timing.
+
+### RNG
+
+- Boss beams are randomised: **1–2 beams** per cast, with random spread, length, width and wind-up.
+- Summons are randomised: **1–3 adds** at the first threshold and **2–4** at the second, with random types and positions. Behemoths are a rare roll.
+- Multi-boss add caps and smaller spawn particles still apply, so the extra bosses do not turn into a particle firehose.
+
+### Performance
+
+- Keeps the v0.9.3 boss-fight resolution budget: 1.1× desktop / 1.0× touch while bosses are live.
+- Split bosses are smaller, which reduces both the hitbox and the pixels each one paints.
+
 ## v0.9.3 — Boss-fight performance (2026-11-04)
 
 A focused hotfix for the moment the Algorithm arrives with friends.
