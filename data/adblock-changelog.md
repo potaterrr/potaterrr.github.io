@@ -45,6 +45,18 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.1 — Halloween readability (2026-11-04)
+
+A small patch for the new seasonal theme. No gameplay changes.
+
+### Theme
+
+- Replaced the dark inverted Halloween palette with a **warm autumn-dusk** palette: parchment surfaces, dark ink, pumpkin-orange accents and a violet-to-peach title sky.
+- The theme no longer flips text to cream on light panels, so the HUD, chat, class cards, settings and boss panels stay readable.
+- **Wave changes got a contrast pass:** the wave banner now uses a solid paper backing, hard dark labels, darker kicker/note text, a high-contrast `cleared` green and a deep raspberry `warn` state.
+- Secondary text (`--ink-soft`, `--ink-faint`) is darker in the theme for wave notes, role labels and quest lines.
+- Kept the pumpkin moon, soft fog, bats and jack-o'-lanterns; the canvas wash is now a light amber/violet tint instead of a dark vignette.
+
 ## v0.9.0 — Archivist, Moderator & the dock (2026-11-04)
 
 Two new classes, a real south-shore dock, a Halloween theme, and a companion pass.
