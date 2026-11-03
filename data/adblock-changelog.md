@@ -45,6 +45,24 @@ Until then, the honest description is: a single-player and local co-op cozy micr
 
 ---
 
+## v0.9.7 — Upgrade exit & ad trap (2026-11-04)
+
+Two flow changes.
+
+### Leaving upgrades starts the next wave
+
+- After a wave clear, opening **Upgrade** and then closing the shop now starts the normal **10-second next-wave countdown** automatically.
+- Buying upgrades still does not start anything by itself; you can browse until you leave.
+- Checkpoint upgrades are unchanged: they still return to the checkpoint panel first.
+- The help panel and wave-cleared subtitle now describe the new flow.
+
+### "CLICK HERE" is a trap
+
+- Pop-up ads now have a real **CLICK HERE** button, separate from the ✕.
+- Clicking the CTA takes a random **25–75%** of the player's **current health** (ignores wave damage pressure), shakes the screen, marks the player, and closes the pop-up without Joy or a monster hit.
+- Clicking the ✕ still rewards Joy and damages the imp as before.
+- The help panel warns: click the ✕, never CLICK HERE.
+
 ## v0.9.6 — One boss, 50% per wave (2026-11-04)
 
 The boss encounter is no longer a guaranteed pair or a guaranteed spawn.

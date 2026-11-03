@@ -1114,11 +1114,11 @@
       "slug": "adblock-island",
       "category": "games",
       "title": "AdBlock Island",
-      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, one boss per run, and a 50% chance to wake it each wave.",
-      "summary": "Pick one of nine classes, sweep the static, and survive Mania — one boss per run with a 50% chance to spawn each eligible wave, then a 75% HP split into two, four, and stop. Canvas 2D and Web Audio, no build, no backend.",
+      "tagline": "A wholesome micro-MMO in a single HTML file. Nine classes, a 50% boss roll each wave, and a pop-up trap.",
+      "summary": "Pick one of nine classes, sweep the static, and survive Mania — one boss per run on a 50% wave roll, a 75% HP split ladder, and pop-up ads that punish CLICK HERE. Canvas 2D and Web Audio, no build, no backend.",
       "status": "Beta",
-      "version": "0.9.6",
-      "channel": "boss roll",
+      "version": "0.9.7",
+      "channel": "trap & flow",
       "badges": [
         "Game",
         "Beta",
@@ -1130,7 +1130,7 @@
       "metrics": [
         {
           "label": "Version",
-          "value": "v0.9.6 Boss roll"
+          "value": "v0.9.7 Trap & flow"
         },
         {
           "label": "Classes",
@@ -1149,14 +1149,14 @@
       ],
       "links": [
         {
-          "label": "Play v0.9.6",
+          "label": "Play v0.9.7",
           "href": "https://potaterrr.github.io/adblock-island/",
           "primary": true,
           "external": true
         },
         {
-          "label": "Download v0.9.6",
-          "href": "/projects/adblock-island/adblock-island-beta-v0.9.6.zip"
+          "label": "Download v0.9.7",
+          "href": "/projects/adblock-island/adblock-island-beta-v0.9.7.zip"
         },
         {
           "label": "Repo",
@@ -1174,7 +1174,7 @@
           "body": [
             "AdBlock Island is a small, wholesome micro-MMO about cleaning up a beach that ads have overrun. You wash ashore with a broom and a class, and the islanders save you a spot by the fire.",
             "It is one self-contained HTML file: no build step, no CDN, no images, no fonts, no backend, no accounts, no trackers. The island is drawn with Canvas 2D; the ocean, lo-fi chords and sound effects are synthesized with Web Audio.",
-            "The v0.9.6 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. There is one boss per run: after the island is 64% clear, each wave has a 50% chance to wake it. At 75% HP it splits into two smaller bosses, then four, then splitting locks. Two bosses move and attack 25% faster; four are 50% faster. Beams and summons are randomised."
+            "The v0.9.7 build adds the Archivist and Moderator classes, the south-shore dock and the autumn-dusk Halloween theme. Closing the upgrade shop after a clear starts the next-wave countdown. Pop-up ads now have a CLICK HERE trap that takes a random 25–75% of current health; the ✕ is still the safe button. Boss fights remain one-per-run on a 50% wave roll, with a 75% HP split ladder."
           ]
         },
         {
@@ -1186,7 +1186,8 @@
             "Bosses split at 75% HP from one to two to four, then lock for one-by-one kills",
             "Two bosses move and attack 25% faster; four bosses are 50% faster",
             "Once four bosses are live, splitting stops and the survivors can be killed one by one",
-            "Randomised boss beams and summons, with smaller split bosses",
+            "Leaving the upgrade shop after a clear starts the next wave",
+            "CLICK HERE on a pop-up is a trap; click the ✕",
             "A south-shore dock with Mira the shopkeeper, and a readable autumn-dusk Halloween theme",
             "The wave ladder, Endless mode with checkpoints, medals, items, the Algorithm boss and kindness notes",
             "Same-keyboard co-op for a second player",
@@ -1199,7 +1200,7 @@
           "title": "Honest limits",
           "body": [
             "Co-op is local, not networked. Online multiplayer, accounts and cross-device saves, moderated chat, parties, quests, trading and anti-cheat all need a backend — a single static HTML file cannot provide them. The next planned step is 4-player room-code co-op; the patch notes keep that roadmap honest.",
-            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.6 One boss, 50% per wave</strong>."
+            "Versions count from zero while the game is in beta, so every release is 0.x. The current build is <strong>v0.9.7 Upgrade exit & ad trap</strong>."
           ]
         }
       ],
