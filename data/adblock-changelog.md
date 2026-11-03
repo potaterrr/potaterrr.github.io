@@ -75,6 +75,8 @@ The Algorithm now splits on a readable health ladder instead of a one-off twin.
 - Keeps the v0.9.3 boss-fight resolution budget: 1.1× desktop / 1.0× touch while bosses are live.
 - Split bosses are smaller, which reduces both the hitbox and the pixels each one paints.
 
+> *Stutter? Sure. That's what ads do.*
+
 ## v0.9.3 — Boss-fight performance (2026-11-04)
 
 A focused hotfix for the moment the Algorithm arrives with friends.
