@@ -67,6 +67,10 @@ This is a correction to the same v0.7.0 release, not a new version.
 - **The next wave is always available.** Upgrading is optional again: choose `Upgrade` if you want, or take `Next wave` immediately. Checkpoint `Continue` is always enabled.
 - Medals, kindness notes, settings, collected items and lifetime bests still persist.
 
+### Footnote — companion damage (2026-11-04)
+
+- The two AI companions now deal **10% of the player's current damage** per hit. They no longer use fixed damage rolls, and they do not inherit the Engineer's overclock window. The human same-keyboard partner is unchanged.
+
 ## v0.6.7 — beta (2026-11-02)
 
 Massive changes: class identity pass. Every class now has its own silhouette and held gear instead of sharing the Reader's robe, cape and pointed hat — the Engineer gets a hard hat and a swinging wrench, the Medic a cross cap and a syringe staff, the Hacker a hood, visor and handheld terminal, the Streamer headphones, a mic boom and an antenna. The Engineer, Medic, Hacker and Streamer also stopped borrowing the Reader's attack: they now throw their own wrench bolts, syringes, exploit bolts and hype shards, each drawn as a real prop with its own hit behaviour (turret shots fire visible bolts, syringes patch you on impact, exploit bolts pierce and mark, hype shards pierce a crowd). Class cards, in-game sprites and projectiles all read as different kits now.
