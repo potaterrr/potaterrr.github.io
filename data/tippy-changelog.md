@@ -4,6 +4,33 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.0 — 2026-11-04
+
+Two new modes and an uncapped streak payout.
+
+### Bet mode
+
+- Fixed **16-card** table across **16 rounds**.
+- Start with **100p** bankroll and bet **5 / 10 / 25 / 50 / 100p** each round.
+- Pick any card that is **not Tippy**; **Tippy flips last**.
+- Win: the stake is not lost and the Classic streak reward goes into an **unbanked pot**.
+- Lose: the stake is lost and **not returned**; bankroll can go into **debt**.
+- **CASH OUT** banks the pot; after round 16 it auto-banks.
+- Debt warning is shown when the bankroll goes negative; debt does not stop the run.
+
+### Reverse mode
+
+- 16 rounds, Classic stages.
+- The peek reveals a **wrong card** instead of Tippy.
+- After the shuffle, you still try to find **Tippy**.
+- New medals: **Reverse Thinker** and **Perfect Avoidance**.
+
+### Economy
+
+- Removed the **+25p reward cap**. Streak rewards now keep climbing: **+5, +10, +15, +20, +25, +30…**
+- Added Bet medals: **First Bet** and **Big Pot**.
+- Title screen now shows **seven modes**.
+
 ## v1.2.1 — 2026-11-04
 
 Fullscreen and a cash-out fix.
