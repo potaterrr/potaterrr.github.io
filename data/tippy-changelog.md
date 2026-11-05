@@ -4,6 +4,15 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.1 — 2026-11-04
+
+Bet mode correction.
+
+- Bet mode now plays the same card loop as Classic: **Tippy is shown during the peek**, the cards shuffle, and you must **pick Tippy** to win.
+- Picking a wrong card loses the stake. The next round still starts, even in debt.
+- The pot, cash-out, auto-bank and debt rules are unchanged.
+- Docs and mode copy now say “find Tippy” instead of the earlier “not Tippy” wording.
+
 ## v1.3.0 — 2026-11-04
 
 Two new modes and an uncapped streak payout.
@@ -12,7 +21,7 @@ Two new modes and an uncapped streak payout.
 
 - Fixed **16-card** table across **16 rounds**.
 - Start with **100p** bankroll and bet **5 / 10 / 25 / 50 / 100p** each round.
-- Pick any card that is **not Tippy**; **Tippy flips last**.
+- Watch Tippy during the peek, follow the shuffle, then pick Tippy.
 - Win: the stake is not lost and the Classic streak reward goes into an **unbanked pot**.
 - Lose: the stake is lost and **not returned**; bankroll can go into **debt**.
 - **CASH OUT** banks the pot; after round 16 it auto-banks.

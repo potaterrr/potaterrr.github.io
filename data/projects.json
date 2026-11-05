@@ -1045,7 +1045,7 @@
           "primary": true
         },
         {
-          "label": "Download v1.3.0",
+          "label": "Download v1.3.1",
           "href": "/projects/tippy-card-monte/tippy-card-monte.zip"
         },
         {
@@ -1059,14 +1059,14 @@
           "title": "Overview",
           "body": [
             "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.",
-            "The 1.3.0 update adds Bet and Reverse modes, removes the +25p reward cap, and expands the medal gallery to 17. Bet mode uses a 100p bankroll, optional stakes up to 100p, a cash-out pot, and allowed debt; Reverse shows a wrong card during the peek but still asks you to find Tippy."
+            "The 1.3.1 update adds Bet and Reverse modes, removes the +25p reward cap, and expands the medal gallery to 17. Bet mode uses a 100p bankroll, optional stakes up to 100p, a cash-out pot, and allowed debt; it follows the Classic loop and you must find Tippy. Reverse shows a wrong card during the peek but still asks you to find Tippy."
           ]
         },
         {
           "title": "Seven modes",
           "bullets": [
             "Classic — 16 rounds, seven stages, 3 to 16 cards. Finish above 0p to win.",
-            "Bet — fixed 16-card rounds, stakes up to 100p, a cash-out pot and allowed debt.",
+            "Bet — fixed 16-card rounds, find Tippy after the peek, stakes up to 100p, a cash-out pot and allowed debt.",
             "Reverse — the peek shows a wrong card; find Tippy anyway.",
             "Endless — no fail. Start at 16 cards, climb forever, and cash out when you want to bank your best depth.",
             "Daily — one date-seeded 16-round shuffle per day. Today’s best score is saved.",
@@ -1098,7 +1098,7 @@
         "adblock-island"
       ],
       "related_posts": [],
-      "version": "1.3.0",
+      "version": "1.3.1",
       "patch_notes": true,
       "changelog": "tippy-changelog.md",
       "changelog_url": "https://github.com/potaterrr/potaterrr.github.io/blob/main/data/tippy-changelog.md",

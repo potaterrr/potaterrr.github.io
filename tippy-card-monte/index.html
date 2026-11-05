@@ -1528,7 +1528,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       <div class="bet-card">
         <p class="bet-kicker">BET MODE · ROUND <span id="bet-round">1</span>/16</p>
         <h2 class="bet-title">PLACE YOUR BET</h2>
-        <p class="bet-sub">Pick any card that is not Tippy. Tippy flips last. Debt is allowed.</p>
+        <p class="bet-sub">Watch Tippy, follow the shuffle, then pick Tippy. A wrong pick loses your stake.</p>
         <div class="bet-stats">
           <div><span>BANKROLL</span><b id="bet-bankroll">100p</b></div>
           <div><span>POT</span><b id="bet-pot">0p</b></div>
@@ -1607,7 +1607,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       <span>The table needs the wider side. Turn your device sideways to keep playing.</span>
     </div>
   </div>
-  <div class="corner-credit">TIPPY CARD MONTE · V1.3.0</div>
+  <div class="corner-credit">TIPPY CARD MONTE · V1.3.1</div>
 </div>
 
 <script>
@@ -1664,8 +1664,8 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       stages: CLASSIC_STAGES
     },
     bet: {
-      id: 'bet', name: 'BET', tag: '16 CARDS',
-      desc: 'Sixteen cards, one pick. Choose a card that is <b>not Tippy</b>; Tippy flips last. Winnings sit in a pot until you <b>CASH OUT</b>. Debt is allowed.',
+      id: 'bet', name: 'BET', tag: 'BET & FIND',
+      desc: 'Sixteen cards, one pick. Watch Tippy, follow the shuffle, and <b>pick Tippy</b>. A wrong pick loses your stake. Winnings sit in a pot until you <b>CASH OUT</b>. Debt is allowed.',
       totalRounds: 16, baseWin: 5, loss: 5, fail: 'none',
       stages: BET_STAGE, bet: true
     },
@@ -2010,7 +2010,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
 
   function modeFineprint(mode) {
     if (mode === 'classic') return 'Finish above 0p to win. All 16 picks is a BIG WIN.';
-    if (mode === 'bet') return 'Pick any card that is not Tippy. Cash out to bank the pot. Debt is allowed.';
+    if (mode === 'bet') return 'Watch Tippy, then pick him. Cash out the pot. Debt is allowed.';
     if (mode === 'reverse') return 'The peek shows a wrong card. Find Tippy anyway.';
     if (mode === 'endless') return 'No fail. Cash out whenever you like; best depth is the record.';
     if (mode === 'daily') return 'Same seeded shuffle all day. Best score for today is saved.';
@@ -2273,10 +2273,10 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       button.setAttribute('aria-label', 'Card ' + (index + 1) + ', face down');
       const betMode = state.mode === 'bet';
       const faceValue = betMode
-        ? (isTippy ? 'LOSS' : '+' + reward + 'p')
+        ? (isTippy ? '+' + reward + 'p' : '-' + state.bet + 'p')
         : (isTippy ? '+' + reward + 'p' : '-' + CONFIG.loss + 'p');
       const faceLabel = betMode
-        ? (isTippy ? 'TIPPY' : 'MINUS')
+        ? (isTippy ? 'TIPPY' : 'WRONG')
         : (isTippy ? 'TIPPY' : 'NOT TIPPY');
       button.innerHTML = `
         <span class="card-inner">
@@ -2468,9 +2468,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     await dealIn();
     if (token !== runId) return;
 
-    if (state.mode === 'bet') {
-      setPrompt('SHUFFLING · TIPPY FLIPS LAST');
-    } else if (state.mode === 'reverse') {
+    if (state.mode === 'reverse') {
       const wrongCard = cards.find((card) => !card.isTippy) || cards[0];
       await peekTippy(wrongCard, stage.peek, 'WATCH THE WRONG CARD');
       if (token !== runId) return;
@@ -2483,7 +2481,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     await shuffle(stage);
     if (token !== runId) return;
 
-    setPrompt(state.mode === 'bet' ? 'PICK A CARD · NOT TIPPY' : 'PICK A CARD');
+    setPrompt(state.mode === 'bet' ? 'PICK TIPPY' : 'PICK A CARD');
     state.busy = false;
   }
 
@@ -2494,7 +2492,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     cards.forEach((item) => { item.el.disabled = true; });
 
     card.el.classList.add('is-revealed');
-    const winningPick = state.mode === 'bet' ? !card.isTippy : card.isTippy;
+    const winningPick = card.isTippy;
     card.el.setAttribute('aria-label', winningPick ? 'Winning card' : 'Losing card');
 
     if (state.mode === 'bet') {
@@ -2579,7 +2577,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
   }
 
   async function resolveBetPick(card, token) {
-    const won = !card.isTippy;
+    const won = card.isTippy;
     if (won) {
       const reward = nextReward();
       state.pot += reward;
@@ -2587,18 +2585,11 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       state.streak += 1;
       state.bestStreak = Math.max(state.bestStreak, state.streak);
       card.el.classList.add('is-correct');
-      setPrompt('MINUS! +' + reward + 'p TO POT', 'good');
+      setPrompt('TIPPY FOUND! +' + reward + 'p TO POT', 'good');
       floatText(card.el, '+' + reward + 'p', false);
       coinBurst(card.el, 8);
       sfxCorrect(reward);
       updateHUD();
-      await wait(520);
-      if (token !== runId) return;
-      const tippyCard = cards.find((item) => item.isTippy);
-      if (tippyCard) {
-        tippyCard.el.classList.add('is-revealed', 'is-tippy-reveal');
-        sfxFlip();
-      }
       await wait(900);
     } else {
       state.misses += 1;
@@ -2607,6 +2598,11 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       card.el.classList.add('is-wrong');
       setPrompt('BET LOST · -' + state.bet + 'p', 'bad');
       floatText(card.el, '-' + state.bet + 'p', true);
+      const tippyCard = cards.find((item) => item.isTippy);
+      if (tippyCard) {
+        tippyCard.el.classList.add('is-revealed', 'is-tippy-reveal');
+        sfxFlip();
+      }
       el.stage.classList.add('is-shaking');
       setTimeout(() => el.stage.classList.remove('is-shaking'), 420 / SPEED);
       if (state.bankroll < 0) showToast('DEBT WARNING', 'Bankroll ' + formatPts(state.bankroll) + '. Debt is allowed.', true);
@@ -3026,7 +3022,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     if (state.mode === 'endless') grantMedal('beyond');
     if (state.mode === 'bet') {
       state.busy = true;
-      showToast('BET MODE', 'PICK A CARD THAT IS NOT TIPPY · CASH OUT TO BANK');
+      showToast('BET MODE', 'FIND TIPPY · CASH OUT TO BANK');
     }
     nextFrame().then(() => {
       if (token !== runId) return;
