@@ -4,6 +4,15 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.4 — 2026-11-04
+
+Bet mode is now endless, and Exit goes home.
+
+- Bet mode uses **infinite rounds**. After a win or a loss it opens the next bet; there is no round-16 auto-bank or forced result.
+- **EXIT** in the HUD now returns straight to the **home/title screen** instead of the result screen.
+- The Bet exit options are gone. If the pot is unbanked when you exit, it is forfeited; cash out first.
+- Cash-out updates the Bet best immediately.
+
 ## v1.3.3 — 2026-11-04
 
 Exit option.
