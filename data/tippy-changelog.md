@@ -4,6 +4,15 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.6 — 2026-11-05
+
+Reverse mode temporarily removed.
+
+- Reverse is no longer available from the mode picker while it is being reworked.
+- The game now shows **six modes**: Classic, Bet, Endless, Daily, Blitz and Zen.
+- Reverse-only medals are hidden from the gallery; the visible gallery is now **15 medals**.
+- Reverse code is left in place for a later fix.
+
 ## v1.3.5 — 2026-11-05
 
 Reverse mode now tracks a hidden card.
