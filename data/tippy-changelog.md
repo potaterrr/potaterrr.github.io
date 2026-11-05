@@ -4,6 +4,14 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.2 — 2026-11-04
+
+Bet mode peek fix.
+
+- Bet mode was using a **0 ms peek**, so Tippy flipped and disappeared instantly.
+- Bet rounds now hold the Tippy peek for the normal **1.5 seconds** before shuffling.
+- No other rules changed: pick Tippy to win, wrong pick loses the stake, debt allowed, cash out the pot.
+
 ## v1.3.1 — 2026-11-04
 
 Bet mode correction.

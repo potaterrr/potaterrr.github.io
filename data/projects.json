@@ -1045,7 +1045,7 @@
           "primary": true
         },
         {
-          "label": "Download v1.3.1",
+          "label": "Download v1.3.2",
           "href": "/projects/tippy-card-monte/tippy-card-monte.zip"
         },
         {
@@ -1059,7 +1059,7 @@
           "title": "Overview",
           "body": [
             "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.",
-            "The 1.3.1 update adds Bet and Reverse modes, removes the +25p reward cap, and expands the medal gallery to 17. Bet mode uses a 100p bankroll, optional stakes up to 100p, a cash-out pot, and allowed debt; it follows the Classic loop and you must find Tippy. Reverse shows a wrong card during the peek but still asks you to find Tippy."
+            "The 1.3.2 update adds Bet and Reverse modes, removes the +25p reward cap, and expands the medal gallery to 17. Bet mode uses a 100p bankroll, optional stakes up to 100p, a cash-out pot, and allowed debt; it shows Tippy for the normal peek, then asks you to find him. Reverse shows a wrong card during the peek but still asks you to find Tippy."
           ]
         },
         {
@@ -1098,7 +1098,7 @@
         "adblock-island"
       ],
       "related_posts": [],
-      "version": "1.3.1",
+      "version": "1.3.2",
       "patch_notes": true,
       "changelog": "tippy-changelog.md",
       "changelog_url": "https://github.com/potaterrr/potaterrr.github.io/blob/main/data/tippy-changelog.md",
