@@ -7,7 +7,7 @@
 <meta name="description" content="Tippy Card Monte is a pixel card monte with seven modes: Classic, Bet, Reverse, Endless, Daily, Blitz and Zen. Follow the shuffle, bank Tippy Coins, and climb as deep as you can.">
 <meta name="theme-color" content="#0b0f1d">
 <meta property="og:title" content="Tippy Card Monte">
-<meta property="og:description" content="Find Tippy. Follow the shuffle. Stay in the green. Seven modes, 16 rounds, bankable bets, a reverse peek, and an Endless depth chase.">
+<meta property="og:description" content="Find Tippy. Follow the shuffle. Stay in the green. Seven modes, 16 rounds, bankable bets, a reverse track, and an Endless depth chase.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="cover.png">
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAACIUlEQVR4nO3dPU4VUQCA0feMWNkYTXQB2LgAChp7VkFj4YosbFiFPQ2FC7CRBUCisbGCAlfgG+MwmZ/vnJYMXG7el5vcOzNvtwMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgI793AMY6/jl0cOcf//65/2i59D8HPZk7gHAnARAmgBIEwBpAiBNAKQJgLSncw9gat9/3I26/u2rZ480kmWqz48VgDQBkCYA0gRAmgBIEwBpAiBt8+cAa9+nnlp9fqwApAmANAGQJgDSBECaAEgTAGmbPwcYa+h++f1+0a+9mdza58cKQJoASBMAaQIgTQCkCYA0AZDmHGBA/X75IWufHysAaQIgTQCkCYA0AZAmANIEAAAAAAAAAAAAAAAAwKqMfnn778/vHx5jIH/z/MPlsl8wz0FL/3x4Iow0AZAmANIEQJoASBMAaQIgLf/9AGfvjibdp166L9/u0+csVgDSBECaAEgTAGkCIE0ApAmAtM3vAQ/t8w/tg9+cn096TvD69HTU9bdXVwd//ubi4uD/N3Z+1s4KQJoASBMAaQIgTQCkCYA0AZCWfx5gbkP7+EzLCkCaAEgTAGkCIE0ApAmANAGQtul7vf/F1O8F+vjiZMpfv/v06+uo67d+v/8QKwBpAiBNAKQJgDQBkCYA0gQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAf/kD7RY5oi8OX8cAAAAASUVORK5CYII=">
@@ -1610,7 +1610,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       <span>The table needs the wider side. Turn your device sideways to keep playing.</span>
     </div>
   </div>
-  <div class="corner-credit">TIPPY CARD MONTE · V1.3.4</div>
+  <div class="corner-credit">TIPPY CARD MONTE · V1.3.5</div>
 </div>
 
 <script>
@@ -1673,8 +1673,8 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       stages: BET_STAGE, bet: true
     },
     reverse: {
-      id: 'reverse', name: 'REVERSE', tag: 'WRONG PEEK',
-      desc: 'The peek shows a <b>wrong card</b>, not Tippy. Follow the shuffle and still find Tippy. <b>The hint is a lie.</b>',
+      id: 'reverse', name: 'REVERSE', tag: 'TRACK THE PEEK',
+      desc: 'The peek shows a <b>hidden card</b>. Track it through the shuffle and pick it. Tippy is a decoy.',
       totalRounds: 16, baseWin: 5, loss: 5, fail: 'score',
       stages: CLASSIC_STAGES, reverse: true
     },
@@ -2005,7 +2005,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
   function modeMetaText(mode) {
     if (mode === 'classic') return '<span>16 ROUNDS</span><span>3 TO 16 CARDS</span><span>DEBT ALLOWED</span>';
     if (mode === 'bet') return '<span>INFINITE ROUNDS</span><span>16 CARDS</span><span>DEBT ALLOWED</span>';
-    if (mode === 'reverse') return '<span>16 ROUNDS</span><span>WRONG CARD PEEK</span><span>FIND TIPPY</span>';
+    if (mode === 'reverse') return '<span>16 ROUNDS</span><span>TRACK THE PEEK</span><span>TIPPY IS A DECOY</span>';
     if (mode === 'endless') return '<span>NO FAIL</span><span>CHECKPOINT EVERY 4</span><span>BEST DEPTH ' + state.bests.endlessDepth + '</span>';
     if (mode === 'daily') return '<span>' + dateKey() + '</span><span>16 ROUNDS</span><span>ONE SEEDED SHUFFLE</span>';
     if (mode === 'blitz') return '<span>8 ROUNDS</span><span>FAST PEEKS</span><span>SCORE CHASE</span>';
@@ -2015,7 +2015,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
   function modeFineprint(mode) {
     if (mode === 'classic') return 'Finish above 0p to win. All 16 picks is a BIG WIN.';
     if (mode === 'bet') return 'Watch Tippy, then pick him. Cash out the pot. Debt is allowed.';
-    if (mode === 'reverse') return 'The peek shows a wrong card. Find Tippy anyway.';
+    if (mode === 'reverse') return 'The peek shows the card to track. Pick it after the shuffle; Tippy is a decoy.';
     if (mode === 'endless') return 'No fail. Cash out whenever you like; best depth is the record.';
     if (mode === 'daily') return 'Same seeded shuffle all day. Best score for today is saved.';
     if (mode === 'blitz') return 'Eight fast rounds. Finish above 0p for the green.';
@@ -2272,6 +2272,10 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
   function buildCards(count) {
     clearBoard();
     const tippyIndex = randRng(0, count - 1);
+    let targetIndex = -1;
+    if (state.mode === 'reverse') {
+      do { targetIndex = randRng(0, count - 1); } while (targetIndex === tippyIndex);
+    }
     const reward = nextReward();
     const fragment = document.createDocumentFragment();
 
@@ -2283,12 +2287,17 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       button.dataset.index = String(index);
       button.setAttribute('aria-label', 'Card ' + (index + 1) + ', face down');
       const betMode = state.mode === 'bet';
+      const reverseMode = state.mode === 'reverse';
+      const isTarget = reverseMode && index === targetIndex;
+      const winningFace = reverseMode ? isTarget : isTippy;
       const faceValue = betMode
         ? (isTippy ? '+' + reward + 'p' : '-' + state.bet + 'p')
-        : (isTippy ? '+' + reward + 'p' : '-' + CONFIG.loss + 'p');
-      const faceLabel = betMode
-        ? (isTippy ? 'TIPPY' : 'WRONG')
-        : (isTippy ? 'TIPPY' : 'NOT TIPPY');
+        : (winningFace ? '+' + reward + 'p' : '-' + CONFIG.loss + 'p');
+      const faceLabel = reverseMode
+        ? (isTarget ? '★' : (isTippy ? 'TIPPY' : ''))
+        : betMode
+          ? (isTippy ? 'TIPPY' : 'WRONG')
+          : (isTippy ? 'TIPPY' : 'NOT TIPPY');
       button.innerHTML = `
         <span class="card-inner">
           <span class="card-side card-back">
@@ -2296,15 +2305,15 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
             <span class="back-label">TIPPY</span>
           </span>
           <span class="card-side card-front">
-            <span class="coin ${isTippy ? 'tippy' : 'empty'}">
-              <img class="coin-face" src="${isTippy ? IMG.face : IMG.sad}" alt="">
+            <span class="coin ${(reverseMode ? (isTarget || isTippy) : isTippy) ? 'tippy' : 'empty'}">
+              <img class="coin-face" src="${(reverseMode ? (isTarget || isTippy) : isTippy) ? IMG.face : IMG.sad}" alt="">
               <span class="coin-value">${faceValue}</span>
               <span class="coin-label">${faceLabel}</span>
             </span>
           </span>
         </span>
       `;
-      const card = { el: button, isTippy, pos: index };
+      const card = { el: button, isTippy, isTarget, pos: index };
       button.addEventListener('click', () => onCardPick(card));
       cards.push(card);
       fragment.appendChild(button);
@@ -2480,8 +2489,8 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     if (token !== runId) return;
 
     if (state.mode === 'reverse') {
-      const wrongCard = cards.find((card) => !card.isTippy) || cards[0];
-      await peekTippy(wrongCard, stage.peek, 'WATCH THE WRONG CARD');
+      const targetCard = cards.find((card) => card.isTarget) || cards[0];
+      await peekTippy(targetCard, stage.peek, 'WATCH THE CARD');
       if (token !== runId) return;
     } else {
       const tippyCard = cards.find((card) => card.isTippy);
@@ -2503,7 +2512,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     cards.forEach((item) => { item.el.disabled = true; });
 
     card.el.classList.add('is-revealed');
-    const winningPick = card.isTippy;
+    const winningPick = state.mode === 'reverse' ? card.isTarget : card.isTippy;
     card.el.setAttribute('aria-label', winningPick ? 'Winning card' : 'Losing card');
 
     if (state.mode === 'bet') {
@@ -2511,14 +2520,15 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       return;
     }
 
-    if (card.isTippy) {
+    const won = state.mode === 'reverse' ? card.isTarget : card.isTippy;
+    if (won) {
       const reward = nextReward();
       state.score += reward;
       state.wins += 1;
       state.streak += 1;
       state.bestStreak = Math.max(state.bestStreak, state.streak);
       card.el.classList.add('is-correct');
-      setPrompt('TIPPY FOUND! +' + reward + 'p', 'good');
+      setPrompt(state.mode === 'reverse' ? 'FOUND IT! +' + reward + 'p' : 'TIPPY FOUND! +' + reward + 'p', 'good');
       floatText(card.el, '+' + reward + 'p', false);
       coinBurst(card.el, 8);
       sfxCorrect(reward);
@@ -2538,9 +2548,11 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       state.misses += 1;
       if (!guard) state.streak = 0;
       card.el.classList.add('is-wrong');
-      const tippyCard = cards.find((item) => item.isTippy);
-      if (tippyCard) {
-        tippyCard.el.classList.add('is-revealed', 'is-tippy-reveal');
+      const revealCard = state.mode === 'reverse'
+        ? cards.find((item) => item.isTarget)
+        : cards.find((item) => item.isTippy);
+      if (revealCard) {
+        revealCard.el.classList.add('is-revealed', 'is-tippy-reveal');
       }
       if (safety) {
         setPrompt('SAFETY NET! NO LOSS', 'good');
@@ -2818,16 +2830,16 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
         image = IMG.bigwin;
         imageAlt = 'Tippy celebrating on a table full of coins';
         title = 'PERFECT REVERSE';
-        sub = 'The wrong-card peek lied, and you still found Tippy every time.';
+        sub = 'You tracked the peeked card every time. Tippy never fooled you.';
         announce = 'BIG WIN';
       } else if (result === 'win') {
         title = 'REVERSE THINKER';
-        sub = 'The hint was wrong. You still left in the green.';
+        sub = 'You followed the peeked card and left in the green.';
       } else {
         image = IMG.loss;
         imageAlt = 'Tippy looking sad';
-        title = 'THE HINT WON';
-        sub = 'The wrong card was a distraction. Tippy got away.';
+        title = 'THE PEEK WON';
+        sub = 'You lost the card you were tracking. Tippy was only a decoy.';
         announce = 'LOSS';
       }
     } else if (state.mode === 'endless') {
@@ -3202,7 +3214,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     document.documentElement.classList.add('debug-fast');
     window.__tippy = {
       state: () => ({ ...state, mode: state.mode, selectedMode: state.selectedMode }),
-      cards: () => cards.map((card, index) => ({ index, tippy: card.isTippy, pos: card.pos })),
+      cards: () => cards.map((card, index) => ({ index, tippy: card.isTippy, target: !!card.isTarget, pos: card.pos })),
       modes: () => Object.keys(MODES),
       medals: () => state.medals.slice(),
       start: (mode = 'classic') => startGame(mode),

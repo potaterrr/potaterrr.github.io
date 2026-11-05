@@ -1045,7 +1045,7 @@
           "primary": true
         },
         {
-          "label": "Download v1.3.4",
+          "label": "Download v1.3.5",
           "href": "/projects/tippy-card-monte/tippy-card-monte.zip"
         },
         {
@@ -1059,7 +1059,7 @@
           "title": "Overview",
           "body": [
             "Tippy Card Monte is a small pixel card game: a shuffled row, a slightly smug mascot, and a bet that gets harder every round. It is built to be played in a browser tab for five minutes, not installed.",
-            "The 1.3.4 update adds Bet and Reverse modes, removes the +25p reward cap, expands the medal gallery to 17, and adds an in-game EXIT button. Bet mode has infinite rounds, a 100p bankroll, stakes up to 100p, a cash-out pot and allowed debt; it shows Tippy for the normal peek, then asks you to find him. Exit returns home and forfeits any unbanked pot. Reverse shows a wrong card during the peek but still asks you to find Tippy."
+            "The 1.3.5 update adds Bet and Reverse modes, removes the +25p reward cap, expands the medal gallery to 17, and adds an in-game EXIT button. Bet mode has infinite rounds, a 100p bankroll, stakes up to 100p, a cash-out pot and allowed debt; it shows Tippy for the normal peek, then asks you to find him. Exit returns home and forfeits any unbanked pot. Reverse shows a hidden card to track; pick that card after the shuffle, because Tippy is a decoy."
           ]
         },
         {
@@ -1067,7 +1067,7 @@
           "bullets": [
             "Classic — 16 rounds, seven stages, 3 to 16 cards. Finish above 0p to win.",
             "Bet — infinite 16-card rounds, find Tippy after the peek, stakes up to 100p, a cash-out pot and allowed debt. Exit returns home; unbanked pot is forfeited.",
-            "Reverse — the peek shows a wrong card; find Tippy anyway.",
+            "Reverse — the peek shows a hidden card; track it through the shuffle and pick it. Tippy is a decoy.",
             "Endless — no fail. Start at 16 cards, climb forever, and cash out when you want to bank your best depth.",
             "Daily — one date-seeded 16-round shuffle per day. Today’s best score is saved.",
             "Blitz — eight fast rounds with 6 to 16 cards. Pure score chase.",
@@ -1098,7 +1098,7 @@
         "adblock-island"
       ],
       "related_posts": [],
-      "version": "1.3.4",
+      "version": "1.3.5",
       "patch_notes": true,
       "changelog": "tippy-changelog.md",
       "changelog_url": "https://github.com/potaterrr/potaterrr.github.io/blob/main/data/tippy-changelog.md",

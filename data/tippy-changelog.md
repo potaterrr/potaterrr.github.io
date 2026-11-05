@@ -4,6 +4,16 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.5 — 2026-11-05
+
+Reverse mode now tracks a hidden card.
+
+- The peek shows a **hidden card**, and you must follow that card through the shuffle.
+- Picking the **peeked card** wins the round. Picking Tippy or any other card loses.
+- Tippy is now a **decoy** in Reverse; the peeked card is never named in the UI.
+- The peeked card is revealed when the round is lost.
+- Reverse copy, mode chips, result text and docs were updated to match the tracking rules.
+
 ## v1.3.4 — 2026-11-04
 
 Bet mode is now endless, and Exit goes home.
