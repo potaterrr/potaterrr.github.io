@@ -1256,7 +1256,12 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
 .bet-choice:hover { border-color: var(--gold); background: rgba(247,197,49,.13); transform: translateY(-1px); }
 .bet-choice small { color: var(--muted); font-family: var(--font-body); font-size: 8px; }
 .bet-cashout { justify-self: center; min-width: 180px; }
+.exit-btn { border-color: rgba(247,197,49,.45) !important; }
+.exit-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.exit-actions .btn { min-width: 0; }
 @media (max-width: 780px) {
+  .exit-actions { flex-direction: column; }
+  .exit-actions .btn { width: 100%; }
   .bet-options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .hud .bet-pill { display: none; }
 }
@@ -1516,6 +1521,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       </div>
       <button class="btn btn-ghost btn-small stop-btn" id="btn-stop" type="button" hidden>CASH OUT</button>
       <button class="btn btn-ghost btn-small fs-btn" id="btn-fullscreen-game" type="button" aria-pressed="false">FULL</button>
+      <button class="btn btn-ghost btn-small exit-btn" id="btn-exit" type="button">EXIT</button>
       <button class="btn btn-ghost btn-small sound-btn js-sound" type="button" aria-pressed="false">SND ON</button>
     </header>
     <main class="stage" id="stage">
@@ -1536,6 +1542,18 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
         <p class="bet-warning" id="bet-warning" hidden>DEBT WARNING · a loss will deepen your debt.</p>
         <div class="bet-options" id="bet-options"></div>
         <button class="btn btn-ghost bet-cashout" id="bet-cashout" type="button">CASH OUT POT</button>
+      </div>
+    </div>
+    <div class="bet-overlay" id="exit-overlay" hidden>
+      <div class="bet-card exit-card">
+        <p class="bet-kicker">LEAVE RUN</p>
+        <h2 class="bet-title">LEAVE THE TABLE?</h2>
+        <p class="bet-sub" id="exit-sub">Your current run will end.</p>
+        <div class="exit-actions">
+          <button class="btn btn-ghost" id="exit-cashout" type="button">CASH OUT &amp; END</button>
+          <button class="btn btn-ghost" id="exit-confirm" type="button">LEAVE POT &amp; END</button>
+          <button class="btn btn-ghost" id="exit-cancel" type="button">KEEP PLAYING</button>
+        </div>
       </div>
     </div>
   </section>
@@ -1607,7 +1625,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
       <span>The table needs the wider side. Turn your device sideways to keep playing.</span>
     </div>
   </div>
-  <div class="corner-credit">TIPPY CARD MONTE · V1.3.2</div>
+  <div class="corner-credit">TIPPY CARD MONTE · V1.3.3</div>
 </div>
 
 <script>
@@ -1787,6 +1805,12 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     betWarning: $('#bet-warning'),
     betOptions: $('#bet-options'),
     betCashout: $('#bet-cashout'),
+    btnExit: $('#btn-exit'),
+    exitOverlay: $('#exit-overlay'),
+    exitSub: $('#exit-sub'),
+    exitCashout: $('#exit-cashout'),
+    exitConfirm: $('#exit-confirm'),
+    exitCancel: $('#exit-cancel'),
     btnFullscreen: $('#btn-fullscreen'),
     btnFullscreenGame: $('#btn-fullscreen-game'),
     fsRotateHint: $('#fs-rotate-hint'),
@@ -2236,6 +2260,24 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     showToast('CASHED OUT', '+' + banked + 'p banked.', false);
     sfxCorrect(banked);
     if (banked >= 100) grantMedal('big_pot');
+  }
+
+  function requestExit() {
+    if (state.screen !== 'game') return;
+    if (state.mode === 'bet' && state.pot > 0) {
+      el.exitSub.textContent = 'You have ' + formatPts(state.pot) + ' in the unbanked pot. Cash it out, or leave it behind.';
+      el.exitCashout.hidden = false;
+      el.exitConfirm.hidden = false;
+      el.exitOverlay.hidden = false;
+      return;
+    }
+    endGame();
+  }
+
+  function finishExit(bankPotFirst) {
+    if (bankPotFirst) bankPot();
+    el.exitOverlay.hidden = true;
+    endGame();
   }
 
   function showScreen(name) {
@@ -2713,6 +2755,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     runId += 1;
     state.checkpointResolve = null;
     if (el.betOverlay) el.betOverlay.hidden = true;
+    if (el.exitOverlay) el.exitOverlay.hidden = true;
     const depth = state.mode === 'endless' ? Math.max(0, state.depth) : 0;
     const perfect = state.mode !== 'endless' && state.mode !== 'bet' && state.wins === CONFIG.totalRounds && state.misses === 0;
     const result = state.mode === 'endless'
@@ -2980,6 +3023,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     el.btnStop.hidden = true;
     el.btnStop.textContent = 'CASH OUT';
     if (el.betOverlay) el.betOverlay.hidden = true;
+    if (el.exitOverlay) el.exitOverlay.hidden = true;
     renderModes();
     showScreen('title');
   }
@@ -3011,6 +3055,7 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
     state.biggestPot = 0;
     state.cashouts = 0;
     if (el.betOverlay) el.betOverlay.hidden = true;
+    if (el.exitOverlay) el.exitOverlay.hidden = true;
     el.btnStop.hidden = state.mode !== 'endless' && state.mode !== 'bet';
     el.btnStop.textContent = 'CASH OUT';
     clearBoard();
@@ -3134,6 +3179,11 @@ body.fs-rotate #fs-rotate-hint { display: grid; }
   });
 
   if (el.betCashout) el.betCashout.addEventListener('click', bankPot);
+
+  if (el.btnExit) el.btnExit.addEventListener('click', requestExit);
+  if (el.exitCashout) el.exitCashout.addEventListener('click', () => finishExit(true));
+  if (el.exitConfirm) el.exitConfirm.addEventListener('click', () => finishExit(false));
+  if (el.exitCancel) el.exitCancel.addEventListener('click', () => { el.exitOverlay.hidden = true; });
 
   el.btnCashoutCheckpoint.addEventListener('click', () => {
     if (state.mode !== 'endless') return;

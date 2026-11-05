@@ -4,6 +4,15 @@ All notable changes to Tippy Card Monte. The game is one self-contained `index.h
 
 Format: [Semantic Versioning](https://semver.org/). Dates are YYYY-MM-DD. Every release is listed below, newest first.
 
+## v1.3.3 — 2026-11-04
+
+Exit option.
+
+- Added an **EXIT** button to the game HUD.
+- Exit ends the current run and shows the result screen, where **CHANGE MODE** returns to the title.
+- In Bet mode, if the pot has money, Exit opens a choice: **CASH OUT & END**, **LEAVE POT & END**, or **KEEP PLAYING**.
+- `Escape` still belongs to the browser; the EXIT button is the in-game path.
+
 ## v1.3.2 — 2026-11-04
 
 Bet mode peek fix.
